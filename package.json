@@ -1,0 +1,16 @@
+﻿{
+  "name": "ielts-speaking-mastery",
+  "version": "1.0.0",
+  "description": "IELTS Speaking Band 8+ Mastery Platform with Real-time Speech-to-Text and 7-Criteria Cambridge Evaluation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["ielts", "speaking", "band-8", "speech-to-text", "evaluation"],
+  "author": "IELTS Prep",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  }
+}

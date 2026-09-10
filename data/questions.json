@@ -1,0 +1,242 @@
+{
+  "part1": [
+    {
+      "id": "p1_real_1",
+      "category": "Work & Studies",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "question": "Do you work or are you a student? What specific aspect of your daily routine do you find most intellectually stimulating?"
+    },
+    {
+      "id": "p1_real_2",
+      "category": "Hometown & Urban Living",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "question": "Where were you brought up? In what significant ways has your hometown evolved since your childhood?"
+    },
+    {
+      "id": "p1_real_3",
+      "category": "Artificial Intelligence & Smart Tech",
+      "isRealExam": true,
+      "source": "Real Exam 2026",
+      "question": "How extensively do you incorporate artificial intelligence or automated digital tools into your daily workflow?"
+    },
+    {
+      "id": "p1_real_4",
+      "category": "Noise & Quiet Places",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "question": "Do you prefer working or studying in complete silence, or do you find ambient background sounds helpful?"
+    },
+    {
+      "id": "p1_real_5",
+      "category": "Waiting & Patience",
+      "isRealExam": true,
+      "source": "Real Exam 2025",
+      "question": "How do you usually occupy your time when you find yourself having to wait in long queues or delayed transit?"
+    },
+    {
+      "id": "p1_real_6",
+      "category": "Public Green Spaces",
+      "isRealExam": true,
+      "source": "Real Exam 2024",
+      "question": "Are there adequate botanical gardens or public recreational parks in your city? How frequently do you visit them?"
+    },
+    {
+      "id": "p1_real_7",
+      "category": "Musical Instruments & Art",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "question": "Did you ever attempt to master a musical instrument during your formative years? Would you consider doing so now?"
+    },
+    {
+      "id": "p1_real_8",
+      "category": "Time Allocation & Morning Routine",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "question": "Are you more disciplined during morning hours or late evening? How do you organize high-priority tasks?"
+    },
+    {
+      "id": "p1_real_9",
+      "category": "Culinary Traditions & Dining",
+      "isRealExam": true,
+      "source": "Real Exam 2025",
+      "question": "Do you prioritize home-prepared culinary recipes, or do you prefer dining out with colleagues? Why?"
+    },
+    {
+      "id": "p1_real_10",
+      "category": "Physical Well-being & Sports",
+      "isRealExam": true,
+      "source": "Real Exam 2024",
+      "question": "What recreational physical activities do people in your country commonly engage in to maintain fitness?"
+    },
+    {
+      "id": "p1_real_11",
+      "category": "Memory & Childhood Souvenirs",
+      "isRealExam": true,
+      "source": "Real Exam 2025",
+      "question": "Do you keep keepsakes or mementos from your childhood? Why do people hold onto nostalgic items?"
+    },
+    {
+      "id": "p1_real_12",
+      "category": "Digital Socialization & Screen Time",
+      "isRealExam": true,
+      "source": "Real Exam 2026",
+      "question": "How has instant messaging altered interpersonal relationships compared to traditional face-to-face dialogues?"
+    }
+  ],
+  "part2": [
+    {
+      "id": "p2_real_1",
+      "category": "Patience & Anticipation",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "title": "Describe an occasion when you had to wait a long time for something special or positive.",
+      "prompts": [
+        "What you were waiting for and why it was meaningful",
+        "How long the waiting period lasted",
+        "What thoughts or emotions you experienced during the delay",
+        "And explain how you felt once the moment finally arrived."
+      ],
+      "associatedPart3": "p3_real_1"
+    },
+    {
+      "id": "p2_real_2",
+      "category": "Urban Environment & Soundscapes",
+      "isRealExam": true,
+      "source": "Real Exam 2025",
+      "title": "Describe a remarkably noisy place you spent time in recently.",
+      "prompts": [
+        "Where this place was situated and when you visited",
+        "What particular sources created the excessive noise",
+        "What reason brought you to this location",
+        "And explain how this sensory overload influenced your state of mind."
+      ],
+      "associatedPart3": "p3_real_2"
+    },
+    {
+      "id": "p2_real_3",
+      "category": "Mentorship & Inspiration",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "title": "Describe an inspiring individual who encouraged you to pursue a creative or ambitious endeavor.",
+      "prompts": [
+        "Who this individual is and how you initially encountered them",
+        "What creative or ambitious project they inspired you to tackle",
+        "How they mentored, advised, or supported your efforts",
+        "And explain why their encouragement was so pivotal to your success."
+      ],
+      "associatedPart3": "p3_real_3"
+    },
+    {
+      "id": "p2_real_4",
+      "category": "Skill Acquisition & Perseverance",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "title": "Describe a demanding skill you attempted to learn that required considerable discipline.",
+      "prompts": [
+        "What the skill was and why you decided to embark on learning it",
+        "What primary difficulties or learning curves you encountered",
+        "What strategies, teachers, or resources aided your progress",
+        "And explain whether you feel you have successfully mastered it."
+      ],
+      "associatedPart3": "p3_real_4"
+    },
+    {
+      "id": "p2_real_5",
+      "category": "Technological Transformation",
+      "isRealExam": true,
+      "source": "Real Exam 2026",
+      "title": "Describe an AI application or software innovation that radically transformed how you perform tasks.",
+      "prompts": [
+        "What the software or application is and how you discovered it",
+        "What specific workflows or creative tasks you utilize it for",
+        "In what ways it outperforms conventional traditional methods",
+        "And explain whether you believe it could eventually lead to over-dependence."
+      ],
+      "associatedPart3": "p3_real_5"
+    },
+    {
+      "id": "p2_real_6",
+      "category": "Travel & Unconventional Journeys",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "title": "Describe an unusual or unexpected journey that deviated substantially from your original plans.",
+      "prompts": [
+        "Where you intended to travel and who accompanied you",
+        "What unforeseen circumstances disrupted the initial itinerary",
+        "How you adapted and what alternative experiences transpired",
+        "And explain what you learned from navigating that unexpected deviation."
+      ],
+      "associatedPart3": "p3_real_6"
+    }
+  ],
+  "part3": [
+    {
+      "id": "p3_real_1",
+      "category": "Patience & Anticipation",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "questions": [
+        "Do modern instant-gratification digital services diminish patience in younger generations?",
+        "Why do people tend to appreciate rewards more intensely when substantial anticipation is involved?",
+        "In what professional contexts is long-term patient perseverance most indispensable?"
+      ]
+    },
+    {
+      "id": "p3_real_2",
+      "category": "Urban Environment & Soundscapes",
+      "isRealExam": true,
+      "source": "Real Exam 2025",
+      "questions": [
+        "Should city planning regulations enforce stricter acoustic zoning laws to curb urban noise pollution?",
+        "How does chronic environmental noise affect cognitive function and mental well-being over time?",
+        "Why do some individuals actively seek out bustling, loud environments rather than tranquil settings?"
+      ]
+    },
+    {
+      "id": "p3_real_3",
+      "category": "Mentorship & Inspiration",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "questions": [
+        "What distinguishes a genuinely transformative mentor from someone who simply gives instructions?",
+        "Do you believe schools cultivate enough creative independent thinking, or do they prioritize standardized metrics?",
+        "How does exposure to world-class artistic or scientific masters elevate communal aspirations?"
+      ]
+    },
+    {
+      "id": "p3_real_4",
+      "category": "Skill Acquisition & Perseverance",
+      "isRealExam": true,
+      "source": "Real Exam 2025/2026",
+      "questions": [
+        "Which skills will remain exclusively human as automation and algorithms continue to proliferate?",
+        "Why do many adults find it more intimidating to acquire new proficiencies compared to young children?",
+        "Should educational curricula prioritize generalist adaptability or deep specialized domain expertise?"
+      ]
+    },
+    {
+      "id": "p3_real_5",
+      "category": "Technological Transformation",
+      "isRealExam": true,
+      "source": "Real Exam 2026",
+      "questions": [
+        "Does widespread automation risk homogenizing human cultural expressions and literature?",
+        "Who should bear legal and ethical accountability when autonomous algorithms produce erroneous judgments?",
+        "How can educational institutions adapt evaluation methods in an era of pervasive generative AI?"
+      ]
+    },
+    {
+      "id": "p3_real_6",
+      "category": "Travel & Unconventional Journeys",
+      "isRealExam": true,
+      "source": "Real Exam 2024/2025",
+      "questions": [
+        "In what ways do travel mishaps and unexpected setbacks shape emotional resilience?",
+        "How has algorithm-driven tourism and social media influenced the preservation of remote destinations?",
+        "Is the cultural value of slow, ground-based exploration being lost to rapid long-distance aviation?"
+      ]
+    }
+  ]
+}
