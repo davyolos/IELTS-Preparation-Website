@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IELTS Speaking Band 8+ Mastery Platform (AI & Vercel Ready)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand-container">
+      <div class="brand-logo">8+</div>
+      <div class="brand-text">
+        <h1>IELTS Speaking <span>Mastery</span></h1>
+        <div class="brand-subtitle">Cambridge-Standard 7-Criteria Evaluator & AI Test Generator</div>
+      </div>
+    </div>
+
+    <div class="header-tools">
+      <button id="aiGenerateBtn" class="btn btn-ai" onclick="triggerAIGenerator()">✨ AI Generate Test</button>
+      <span class="badge">🚀 Band 8.5+ Target</span>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <label for="geminiKeyInput" style="font-size: 0.8rem; color: var(--text-secondary);">Gemini Key (Optional):</label>
+        <input type="password" id="geminiKeyInput" placeholder="Paste for LLM audit..." style="background: #0d131f; border: 1px solid var(--border-color); color: #fff; padding: 0.35rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.8rem; width: 160px;" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-title">Exam Modules</div>
+        <div class="phase-tabs">
+          <div class="phase-tab active" data-phase="part1" onclick="selectPhase('part1')">
+            <div>
+              <div class="phase-title">Part 1: Introduction</div>
+              <div class="phase-timing">Familiar Topics &bull; 4-5 mins</div>
+            </div>
+            <span>➔</span>
+          </div>
+
+          <div class="phase-tab" data-phase="part2" onclick="selectPhase('part2')">
+            <div>
+              <div class="phase-title">Part 2: Cue Card</div>
+              <div class="phase-timing">1m Prep &bull; 2m Long Turn</div>
+            </div>
+            <span>➔</span>
+          </div>
+
+          <div class="phase-tab" data-phase="part3" onclick="selectPhase('part3')">
+            <div>
+              <div class="phase-title">Part 3: Discussion</div>
+              <div class="phase-timing">Analytical Debate &bull; 4-5 mins</div>
+            </div>
+            <span>➔</span>
+          </div>
+
+          <div class="phase-tab" data-phase="history" onclick="selectPhase('history')">
+            <div>
+              <div class="phase-title">📊 Practice History</div>
+              <div class="phase-timing">Scores & Progression</div>
+            </div>
+            <span>➔</span>
+          </div>
+
+          <div class="phase-tab" data-phase="deploy" onclick="selectPhase('deploy')">
+            <div>
+              <div class="phase-title">☁️ Deploy to Vercel</div>
+              <div class="phase-timing">Make Live Worldwide</div>
+            </div>
+            <span>➔</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+        <div class="card-title">
+          <span>Question Bank</span>
+          <small id="bankCountBadge" style="color: var(--primary);"></small>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-bar">
+          <button id="filter-all" class="filter-chip active" onclick="setFilter('all')">All</button>
+          <button id="filter-real" class="filter-chip" onclick="setFilter('real')">📜 Real Exams</button>
+          <button id="filter-ai" class="filter-chip" onclick="setFilter('ai')">✨ AI Generated</button>
+        </div>
+
+        <div id="topicScrollList" class="question-scroll-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Examination Arena -->
+    <main class="main-stage">
+      
+      <!-- Normal Question & Recording Arena -->
+      <div id="stageNormal" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <div class="prompt-card">
+          <div class="prompt-meta">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="badge" id="activePhaseBadge">Part 1: Introduction</span>
+              <span id="realExamPill" class="real-exam-pill">📜 Real Exam</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span id="categoryLabel" style="font-size: 0.85rem; color: var(--text-muted);">Topic: Work & Study</span>
+              <button class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" onclick="speakExaminerQuestion()">🔊 Read Question</button>
+            </div>
+          </div>
+
+          <div class="prompt-body">
+            <div class="prompt-text" id="promptTitle">Loading question...</div>
+            <div id="promptBullets" class="prompt-bullets" style="display: none;"></div>
+            <textarea id="cueScratchpad" class="cue-scratchpad" rows="3" placeholder="Digital Scratchpad: Jot down collocations, idioms, and 3 key points during your 1-minute preparation..."></textarea>
+          </div>
+
+          <!-- Timer Bar -->
+          <div class="timer-bar">
+            <div>
+              <div class="timer-label" id="timerLabel">SPEAKING TIMER</div>
+              <div class="timer-readout" id="timerReadout">00:00</div>
+            </div>
+
+            <div class="btn-group">
+              <button id="prepBtn" class="btn btn-outline" style="display: none; border-color: var(--accent-amber); color: var(--accent-amber);" onclick="triggerPrepTimer()">⏱️ 1-Min Prep</button>
+              <button id="recordBtn" class="btn btn-primary" onclick="toggleSpeechRecording()">🎙️ Start Speaking</button>
+              <button class="btn btn-outline" onclick="navigateQuestion(-1)">◀ Prev</button>
+              <button class="btn btn-outline" onclick="navigateQuestion(1)">Next ▶</button>
+            </div>
+          </div>
+
+          <!-- Candidate Live Speech Transcript Box -->
+          <div class="speech-container">
+            <div class="speech-header">
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Candidate Response Transcript (Live Speech Recognition)</label>
+              <div id="liveIndicator" class="live-indicator" style="display: none;">
+                <span class="pulse-dot"></span> LIVE LISTENING (Web Speech API)
+              </div>
+            </div>
+
+            <textarea id="speechTranscript" class="speech-textarea" placeholder="Click 'Start Speaking' and answer naturally. Your voice will convert to text in real-time. You can also edit or paste text manually before evaluating..."></textarea>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+              <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="clearTranscriptField()">Clear</button>
+              <button class="btn btn-emerald" onclick="performEvaluation()">🔍 Analyze 7 Criteria & Rephrase</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprehensive Evaluation Report (7 Operational Criteria) -->
+        <div id="evalCard" class="eval-card">
+          
+          <div class="score-banner">
+            <div>
+              <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem;">IELTS Speaking Assessment Report</h2>
+              <div style="display: flex; gap: 1rem; align-items: center;">
+                <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;" id="wpmStat">-- WPM</span>
+                <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;" id="wordCountStat">-- Words</span>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">Cambridge Standard Rubric</span>
+              </div>
+            </div>
+
+            <div class="band-pod">
+              <span class="band-score" id="overallBandNumber">8.5</span>
+              <span class="band-label">Band</span>
+            </div>
+          </div>
+
+          <!-- 7 Criteria Breakdown -->
+          <div>
+            <div class="card-title">Examiner Breakdown Across All 7 Operational Criteria</div>
+            <div class="criteria-matrix" id="criteriaGrid">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+
+          <!-- Band 8.5/9.0 Model Rephraser -->
+          <div class="rephrase-container">
+            <h3 style="font-size: 1.15rem; color: #60a5fa; display: flex; align-items: center; gap: 0.5rem;">
+              🌟 Band 8.5 - 9.0 Native Speaker Rephrase
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+              Cambridge gives zero rephrasing advice. Here is how a native C2 speaker would express your exact thoughts and experiences with C1/C2 collocations, balanced compound-complex syntax, and cohesive discourse flow:
+            </p>
+            <div class="model-rephrase-box" id="modelRephraseContent">
+              <!-- Rephrased text injected here -->
+            </div>
+
+            <h4 style="margin-top: 1.5rem; font-size: 0.95rem; color: #fff;">Vocabulary Upgrades (Band 6.0 ➔ Band 8.5+)</h4>
+            <table class="upgrade-grid">
+              <thead>
+                <tr>
+                  <th>Your Word / Phrase</th>
+                  <th>Band 8.5+ Replacement</th>
+                  <th>Why it Scores Higher</th>
+                </tr>
+              </thead>
+              <tbody id="upgradeTableBody">
+                <!-- Upgrades injected here -->
+              </tbody>
+            </table>
+
+            <h4 style="margin-top: 1.5rem; font-size: 0.95rem; color: #f59e0b;">Actionable Recommendations to Reach Band 8.0+</h4>
+            <ul class="tips-list" id="tipsList">
+              <!-- Tips injected here -->
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Practice History Stage -->
+      <div id="stageHistory" class="history-section">
+        <div class="prompt-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.3rem; color: #fff;">Past Practice Sessions</h2>
+            <button class="btn btn-outline" style="border-color: var(--accent-rose); color: var(--accent-rose);" onclick="clearAllHistory()">Clear History</button>
+          </div>
+          <div id="historyItemsList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <!-- History sessions rendered here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Vercel Deployment Guide Stage -->
+      <div id="stageDeploy" style="display: none; flex-direction: column; gap: 1.5rem;">
+        <div class="prompt-card">
+          <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem;">🚀 How to Make This Website Live on Vercel (100% Free)</h2>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+            Your project is already configured with <code>vercel.json</code> and serverless API handlers. You can deploy it in less than 2 minutes!
+          </p>
+
+          <div class="deploy-step-box">
+            <h3>Method 1: One-Click Windows Script (Fastest)</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              Double-click the script in your project folder:
+            </p>
+            <code class="code-snippet">C:\IELTS Preparation Website\deploy-vercel.bat</code>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+              It will run <code>npx vercel</code>. You will be prompted in your browser to log in (or create a free account), then press Enter to deploy!
+            </p>
+          </div>
+
+          <div class="deploy-step-box">
+            <h3>Method 2: Via PowerShell Command Line</h3>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">Open PowerShell in your project folder and run:</p>
+            <code class="code-snippet">cd "C:\IELTS Preparation Website"<br>npx vercel --prod</code>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+              When asked <em>"Set up and deploy?"</em>, type <strong>Y</strong> and accept the defaults. Vercel will instantly return your live public URL!
+            </p>
+          </div>
+
+          <div class="deploy-step-box">
+            <h3>Method 3: Via GitHub & Opera GX</h3>
+            <ol style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8;">
+              <li>Create a new repository on GitHub (e.g. <code>ielts-speaking-pro</code>).</li>
+              <li>Push this folder to GitHub.</li>
+              <li>Go to <a href="https://vercel.com" target="_blank" style="color: #60a5fa;">vercel.com</a> in Opera GX, log in, click <strong>"Add New Project"</strong>, and select your repository.</li>
+              <li>Click <strong>Deploy</strong>. Vercel builds and publishes it automatically!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="ai-generator.js"></script>
+  <script src="evaluator.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
