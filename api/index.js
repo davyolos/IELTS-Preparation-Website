@@ -6,6 +6,9 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
 const questionsData = require('../data/questions.json');
+const vocabData = require('../data/vocab-bank.json');
+
+app.get('/api/vocab', (req, res) => { res.json(vocabData); });
 
 app.get('/api/questions', (req, res) => {
   res.json(questionsData);

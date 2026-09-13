@@ -19,6 +19,17 @@ if (!fs.existsSync(HISTORY_PATH)) {
 }
 
 // 1. Get Questions
+const VOCAB_PATH = path.join(__dirname, 'data', 'vocab-bank.json');
+
+app.get('/api/vocab', (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync(VOCAB_PATH, 'utf-8'));
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to read vocab bank', details: err.message });
+  }
+});
+
 app.get('/api/questions', (req, res) => {
   try {
     const data = JSON.parse(fs.readFileSync(QUESTIONS_PATH, 'utf-8'));

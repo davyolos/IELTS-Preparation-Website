@@ -228,9 +228,150 @@ Return pure JSON only:
       part2CueCard: parsed.part2CueCard,
       part3Questions: parsed.part3Questions
     };
-  }
-};
+  },
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = IELTS_AI_GENERATOR;
-}
+  // Generate 30 Vocabulary Words for IELTS Topic
+  async generate30VocabTopic(customTopic = "", apiKey = "") {
+    if (apiKey && apiKey.trim().length > 10) {
+      try {
+        return await this.generate30VocabViaGemini(customTopic, apiKey.trim());
+      } catch (err) {
+        console.warn("Gemini vocab generation failed, falling back to procedural:", err);
+      }
+    }
+    return this.generate30VocabProcedural(customTopic);
+  },
+
+  generate30VocabProcedural(customTopic = "") {
+    // If empty, generate a fresh dynamic topic
+    const dynamicThemes = [
+      {
+        title: "Public Health, Epidemiology & Modern Medicine",
+        desc: "Essential C1/C2 vocabulary for medical advancements, healthcare access, and global epidemics.",
+        cueTitle: "Describe a public health policy or medical innovation that significantly improved lives.",
+        prompts: ["What the policy or innovation is", "How it combats widespread health vulnerabilities", "What obstacles hindered its universal deployment", "And explain why equitable healthcare remains of paramount importance."]
+      },
+      {
+        title: "Global Economics, Wealth Disparity & Future of Labor",
+        desc: "Academic vocabulary for fiscal policies, income inequality, trade, and economic mobility.",
+        cueTitle: "Describe an economic trend or employment challenge confronting modern workers.",
+        prompts: ["What the economic trend is", "What underlying systemic factors drove this development", "How it impacts vulnerable demographics", "And explain what measures could ensure equitable economic prosperity."]
+      },
+      {
+        title: "Art, Cultural Preservation & Architecture",
+        desc: "Band 8+ lexical resource for aesthetic appreciation, historical restoration, and creative arts.",
+        cueTitle: "Describe an architectural masterpiece or cultural monument of profound historical value.",
+        prompts: ["Where the monument is situated and its cultural significance", "What distinct aesthetic features define it", "Why maintaining cultural heritage is vital in a globalized era", "And explain how encountering this artwork influenced your perception."]
+      }
+    ];
+
+    const sel = customTopic 
+      ? { title: customTopic, desc: "Specialized Band 8.5 vocabulary and collocations tailored for " + customTopic, cueTitle: "Describe a significant challenge or development related to " + customTopic + ".", prompts: ["What the development or challenge is", "Why it has garnered substantial public discourse", "What consequences it holds for broader society", "And explain your perspective on resolving issues regarding " + customTopic + "."] }
+      : dynamicThemes[Math.floor(Math.random() * dynamicThemes.length)];
+
+    // Curate 30 high-frequency C1/C2 IELTS vocabulary words
+    const baseWords = [
+      { word: "Substantial", pos: "adjective", meaning: "Of considerable importance, size, or worth.", collocations: ["substantial increase", "substantial evidence", "substantial progress"] },
+      { word: "Pivotal", pos: "adjective", meaning: "Of crucial importance in relation to the development or success of something else.", collocations: ["play a pivotal role", "pivotal moment", "pivotal decision"] },
+      { word: "Detrimental", pos: "adjective", meaning: "Tending to cause harm or damage.", collocations: ["detrimental effect", "detrimental impact", "highly detrimental"] },
+      { word: "Mitigate", pos: "verb", meaning: "To make something less severe, serious, or painful.", collocations: ["mitigate risks", "mitigate the impact", "mitigate consequences"] },
+      { word: "Proliferation", pos: "noun", meaning: "Rapid increase in the number or amount of something.", collocations: ["rapid proliferation", "proliferation of technology", "proliferation of tools"] },
+      { word: "Indispensable", pos: "adjective", meaning: "Absolutely necessary; essential.", collocations: ["indispensable asset", "indispensable tool", "indispensable role"] },
+      { word: "Paramount", pos: "adjective", meaning: "More important than anything else; supreme.", collocations: ["paramount importance", "paramount concern", "hold paramount"] },
+      { word: "Exacerbate", pos: "verb", meaning: "To make a problem, bad situation, or negative feeling worse.", collocations: ["exacerbate the problem", "exacerbate tensions", "exacerbate disparity"] },
+      { word: "Ubiquitous", pos: "adjective", meaning: "Present, appearing, or found everywhere.", collocations: ["ubiquitous presence", "become ubiquitous", "ubiquitous nature"] },
+      { word: "Resilience", pos: "noun", meaning: "The capacity to withstand or recover quickly from difficulties.", collocations: ["build resilience", "demonstrate resilience", "remarkable resilience"] },
+      { word: "Equitable", pos: "adjective", meaning: "Fair and impartial; just.", collocations: ["equitable distribution", "equitable access", "equitable society"] },
+      { word: "Viable", pos: "adjective", meaning: "Capable of working successfully; feasible.", collocations: ["viable alternative", "economically viable", "viable solution"] },
+      { word: "Imperative", pos: "adjective", meaning: "Of vital importance; crucial.", collocations: ["moral imperative", "imperative to act", "economic imperative"] },
+      { word: "Incentivize", pos: "verb", meaning: "To provide an incentive or motivation for doing something.", collocations: ["incentivize innovation", "incentivize workers", "incentivize adoption"] },
+      { word: "Precipitate", pos: "verb", meaning: "To cause an event or situation (typically bad) to happen suddenly or unexpectedly.", collocations: ["precipitate a crisis", "precipitate decline", "precipitate change"] },
+      { word: "Cognitive", pos: "adjective", meaning: "Relating to mental action or process of acquiring knowledge.", collocations: ["cognitive skills", "cognitive faculties", "cognitive load"] },
+      { word: "Disparity", pos: "noun", meaning: "A great difference or inequality.", collocations: ["growing disparity", "wealth disparity", "regional disparity"] },
+      { word: "Homogenize", pos: "verb", meaning: "To make uniform or similar, diminishing diversity.", collocations: ["homogenize culture", "homogenize opinion", "risk homogenizing"] },
+      { word: "Unprecedented", pos: "adjective", meaning: "Never done or known before; without parallel.", collocations: ["unprecedented scale", "unprecedented growth", "unprecedented crisis"] },
+      { word: "Disseminate", pos: "verb", meaning: "To spread or disperse information widely.", collocations: ["disseminate knowledge", "disseminate information", "widely disseminate"] },
+      { word: "Facilitate", pos: "verb", meaning: "To make an action or process smooth or easier.", collocations: ["facilitate dialogue", "facilitate progress", "facilitate access"] },
+      { word: "Stifle", pos: "verb", meaning: "To restrain, suppress, or prevent from flourishing.", collocations: ["stifle creativity", "stifle innovation", "stifle growth"] },
+      { word: "Intrinsically", pos: "adverb", meaning: "In an essential or natural manner; inherently.", collocations: ["intrinsically linked", "intrinsically valuable", "intrinsically motivated"] },
+      { word: "Nuance", pos: "noun", meaning: "A subtle distinction or variation in meaning or tone.", collocations: ["subtle nuance", "appreciate nuances", "grasp the nuance"] },
+      { word: "Accountability", pos: "noun", meaning: "The condition of being responsible and answerable for actions.", collocations: ["ensure accountability", "hold accountable", "lack of accountability"] },
+      { word: "Discrepancy", pos: "noun", meaning: "A noticeable lack of compatibility between two facts.", collocations: ["glaring discrepancy", "reconcile discrepancy", "apparent discrepancy"] },
+      { word: "Harmonious", pos: "adjective", meaning: "Forming a pleasing or consistent whole.", collocations: ["harmonious coexistence", "harmonious relationship", "harmonious society"] },
+      { word: "Deteriorate", pos: "verb", meaning: "To become progressively worse.", collocations: ["deteriorate rapidly", "conditions deteriorate", "cause to deteriorate"] },
+      { word: "Consensus", pos: "noun", meaning: "A general agreement among a group of people.", collocations: ["reach a consensus", "scientific consensus", "broad consensus"] },
+      { word: "Epitome", pos: "noun", meaning: "A person or thing that is a perfect example of a quality.", collocations: ["the epitome of", "serve as the epitome", "stand as the epitome"] }
+    ];
+
+    const words = baseWords.map((w, idx) => ({
+      id: idx + 1,
+      word: w.word,
+      pos: w.pos,
+      meaning: w.meaning,
+      example: "In the context of " + sel.title.toLowerCase() + ", " + w.word.toLowerCase() + " dynamics play a significant role.",
+      collocations: w.collocations
+    }));
+
+    return {
+      topicId: "custom_" + Date.now(),
+      topicTitle: sel.title,
+      description: sel.desc,
+      speechCueCard: {
+        title: sel.cueTitle,
+        prompts: sel.prompts
+      },
+      words: words
+    };
+  },
+
+  async generate30VocabViaGemini(customTopic, apiKey) {
+    const prompt = `You are an expert Cambridge IELTS lexicographer.
+Generate a cohesive 30-word academic IELTS vocabulary module for Band 8.5+ test preparation.
+Theme: "${customTopic || "Modern Technological Disruption & Ethics"}"
+
+Provide:
+1. topicTitle: A concise, academic topic name.
+2. description: One sentence explaining why this topic is frequent in IELTS.
+3. speechCueCard: A 2-minute IELTS Part 2 Cue Card prompt testing this topic (title + 4 bullet prompts).
+4. words: Exactly 30 C1/C2 Band 8+ academic words/idiomatic phrases. For each word provide:
+   - id: 1 to 30
+   - word: capitalized target word
+   - pos: part of speech (noun, verb, adjective, adverb, idiom)
+   - meaning: precise definition
+   - example: Band 8.5 example sentence specifically addressing the topic
+   - collocations: array of 3 natural collocations
+
+Return pure JSON only:
+{
+  "topicTitle": "...",
+  "description": "...",
+  "speechCueCard": {
+    "title": "...",
+    "prompts": ["...", "...", "...", "..."]
+  },
+  "words": [
+    { "id": 1, "word": "...", "pos": "...", "meaning": "...", "example": "...", "collocations": ["...", "...", "..."] }
+  ]
+}`;
+
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json" }
+      })
+    });
+
+    const data = await resp.json();
+    const parsed = JSON.parse(data.candidates[0].content.parts[0].text);
+    return {
+      topicId: "gemini_" + Date.now(),
+      topicTitle: parsed.topicTitle,
+      description: parsed.description,
+      speechCueCard: parsed.speechCueCard,
+      words: parsed.words
+    };
+  }
+
+};

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IELTS Speaking Band 8+ Mastery Platform (AI & Vercel Ready)</title>
+  <title>IELTS Mastery Platform (Target Band 8.5+)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -15,28 +15,155 @@
     <div class="brand-container">
       <div class="brand-logo">8+</div>
       <div class="brand-text">
-        <h1>IELTS Speaking <span>Mastery</span></h1>
-        <div class="brand-subtitle">Cambridge-Standard 7-Criteria Evaluator & AI Test Generator</div>
+        <h1>IELTS <span>Mastery</span></h1>
+        <div class="brand-subtitle">Band 8.5+ Preparation Platform</div>
       </div>
+      
+      <!-- Top Navigation Tabs -->
+      <nav class="top-nav">
+        <button class="top-nav-link active" data-view="dashboardView" onclick="showView('dashboardView')">🏠 Dashboard</button>
+        <button class="top-nav-link" data-view="speakingView" onclick="showView('speakingView')">🎙️ Speaking</button>
+        <button class="top-nav-link" data-view="vocabsView" onclick="showView('vocabsView')">📚 Vocabs (30-Word Drills)</button>
+      </nav>
     </div>
 
     <div class="header-tools">
-      <button id="aiGenerateBtn" class="btn btn-ai" onclick="triggerAIGenerator()">✨ AI Generate Test</button>
-      <span class="badge">🚀 Band 8.5+ Target</span>
+      <span class="badge">🚀 Cambridge Band 8+ Target</span>
       <div style="display: flex; align-items: center; gap: 0.5rem;">
         <label for="geminiKeyInput" style="font-size: 0.8rem; color: var(--text-secondary);">Gemini Key (Optional):</label>
-        <input type="password" id="geminiKeyInput" placeholder="Paste for LLM audit..." style="background: #0d131f; border: 1px solid var(--border-color); color: #fff; padding: 0.35rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.8rem; width: 160px;" />
+        <input type="password" id="geminiKeyInput" placeholder="Paste for LLM audit..." style="background: #0d131f; border: 1px solid var(--border-color); color: #fff; padding: 0.35rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.8rem; width: 150px;" />
       </div>
     </div>
   </header>
 
-  <!-- Main Container -->
-  <div class="app-container">
+  <!-- ====================================================================
+       VIEW 1: MAIN DASHBOARD
+       ==================================================================== -->
+  <section id="dashboardView" class="dashboard-container">
+    
+    <div class="dashboard-hero">
+      <div>
+        <h2>Welcome to IELTS Preparation Mastery</h2>
+        <p>Your comprehensive private simulator designed to elevate your English proficiency to <strong>Band 8.0 - 9.0</strong> across all four official IELTS testing modules and academic vocabulary.</p>
+      </div>
+      <div style="text-align: right;">
+        <div class="badge" style="font-size: 0.9rem; padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2);">Target: Band 8.5+</div>
+      </div>
+    </div>
+
+    <div class="modules-grid">
+      
+      <!-- 1. Speaking Module (Active) -->
+      <div class="module-card featured" onclick="showView('speakingView')">
+        <div class="module-header">
+          <div class="module-icon">🎙️</div>
+          <span class="module-status-badge status-active">● Active Simulator</span>
+        </div>
+        <div class="module-body">
+          <h3>Speaking Module</h3>
+          <p>Full 3-phase Cambridge speaking exam simulator with real-time speech recognition, 7-criteria evaluation, and Band 8.5+ native rephrasing.</p>
+          <ul class="module-features">
+            <li>Part 1: 15+ Familiar Topic Categories</li>
+            <li>Part 2: Cue Card with 1m Prep + 2m Speaking Timers</li>
+            <li>Part 3: Deep Analytical & Societal Discussion</li>
+            <li>2024–2026 Authentic Real Exam Question Bank</li>
+            <li>AI Dynamic Question Generator for Custom Themes</li>
+          </ul>
+        </div>
+        <button class="module-btn btn-primary">Launch Speaking Module ➔</button>
+      </div>
+
+      <!-- 2. Vocabulary Practice Module (Active) -->
+      <div class="module-card featured" onclick="showView('vocabsView')">
+        <div class="module-header">
+          <div class="module-icon" style="background: rgba(139, 92, 246, 0.2); border-color: #8b5cf6;">📚</div>
+          <span class="module-status-badge status-active" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border-color: rgba(139, 92, 246, 0.4);">✨ AI Feature - Active</span>
+        </div>
+        <div class="module-body">
+          <h3>Vocabulary Practice Arena</h3>
+          <p>Intensive topic-based vocabulary drills. Learn 30 curated C1/C2 words, practice 3 simple + 3 complex sentences per word (3-min timer), and finish with a 3-minute cue card speech challenge.</p>
+          <ul class="module-features">
+            <li>30 Band 8+ Words under a Single Cohesive Topic</li>
+            <li>Interactive 30-Word Selection Grid</li>
+            <li>3-Minute Countdown Timer per Word</li>
+            <li>6 Sentence Fields (3 Simple + 3 Complex with Structure Tips)</li>
+            <li>Final 3-Minute Speech Challenge (1m Prep, 2m Speaking + Mic)</li>
+            <li>Target Vocabulary Density Scoring & C2 Rephrasing</li>
+          </ul>
+        </div>
+        <button class="module-btn" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: #fff;">Launch Vocab Arena ➔</button>
+      </div>
+
+      <!-- 3. Writing Module (Under Development) -->
+      <div class="module-card disabled" onclick="showUnderDevModal('Writing', 'The IELTS Writing Module is currently under development. It will feature automated Band 8+ scoring for Academic Task 1 (charts, maps, diagrams) and Task 2 Argumentative Essays with grammatical range mapping and coherence analysis.')">
+        <div class="module-header">
+          <div class="module-icon">✍️</div>
+          <span class="module-status-badge status-soon">⏳ Under Development</span>
+        </div>
+        <div class="module-body">
+          <h3>Writing Module</h3>
+          <p>Automated essay analysis and graph reporting with feedback on Task Achievement, Coherence & Cohesion, Lexical Resource, and Grammatical Range.</p>
+          <ul class="module-features">
+            <li>Task 1: Line Graphs, Bar Charts, Tables & Processes</li>
+            <li>Task 2: Opinion, Discussion, Problem-Solution Essays</li>
+            <li>C1/C2 Academic Vocabulary Suggester</li>
+            <li>Paragraph Cohesion & Linking Diagnostics</li>
+          </ul>
+        </div>
+        <button class="module-btn btn-outline" style="color: var(--text-muted);">Coming Soon (Details) ➔</button>
+      </div>
+
+      <!-- 4. Reading Module (Under Development) -->
+      <div class="module-card disabled" onclick="showUnderDevModal('Reading', 'The IELTS Reading Module is currently under development. It will provide timed authentic academic passages with automated grading for True/False/Not Given, Heading Matching, and scanning speed metrics.')">
+        <div class="module-header">
+          <div class="module-icon">📖</div>
+          <span class="module-status-badge status-soon">⏳ Under Development</span>
+        </div>
+        <div class="module-body">
+          <h3>Reading Module</h3>
+          <p>Time-pressured passage drills with automatic grading for True/False/Not Given, Paragraph Headings, and Summary Completion.</p>
+          <ul class="module-features">
+            <li>Academic & General Reading Passages</li>
+            <li>Skimming & Scanning Speed Analytics</li>
+            <li>Keyword Distractor Analysis</li>
+            <li>60-Minute Full Exam Countdown Simulation</li>
+          </ul>
+        </div>
+        <button class="module-btn btn-outline" style="color: var(--text-muted);">Coming Soon (Details) ➔</button>
+      </div>
+
+      <!-- 5. Listening Module (Under Development) -->
+      <div class="module-card disabled" onclick="showUnderDevModal('Listening', 'The IELTS Listening Module is currently under development. It will feature authentic multi-accent recordings (British, Australian, American), note-completion exercises, and instant audio transcript reviews.')">
+        <div class="module-header">
+          <div class="module-icon">🎧</div>
+          <span class="module-status-badge status-soon">⏳ Under Development</span>
+        </div>
+        <div class="module-body">
+          <h3>Listening Module</h3>
+          <p>Full 4-section listening practice featuring British, Australian, and North American accents with instant transcript and distractor analysis.</p>
+          <ul class="module-features">
+            <li>Section 1: Social Everyday Dialogues</li>
+            <li>Section 2: Monologues (Tours, Facilities)</li>
+            <li>Section 3: Academic Group Discussions</li>
+            <li>Section 4: University Lectures</li>
+          </ul>
+        </div>
+        <button class="module-btn btn-outline" style="color: var(--text-muted);">Coming Soon (Details) ➔</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================================================================
+       VIEW 2: SPEAKING MODULE ARENA (Existing & Fully Featured)
+       ==================================================================== -->
+  <section id="speakingView" class="app-container" style="display: none;">
     
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="card">
-        <div class="card-title">Exam Modules</div>
+        <div class="card-title">Speaking Phases</div>
         <div class="phase-tabs">
           <div class="phase-tab active" data-phase="part1" onclick="selectPhase('part1')">
             <div>
@@ -69,14 +196,6 @@
             </div>
             <span>➔</span>
           </div>
-
-          <div class="phase-tab" data-phase="deploy" onclick="selectPhase('deploy')">
-            <div>
-              <div class="phase-title">☁️ Deploy to Vercel</div>
-              <div class="phase-timing">Make Live Worldwide</div>
-            </div>
-            <span>➔</span>
-          </div>
         </div>
       </div>
 
@@ -102,9 +221,7 @@
     <!-- Main Examination Arena -->
     <main class="main-stage">
       
-      <!-- Normal Question & Recording Arena -->
       <div id="stageNormal" style="display: flex; flex-direction: column; gap: 1.5rem;">
-        
         <div class="prompt-card">
           <div class="prompt-meta">
             <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -157,9 +274,8 @@
           </div>
         </div>
 
-        <!-- Comprehensive Evaluation Report (7 Operational Criteria) -->
+        <!-- Comprehensive Evaluation Report -->
         <div id="evalCard" class="eval-card">
-          
           <div class="score-banner">
             <div>
               <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem;">IELTS Speaking Assessment Report</h2>
@@ -176,25 +292,15 @@
             </div>
           </div>
 
-          <!-- 7 Criteria Breakdown -->
           <div>
             <div class="card-title">Examiner Breakdown Across All 7 Operational Criteria</div>
-            <div class="criteria-matrix" id="criteriaGrid">
-              <!-- Dynamically rendered -->
-            </div>
+            <div class="criteria-matrix" id="criteriaGrid"></div>
           </div>
 
-          <!-- Band 8.5/9.0 Model Rephraser -->
           <div class="rephrase-container">
-            <h3 style="font-size: 1.15rem; color: #60a5fa; display: flex; align-items: center; gap: 0.5rem;">
-              🌟 Band 8.5 - 9.0 Native Speaker Rephrase
-            </h3>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-              Cambridge gives zero rephrasing advice. Here is how a native C2 speaker would express your exact thoughts and experiences with C1/C2 collocations, balanced compound-complex syntax, and cohesive discourse flow:
-            </p>
-            <div class="model-rephrase-box" id="modelRephraseContent">
-              <!-- Rephrased text injected here -->
-            </div>
+            <h3 style="font-size: 1.15rem; color: #60a5fa;">🌟 Band 8.5 - 9.0 Native Speaker Rephrase</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">Here is how a native C2 speaker would express your exact thoughts and experiences with C1/C2 collocations, balanced compound-complex syntax, and cohesive discourse flow:</p>
+            <div class="model-rephrase-box" id="modelRephraseContent"></div>
 
             <h4 style="margin-top: 1.5rem; font-size: 0.95rem; color: #fff;">Vocabulary Upgrades (Band 6.0 ➔ Band 8.5+)</h4>
             <table class="upgrade-grid">
@@ -205,18 +311,13 @@
                   <th>Why it Scores Higher</th>
                 </tr>
               </thead>
-              <tbody id="upgradeTableBody">
-                <!-- Upgrades injected here -->
-              </tbody>
+              <tbody id="upgradeTableBody"></tbody>
             </table>
 
             <h4 style="margin-top: 1.5rem; font-size: 0.95rem; color: #f59e0b;">Actionable Recommendations to Reach Band 8.0+</h4>
-            <ul class="tips-list" id="tipsList">
-              <!-- Tips injected here -->
-            </ul>
+            <ul class="tips-list" id="tipsList"></ul>
           </div>
         </div>
-
       </div>
 
       <!-- Practice History Stage -->
@@ -226,58 +327,269 @@
             <h2 style="font-size: 1.3rem; color: #fff;">Past Practice Sessions</h2>
             <button class="btn btn-outline" style="border-color: var(--accent-rose); color: var(--accent-rose);" onclick="clearAllHistory()">Clear History</button>
           </div>
-          <div id="historyItemsList" style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <!-- History sessions rendered here -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Vercel Deployment Guide Stage -->
-      <div id="stageDeploy" style="display: none; flex-direction: column; gap: 1.5rem;">
-        <div class="prompt-card">
-          <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem;">🚀 How to Make This Website Live on Vercel (100% Free)</h2>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
-            Your project is already configured with <code>vercel.json</code> and serverless API handlers. You can deploy it in less than 2 minutes!
-          </p>
-
-          <div class="deploy-step-box">
-            <h3>Method 1: One-Click Windows Script (Fastest)</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary);">
-              Double-click the script in your project folder:
-            </p>
-            <code class="code-snippet">C:\IELTS Preparation Website\deploy-vercel.bat</code>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
-              It will run <code>npx vercel</code>. You will be prompted in your browser to log in (or create a free account), then press Enter to deploy!
-            </p>
-          </div>
-
-          <div class="deploy-step-box">
-            <h3>Method 2: Via PowerShell Command Line</h3>
-            <p style="font-size: 0.88rem; color: var(--text-secondary);">Open PowerShell in your project folder and run:</p>
-            <code class="code-snippet">cd "C:\IELTS Preparation Website"<br>npx vercel --prod</code>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
-              When asked <em>"Set up and deploy?"</em>, type <strong>Y</strong> and accept the defaults. Vercel will instantly return your live public URL!
-            </p>
-          </div>
-
-          <div class="deploy-step-box">
-            <h3>Method 3: Via GitHub & Opera GX</h3>
-            <ol style="margin-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8;">
-              <li>Create a new repository on GitHub (e.g. <code>ielts-speaking-pro</code>).</li>
-              <li>Push this folder to GitHub.</li>
-              <li>Go to <a href="https://vercel.com" target="_blank" style="color: #60a5fa;">vercel.com</a> in Opera GX, log in, click <strong>"Add New Project"</strong>, and select your repository.</li>
-              <li>Click <strong>Deploy</strong>. Vercel builds and publishes it automatically!</li>
-            </ol>
-          </div>
+          <div id="historyItemsList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
         </div>
       </div>
 
     </main>
+  </section>
+
+
+  <!-- ====================================================================
+       VIEW 3: VOCABULARY PRACTICE ARENA (30 Words + Sentences + Speech)
+       ==================================================================== -->
+  <section id="vocabsView" class="vocab-arena" style="display: none;">
+    
+    <!-- Topic Selection & Progress Bar -->
+    <div class="vocab-header-card">
+      <div>
+        <div class="card-title">IELTS Academic Vocabulary Module (30 Words Under One Cohesive Topic)</div>
+        <div class="vocab-topic-picker">
+          <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">Active Topic:</label>
+          <select id="vocabTopicSelect" class="vocab-select" onchange="onTopicChanged()"></select>
+          <button id="aiVocabGenBtn" class="btn btn-ai" onclick="generateNewAIVocab()">✨ AI Generate 30 Words</button>
+        </div>
+      </div>
+
+      <div style="min-width: 250px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">
+          <span>Topic Progress:</span>
+          <span id="vocabProgressText">0 / 30 Words Completed (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div id="vocabProgressBar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 30 Word Interactive Grid Buttons -->
+    <div class="card">
+      <div class="card-title">
+        <span>Word Selector (Click any of the 30 words to practice sentences)</span>
+        <small style="color: var(--accent-emerald);">✓ Green = Completed</small>
+      </div>
+      <div id="wordGrid" class="word-grid"></div>
+    </div>
+
+    <!-- Active Word Practice Box (Meaning, Example, 3-min Timer, 6 Sentences) -->
+    <div class="word-practice-panel">
+      
+      <div class="word-hero-header">
+        <div>
+          <div class="word-main-title">
+            <span id="activeWordTitle">1. Mitigate</span>
+            <small id="activeWordPos" style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(verb)</small>
+          </div>
+          <div class="word-meaning-box">
+            <strong>Definition:</strong> <span id="activeWordMeaning">Loading...</span>
+            <div style="margin-top: 0.5rem; color: #93c5fd;">
+              <strong>Band 8.5 Model Sentence:</strong> <span id="activeWordExample">Loading...</span>
+            </div>
+            <div class="collocations-container" id="activeWordCollocations"></div>
+          </div>
+        </div>
+
+        <!-- 3-Minute Word Timer -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.5rem; text-align: center;">
+          <div class="timer-label">WORD DRILL TIMER</div>
+          <div id="wordTimerDisplay" class="timer-readout" style="font-size: 2.2rem; margin: 0.2rem 0;">03:00</div>
+          <button id="wordTimerBtn" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; margin-top: 0.4rem;" onclick="toggleWordTimer()">⏱️ Start 3-Min Timer</button>
+        </div>
+      </div>
+
+      <!-- 6 Sentence Input Fields (3 Simple + 3 Complex) -->
+      <div>
+        <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.3rem;">Sentence Construction Practice (6 Sentences Required)</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Write <strong>3 simple sentences</strong> focusing on accurate word collocations, followed by <strong>3 complex sentences</strong> demonstrating varied syntactic structures (subordinate clauses, conditionals, or inversions).
+        </p>
+
+        <div class="sentences-section">
+          <!-- 3 Simple Sentences -->
+          <div class="sentence-category-block">
+            <div class="sentence-category-header">
+              <span>Part A: 3 Simple Sentences</span>
+              <small style="color: #60a5fa;">Subject + Verb + Clear Thought</small>
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Simple Sentence #1:</label>
+              <input type="text" id="simpleSentence1" class="sentence-input" placeholder="e.g., Renewable energy will mitigate carbon emissions." />
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Simple Sentence #2:</label>
+              <input type="text" id="simpleSentence2" class="sentence-input" placeholder="e.g., Planting urban trees helps mitigate summer heat." />
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Simple Sentence #3:</label>
+              <input type="text" id="simpleSentence3" class="sentence-input" placeholder="e.g., Timely medical aid can mitigate long-term damage." />
+            </div>
+          </div>
+
+          <!-- 3 Complex Sentences -->
+          <div class="sentence-category-block">
+            <div class="sentence-category-header">
+              <span>Part B: 3 Complex Sentences</span>
+              <small style="color: #c084fc;">Subordinate / Conditional / Relative</small>
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Complex Sentence #1 (Subordinate / Causal: <em>although, because, whereas</em>):</label>
+              <input type="text" id="complexSentence1" class="sentence-input" placeholder="e.g., Although initial costs are substantial, solar power effectively mitigates environmental harm." />
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Complex Sentence #2 (Conditional / Hypothetical: <em>if, had I, unless</em>):</label>
+              <input type="text" id="complexSentence2" class="sentence-input" placeholder="e.g., If governments fail to enforce regulations, nothing will mitigate the impending resource depletion." />
+            </div>
+
+            <div class="sentence-input-group">
+              <label>Complex Sentence #3 (Relative / Inversion / Cleft: <em>which, not only... but also</em>):</label>
+              <input type="text" id="complexSentence3" class="sentence-input" placeholder="e.g., Modern waste treatment, which is widely praised, not only mitigates pollution but also generates biogas." />
+            </div>
+          </div>
+        </div>
+
+        <div id="sentenceValidationNotice" style="margin-top: 1rem;"></div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+          <button class="btn btn-emerald" onclick="validateAndSaveSentences()">💾 Validate & Save 6 Sentences</button>
+          <button class="btn btn-primary" onclick="nextWord()">Next Word ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final 3-Minute Speech Challenge (Cue Card Style: 1m Prep + 2m Speak) -->
+    <div class="speech-challenge-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border-color: #8b5cf6;">Grand Final Challenge</span>
+          <h2 style="font-size: 1.4rem; color: #fff; margin-top: 0.5rem;" id="vocabCueTopicTitle">Vocabulary Cue Card Speech Challenge</h2>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            Test your lexical retention! You have <strong>1 minute to prepare</strong> notes, followed by <strong>2 minutes of continuous speaking</strong>. Attempt to incorporate as many of the 30 topic words as possible.
+          </p>
+        </div>
+
+        <button class="btn btn-outline" onclick="speakVocabCueCard()">🔊 Read Cue Card (TTS)</button>
+      </div>
+
+      <!-- Cue Card Prompts -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
+        <div id="vocabCueBullets" class="prompt-bullets" style="margin-top: 0; color: #e2e8f0;"></div>
+      </div>
+
+      <!-- Word Checklist Helper -->
+      <div>
+        <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Topic Target Words (Words detected in your speech will highlight in green):</label>
+        <div id="vocabWordChecklist" style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem;"></div>
+      </div>
+
+      <!-- Timers & Controls -->
+      <div class="timer-bar">
+        <div>
+          <div id="vocabSpeechTimerLabel" class="timer-label">SPEECH TIMED DURATION</div>
+          <div id="vocabSpeechTimerDisplay" class="timer-readout">00:00</div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" style="border-color: var(--accent-amber); color: var(--accent-amber);" onclick="startVocabPrepTimer()">⏱️ 1-Min Prep</button>
+          <button id="vocabRecordBtn" class="btn btn-primary" onclick="toggleVocabSpeechRecording()">🎙️ Start 2-Min Speaking</button>
+        </div>
+      </div>
+
+      <!-- Speech Transcript Box -->
+      <div class="speech-container">
+        <div class="speech-header">
+          <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Your Spoken Speech Transcript</label>
+          <div id="vocabLiveTag" class="live-indicator" style="display: none;">
+            <span class="pulse-dot"></span> LISTENING (Web Speech API)
+          </div>
+        </div>
+        <textarea id="vocabSpeechTranscript" class="speech-textarea" rows="4" placeholder="Press 'Start 2-Min Speaking' and deliver your long turn speech. Weave the target words naturally into your narrative..."></textarea>
+        
+        <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+          <button class="btn btn-emerald" onclick="evaluateVocabSpeech()">🔍 Evaluate Vocab Density & 7 Criteria</button>
+        </div>
+      </div>
+
+      <!-- Vocab Speech Evaluation Card -->
+      <div id="vocabEvalCard" class="eval-card" style="margin-top: 1rem;">
+        <div class="score-banner">
+          <div>
+            <h2 style="font-size: 1.35rem; color: #fff; margin-bottom: 0.3rem;">Vocabulary & Speaking Evaluation Report</h2>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-top: 0.5rem;">
+              <span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; font-weight: 700;" id="vocabUsedCount">0 / 30 Target Words</span>
+              <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;" id="vocabWpmStat">-- WPM</span>
+            </div>
+          </div>
+
+          <div class="band-pod">
+            <span class="band-score" id="vocabOverallBand">8.0</span>
+            <span class="band-label">Band</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="card-title">Target Words Detected in Speech:</div>
+          <div id="vocabUsedWordsList" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem;"></div>
+        </div>
+
+        <div>
+          <div class="card-title">Examiner Breakdown Across All 7 Operational Criteria</div>
+          <div id="vocabCriteriaGrid" class="criteria-matrix"></div>
+        </div>
+
+        <div class="rephrase-container">
+          <h3 style="font-size: 1.15rem; color: #60a5fa;">🌟 Band 8.5 - 9.0 Native Speaker Rephrase</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">Here is how an authentic native C2 speaker integrates the topic vocabulary into a seamless, high-scoring response:</p>
+          <div id="vocabModelRephrase" class="model-rephrase-box"></div>
+
+          <h4 style="margin-top: 1.5rem; font-size: 0.95rem; color: #fff;">Vocabulary Upgrades Matrix</h4>
+          <table class="upgrade-grid">
+            <thead>
+              <tr>
+                <th>Your Spoken Phrase</th>
+                <th>Band 8.5+ Replacement</th>
+                <th>Why it Scores Higher</th>
+              </tr>
+            </thead>
+            <tbody id="vocabUpgradeTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ====================================================================
+       MODAL: UNDER DEVELOPMENT
+       ==================================================================== -->
+  <div id="underDevModal" class="modal-overlay" onclick="closeUnderDevModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">Roadmap Feature</span>
+        <button style="background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;" onclick="closeUnderDevModal()">&times;</button>
+      </div>
+
+      <h3 id="underDevModalTitle" style="font-size: 1.35rem; color: #fff;">Module Under Development</h3>
+      <p id="underDevModalDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;"></p>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+        💡 In the meantime, you can master your score using the active <strong>Speaking Simulator</strong> and the <strong>Vocabulary Practice Arena</strong>!
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="closeUnderDevModal()">Got It, Let's Practice!</button>
+    </div>
   </div>
 
   <!-- Scripts -->
   <script src="ai-generator.js"></script>
   <script src="evaluator.js"></script>
   <script src="app.js"></script>
+  <script src="vocab.js"></script>
 </body>
 </html>

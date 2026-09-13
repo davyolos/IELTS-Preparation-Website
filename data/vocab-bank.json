@@ -1,0 +1,1129 @@
+[
+  {
+    "topicId": "env_1",
+    "topicTitle": "Environmental Degradation & Climate Sustainability",
+    "description": "High-frequency IELTS vocabulary for climate change, renewable energy, and ecological conservation.",
+    "speechCueCard": {
+      "title": "Describe an environmental measure or green initiative that could make cities more sustainable.",
+      "prompts": [
+        "What the measure or initiative is and how it functions",
+        "Which environmental problems it seeks to mitigate",
+        "What hurdles governments or citizens encounter in adopting it",
+        "And explain how effectively this initiative could safeguard ecological biodiversity in the long run."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Mitigate",
+        "pos": "verb",
+        "meaning": "To make something less severe, harmful, or painful.",
+        "example": "Switching to renewable energy is essential to mitigate the catastrophic impacts of global warming.",
+        "collocations": [
+          "mitigate risks",
+          "mitigate climate change",
+          "mitigate the effects"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Biodiversity",
+        "pos": "noun",
+        "meaning": "The variety of plant and animal life in a particular habitat.",
+        "example": "Deforestation across the Amazon poses an existential threat to global biodiversity.",
+        "collocations": [
+          "rich biodiversity",
+          "loss of biodiversity",
+          "conserve biodiversity"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Detrimental",
+        "pos": "adjective",
+        "meaning": "Tending to cause harm or damage.",
+        "example": "Excessive single-use plastic consumption has proven distinctly detrimental to marine ecosystems.",
+        "collocations": [
+          "detrimental effect",
+          "detrimental impact",
+          "highly detrimental"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Depletion",
+        "pos": "noun",
+        "meaning": "Reduction in the number or quantity of something.",
+        "example": "Rapid groundwater depletion has triggered severe water scarcity in agricultural provinces.",
+        "collocations": [
+          "resource depletion",
+          "ozone depletion",
+          "rapid depletion"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Sustainable",
+        "pos": "adjective",
+        "meaning": "Able to be maintained at a certain rate or level without exhausting natural resources.",
+        "example": "Urban planners must prioritize sustainable transportation systems like electric light rail.",
+        "collocations": [
+          "sustainable development",
+          "sustainable practices",
+          "sustainable future"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Unprecedented",
+        "pos": "adjective",
+        "meaning": "Never done or known before; extraordinary.",
+        "example": "The region experienced unprecedented heatwaves, shattering historical meteorological records.",
+        "collocations": [
+          "unprecedented scale",
+          "unprecedented levels",
+          "unprecedented crisis"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Degradation",
+        "pos": "noun",
+        "meaning": "The condition or process of deteriorating or being degraded.",
+        "example": "Intensive industrial farming has accelerated land degradation and topsoil erosion.",
+        "collocations": [
+          "environmental degradation",
+          "soil degradation",
+          "ecosystem degradation"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Exacerbate",
+        "pos": "verb",
+        "meaning": "To make a problem, bad situation, or negative feeling worse.",
+        "example": "Prolonged droughts will inevitably exacerbate food shortages across vulnerable nations.",
+        "collocations": [
+          "exacerbate the problem",
+          "exacerbate tensions",
+          "exacerbate inequality"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Imperative",
+        "pos": "adjective / noun",
+        "meaning": "Of vital importance; crucial.",
+        "example": "It is absolutely imperative that international leaders enforce binding emissions limits.",
+        "collocations": [
+          "moral imperative",
+          "vital imperative",
+          "imperative to act"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Incentivize",
+        "pos": "verb",
+        "meaning": "To provide someone with an incentive or reason for doing something.",
+        "example": "Governments should incentivize green entrepreneurship through tax exemptions and subsidies.",
+        "collocations": [
+          "incentivize innovation",
+          "incentivize consumers",
+          "incentivize adoption"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Catastrophic",
+        "pos": "adjective",
+        "meaning": "Involving or causing sudden great damage or suffering.",
+        "example": "Melting polar ice caps could trigger catastrophic sea-level rises along coastal settlements.",
+        "collocations": [
+          "catastrophic failure",
+          "catastrophic consequences",
+          "catastrophic collapse"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Ecological",
+        "pos": "adjective",
+        "meaning": "Relating to or concerned with the relation of living organisms to one another and their physical surroundings.",
+        "example": "The oil spill inflicted profound ecological trauma that will take decades to rehabilitate.",
+        "collocations": [
+          "ecological balance",
+          "ecological footprint",
+          "ecological disaster"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Renewable",
+        "pos": "adjective",
+        "meaning": "Capable of being replenished naturally within human timescales.",
+        "example": "Investing heavily in renewable infrastructure like offshore wind farms reduces reliance on fossil fuels.",
+        "collocations": [
+          "renewable energy",
+          "renewable sources",
+          "renewable technology"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Conservation",
+        "pos": "noun",
+        "meaning": "The preservation and careful management of the environment and of natural resources.",
+        "example": "Community-led wildlife conservation programs have succeeded in revitalizing endangered tiger reserves.",
+        "collocations": [
+          "wildlife conservation",
+          "energy conservation",
+          "conservation efforts"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Contaminate",
+        "pos": "verb",
+        "meaning": "To make something impure or poisonous by adding harmful substances.",
+        "example": "Improperly discarded chemical waste can contaminate communal aquifers and drinking supplies.",
+        "collocations": [
+          "contaminate the water",
+          "heavily contaminated",
+          "contaminate soil"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Paramount",
+        "pos": "adjective",
+        "meaning": "More important than anything else; supreme.",
+        "example": "Transitioning to clean grid energy is of paramount importance if we are to avert irreversible climate tipping points.",
+        "collocations": [
+          "paramount importance",
+          "paramount concern",
+          "hold paramount"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Proliferation",
+        "pos": "noun",
+        "meaning": "Rapid increase in the number or amount of something.",
+        "example": "The proliferation of electric vehicles has markedly decreased downtown vehicular carbon output.",
+        "collocations": [
+          "rapid proliferation",
+          "proliferation of technology",
+          "proliferation of pollutants"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Viable",
+        "pos": "adjective",
+        "meaning": "Capable of working successfully; feasible.",
+        "example": "Hydrogen power offers a viable alternative for heavy long-distance freight transit.",
+        "collocations": [
+          "viable solution",
+          "commercially viable",
+          "economically viable"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Resilience",
+        "pos": "noun",
+        "meaning": "The capacity to withstand or recover quickly from difficulties.",
+        "example": "Developing drought-tolerant crops enhances agricultural resilience in arid climates.",
+        "collocations": [
+          "climate resilience",
+          "build resilience",
+          "systemic resilience"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Ecosystem",
+        "pos": "noun",
+        "meaning": "A biological community of interacting organisms and their physical environment.",
+        "example": "Mangrove forests constitute an indispensable marine ecosystem shielding coastlines from storm surges.",
+        "collocations": [
+          "fragile ecosystem",
+          "marine ecosystem",
+          "disturb the ecosystem"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Rehabilitate",
+        "pos": "verb",
+        "meaning": "To restore something to a former condition of health or productivity.",
+        "example": "Non-profit organizations have joined forces to rehabilitate barren, strip-mined hillsides.",
+        "collocations": [
+          "rehabilitate habitats",
+          "rehabilitate ecosystems",
+          "rehabilitate wetlands"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Negligent",
+        "pos": "adjective",
+        "meaning": "Failing to take proper care over something.",
+        "example": "Factory executives were fined heavily for negligent disposal of hazardous industrial effluents.",
+        "collocations": [
+          "negligent behavior",
+          "criminally negligent",
+          "negligent oversight"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Inevitably",
+        "pos": "adverb",
+        "meaning": "As is certain to happen; unavoidably.",
+        "example": "Failure to enforce fishing quotas will inevitably collapse local pelagic fish stocks.",
+        "collocations": [
+          "inevitably lead to",
+          "inevitably result in",
+          "inevitably occur"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Emissions",
+        "pos": "noun (plural)",
+        "meaning": "Substances discharged into the air, especially by combustion.",
+        "example": "Stringent industrial emissions standards have proven pivotal in clearing metropolitan smog.",
+        "collocations": [
+          "carbon emissions",
+          "greenhouse emissions",
+          "curb emissions"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Subsidize",
+        "pos": "verb",
+        "meaning": "To support an enterprise or activity financially, typically with public funds.",
+        "example": "The municipal government voted to subsidize residential solar panel installations.",
+        "collocations": [
+          "heavily subsidize",
+          "subsidize green transit",
+          "government subsidies"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Pristine",
+        "pos": "adjective",
+        "meaning": "In its original condition; unspoiled.",
+        "example": "Eco-tourists were captivated by the pristine glacial fjords and untouched alpine valleys.",
+        "collocations": [
+          "pristine condition",
+          "pristine environment",
+          "pristine wilderness"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Tipping point",
+        "pos": "noun phrase",
+        "meaning": "The critical point in a situation beyond which a significant and often unstoppable effect takes place.",
+        "example": "Scientists caution that the thawing Siberian permafrost is nearing a dangerous planetary tipping point.",
+        "collocations": [
+          "reach a tipping point",
+          "critical tipping point",
+          "ecological tipping point"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Indispensable",
+        "pos": "adjective",
+        "meaning": "Absolutely necessary; essential.",
+        "example": "Clean freshwater aquifers are indispensable for sustaining burgeoning urban populations.",
+        "collocations": [
+          "indispensable asset",
+          "indispensable role",
+          "indispensable resource"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Advocate",
+        "pos": "verb / noun",
+        "meaning": "To publicly recommend or support; a person who does so.",
+        "example": "Environmental scholars actively advocate for a circular economy that minimizes industrial waste.",
+        "collocations": [
+          "strongly advocate",
+          "advocate for policy",
+          "fervent advocate"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Equitable",
+        "pos": "adjective",
+        "meaning": "Fair and impartial; just.",
+        "example": "Global climate treaties must provide equitable financial assistance to developing nations confronting rising sea levels.",
+        "collocations": [
+          "equitable distribution",
+          "equitable transition",
+          "equitable access"
+        ]
+      }
+    ]
+  },
+  {
+    "topicId": "tech_1",
+    "topicTitle": "Artificial Intelligence, Automation & Digital Ethics",
+    "description": "High-yield IELTS vocabulary for machine learning, autonomous systems, workplace disruption, and ethics.",
+    "speechCueCard": {
+      "title": "Describe an artificial intelligence technology or automated tool that you believe will reshape human society.",
+      "prompts": [
+        "What the AI technology is and what capabilities it demonstrates",
+        "How it compares to traditional human intellectual or manual tasks",
+        "What ethical or social dilemmas arise from its proliferation",
+        "And explain whether you believe its overall impact will be benevolent or detrimental."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Ubiquitous",
+        "pos": "adjective",
+        "meaning": "Present, appearing, or found everywhere.",
+        "example": "Smartphones and embedded algorithms have become ubiquitous features of contemporary life.",
+        "collocations": [
+          "ubiquitous presence",
+          "become ubiquitous",
+          "ubiquitous technology"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Algorithm",
+        "pos": "noun",
+        "meaning": "A process or set of rules to be followed in calculations or problem-solving operations by a computer.",
+        "example": "Recommendation algorithms significantly shape the news and media consumed by millions.",
+        "collocations": [
+          "complex algorithm",
+          "algorithmic bias",
+          "search algorithm"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Autonomy",
+        "pos": "noun",
+        "meaning": "The right or condition of self-government; independence.",
+        "example": "Critics worry that excessive algorithmic delegation threatens human intellectual autonomy.",
+        "collocations": [
+          "individual autonomy",
+          "maintain autonomy",
+          "loss of autonomy"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Proliferation",
+        "pos": "noun",
+        "meaning": "Rapid increase in numbers or spread.",
+        "example": "The proliferation of generative AI tools has transformed academic writing and research practices.",
+        "collocations": [
+          "rapid proliferation",
+          "proliferation of tools",
+          "proliferation of data"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Disruptive",
+        "pos": "adjective",
+        "meaning": "Innovatively transforming or overthrowing an established industry or market.",
+        "example": "Autonomous driving systems are poised to be immensely disruptive to public transportation and logistics.",
+        "collocations": [
+          "disruptive technology",
+          "disruptive impact",
+          "disruptive innovation"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Cognitive",
+        "pos": "adjective",
+        "meaning": "Relating to the mental action or process of acquiring knowledge and understanding through thought and experience.",
+        "example": "Engaging in strategic debate sharpens complex cognitive faculties and critical reasoning.",
+        "collocations": [
+          "cognitive ability",
+          "cognitive decline",
+          "cognitive load"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Ethical",
+        "pos": "adjective",
+        "meaning": "Relating to moral principles or the branch of knowledge dealing with these.",
+        "example": "Software engineers face grave ethical quandaries regarding data privacy and user surveillance.",
+        "collocations": [
+          "ethical dilemmas",
+          "ethical standards",
+          "ethical considerations"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Accountability",
+        "pos": "noun",
+        "meaning": "The fact or condition of being accountable; responsibility.",
+        "example": "Establishing legal accountability is paramount when autonomous vehicles cause vehicular accidents.",
+        "collocations": [
+          "hold accountable",
+          "corporate accountability",
+          "lack of accountability"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Obsolete",
+        "pos": "adjective",
+        "meaning": "No longer produced or used; out of date.",
+        "example": "Repetitive clerical duties will rapidly become obsolete as specialized neural networks evolve.",
+        "collocations": [
+          "render obsolete",
+          "become obsolete",
+          "technologically obsolete"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Streamline",
+        "pos": "verb",
+        "meaning": "To make an organization or process more efficient and effective by employing faster or simpler working methods.",
+        "example": "Enterprise cloud platforms streamline logistical operations across disparate global teams.",
+        "collocations": [
+          "streamline processes",
+          "streamline workflow",
+          "streamline operations"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Homogenize",
+        "pos": "verb",
+        "meaning": "To make things uniform or similar, reducing distinct diversity.",
+        "example": "Over-reliance on standardized AI writing assistants risks homogenizing literary prose and creative thought.",
+        "collocations": [
+          "homogenize culture",
+          "homogenize expression",
+          "risk homogenizing"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Precarious",
+        "pos": "adjective",
+        "meaning": "Not securely held or in position; dangerously likely to fall or collapse; uncertain.",
+        "example": "Gig economy workers often navigate precarious employment devoid of healthcare pensions.",
+        "collocations": [
+          "precarious position",
+          "precarious situation",
+          "precarious livelihoods"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Pivotal",
+        "pos": "adjective",
+        "meaning": "Of crucial importance in relation to the development or success of something else.",
+        "example": "High-speed semiconductors play a pivotal role in training advanced natural language models.",
+        "collocations": [
+          "pivotal role",
+          "pivotal moment",
+          "prove pivotal"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Nuance",
+        "pos": "noun",
+        "meaning": "A subtle distinction or variation in meaning, sound, or expression.",
+        "example": "Current machine translation models often struggle to capture idiomatic nuance and dry cultural sarcasm.",
+        "collocations": [
+          "subtle nuance",
+          "capture nuance",
+          "cultural nuance"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Benevolent",
+        "pos": "adjective",
+        "meaning": "Well-meaning and kindly; serving a positive purpose.",
+        "example": "Futurists advocate for aligning artificial superintelligence toward strictly benevolent humanitarian objectives.",
+        "collocations": [
+          "benevolent purpose",
+          "benevolent intentions",
+          "benevolent force"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Surveillance",
+        "pos": "noun",
+        "meaning": "Close observation, especially of a suspected person or the public by authorities.",
+        "example": "Ubiquitous biometric surveillance sparks fierce debates over constitutional civil liberties.",
+        "collocations": [
+          "mass surveillance",
+          "facial surveillance",
+          "under surveillance"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Infallible",
+        "pos": "adjective",
+        "meaning": "Incapable of making mistakes or being wrong.",
+        "example": "Judges must remember that algorithmic risk scores are far from infallible and reflect human training biases.",
+        "collocations": [
+          "far from infallible",
+          "infallible system",
+          "not infallible"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Paradigm",
+        "pos": "noun",
+        "meaning": "A typical example or pattern of something; a distinct conceptual framework.",
+        "example": "Cloud-native computing represents an irreversible paradigm shift in enterprise software architecture.",
+        "collocations": [
+          "paradigm shift",
+          "dominant paradigm",
+          "new paradigm"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Complement",
+        "pos": "verb",
+        "meaning": "To add to something in a way that enhances or completes it.",
+        "example": "AI diagnostics are designed to complement experienced physicians, rather than outright displace them.",
+        "collocations": [
+          "complement each other",
+          "perfectly complement",
+          "complement human skills"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Monopolize",
+        "pos": "verb",
+        "meaning": "To obtain exclusive possession or control of a market or trade.",
+        "example": "Regulators must prevent handfuls of tech conglomerates from monopolizing computing infrastructure.",
+        "collocations": [
+          "monopolize the market",
+          "monopolize resources",
+          "tendency to monopolize"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Empirical",
+        "pos": "adjective",
+        "meaning": "Based on, concerned with, or verifiable by observation or experience rather than theory or pure logic.",
+        "example": "We require rigorous empirical evidence before deploying automated algorithms in criminal sentencing.",
+        "collocations": [
+          "empirical data",
+          "empirical research",
+          "empirical evidence"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Synthesize",
+        "pos": "verb",
+        "meaning": "To combine a number of things into a coherent whole.",
+        "example": "Advanced language processors can synthesize thousands of medical research papers in seconds.",
+        "collocations": [
+          "synthesize information",
+          "synthesize data",
+          "synthesize findings"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Disseminate",
+        "pos": "verb",
+        "meaning": "To scatter or spread widely (especially information or ideas).",
+        "example": "Social media algorithms can unfortunately disseminate deceptive deepfakes across millions in minutes.",
+        "collocations": [
+          "disseminate information",
+          "disseminate knowledge",
+          "widely disseminate"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Discrepancy",
+        "pos": "noun",
+        "meaning": "An illogical or unexpected lack of compatibility or similarity between two or more facts.",
+        "example": "Auditors uncovered a glaring discrepancy between user privacy policies and backend database logging.",
+        "collocations": [
+          "glaring discrepancy",
+          "noticeable discrepancy",
+          "discrepancy between"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Incentive",
+        "pos": "noun",
+        "meaning": "A thing that motivates or encourages someone to do something.",
+        "example": "Tech startups possess tremendous commercial incentives to release products before verifying safety boundaries.",
+        "collocations": [
+          "financial incentive",
+          "strong incentive",
+          "perverse incentive"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Facilitate",
+        "pos": "verb",
+        "meaning": "To make an action or process easy or easier.",
+        "example": "Automated workflow management tools facilitate frictionless cross-timezone collaboration.",
+        "collocations": [
+          "facilitate communication",
+          "facilitate learning",
+          "greatly facilitate"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Intrinsically",
+        "pos": "adverb",
+        "meaning": "In an essential or natural way; inherently.",
+        "example": "Human empathy and artistic vulnerability are intrinsically difficult to capture through computational neural matrices.",
+        "collocations": [
+          "intrinsically valuable",
+          "intrinsically linked",
+          "intrinsically motivated"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Vulnerability",
+        "pos": "noun",
+        "meaning": "The quality or state of being exposed to the possibility of being attacked or harmed.",
+        "example": "Legacy financial protocols harbor severe cybersecurity vulnerabilities against sophisticated malware.",
+        "collocations": [
+          "exploit vulnerability",
+          "cyber vulnerability",
+          "security vulnerability"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Double-edged sword",
+        "pos": "idiom / phrase",
+        "meaning": "A situation or decision that has both positive and negative consequences.",
+        "example": "Pervasive digital connectivity is a double-edged sword, fostering instant communication while eroding personal seclusion.",
+        "collocations": [
+          "prove a double-edged sword",
+          "classic double-edged sword"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Profound",
+        "pos": "adjective",
+        "meaning": "Very great or intense; having or showing great knowledge or insight.",
+        "example": "The transition into automated industry will exert a profound influence on modern socio-economic contracts.",
+        "collocations": [
+          "profound impact",
+          "profound effect",
+          "profound change"
+        ]
+      }
+    ]
+  },
+  {
+    "topicId": "urban_1",
+    "topicTitle": "Urbanization, Megacities & Public Infrastructure",
+    "description": "Essential C1/C2 vocabulary for city planning, congestion, housing affordability, and urban life.",
+    "speechCueCard": {
+      "title": "Describe an urban development project or metropolitan city that impressed you.",
+      "prompts": [
+        "Where this city or urban project is situated",
+        "What specific architectural or transport infrastructure it features",
+        "How it addresses problems like overcrowding and environmental sustainability",
+        "And explain why you consider this urban model exemplary for future societies."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Congestion",
+        "pos": "noun",
+        "meaning": "The state of being congested; overcrowding of traffic or people.",
+        "example": "Congestion pricing in city centers has demonstrably reduced peak-hour traffic bottlenecks.",
+        "collocations": [
+          "traffic congestion",
+          "severe congestion",
+          "ease congestion"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Infrastructure",
+        "pos": "noun",
+        "meaning": "The basic physical and organizational structures and facilities needed for the operation of a society.",
+        "example": "Investing in resilient wastewater infrastructure prevents catastrophic urban flooding.",
+        "collocations": [
+          "transport infrastructure",
+          "critical infrastructure",
+          "aging infrastructure"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Burgeoning",
+        "pos": "adjective",
+        "meaning": "Beginning to grow or increase rapidly; flourishing.",
+        "example": "Burgeoning metropolitan populations place tremendous strain on suburban transit networks.",
+        "collocations": [
+          "burgeoning population",
+          "burgeoning demand",
+          "burgeoning economy"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Affordability",
+        "pos": "noun",
+        "meaning": "The extent to which something is affordable, as measured by its cost relative to the amount that the purchaser is able to pay.",
+        "example": "Skyrocketing real estate values have decimated housing affordability for young working professionals.",
+        "collocations": [
+          "housing affordability",
+          "ensure affordability",
+          "crisis of affordability"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Pedestrianize",
+        "pos": "verb",
+        "meaning": "To convert a street or an area into a place for pedestrians only.",
+        "example": "The mayor moved to pedestrianize the historic city center, boosting local retail footfall.",
+        "collocations": [
+          "pedestrianize streets",
+          "pedestrianized zone",
+          "fully pedestrianized"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Metropolis",
+        "pos": "noun",
+        "meaning": "A very large and densely populated city of a country or region.",
+        "example": "Tokyo is a staggering metropolis that harmoniously blends hyper-modern engineering with ancient shrines.",
+        "collocations": [
+          "bustling metropolis",
+          "sprawling metropolis",
+          "global metropolis"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Gentrification",
+        "pos": "noun",
+        "meaning": "The process whereby the character of a poor urban area is changed by wealthier people moving in.",
+        "example": "While gentrification attracts stylish cafes, it frequently displaces long-term vulnerable residents.",
+        "collocations": [
+          "rapid gentrification",
+          "consequences of gentrification",
+          "neighborhood gentrification"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Amenities",
+        "pos": "noun (plural)",
+        "meaning": "Desirable or useful features of a building or place.",
+        "example": "Modern residential complexes provide essential communal amenities like recreational gyms and childcare facilities.",
+        "collocations": [
+          "local amenities",
+          "public amenities",
+          "convenient amenities"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Decentralize",
+        "pos": "verb",
+        "meaning": "To move departments of large organizations away from a single capital or administrative center to other areas.",
+        "example": "Decentralizing administrative ministries encourages balanced economic prosperity across satellite towns.",
+        "collocations": [
+          "decentralize power",
+          "decentralize administration",
+          "decentralized planning"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Sprawl",
+        "pos": "noun / verb",
+        "meaning": "The uncontrolled expansion of urban areas.",
+        "example": "Unchecked suburban sprawl encroaches on fertile arable farming belts surrounding the city.",
+        "collocations": [
+          "urban sprawl",
+          "suburban sprawl",
+          "contain sprawl"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Accessibility",
+        "pos": "noun",
+        "meaning": "The quality of being easily reached, entered, or used by everyone, including people with disabilities.",
+        "example": "Retrofitting subway stations with step-free elevators is crucial for ensuring equitable accessibility.",
+        "collocations": [
+          "wheelchair accessibility",
+          "public accessibility",
+          "improve accessibility"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Cosmopolitan",
+        "pos": "adjective",
+        "meaning": "Familiar with and at ease in many different countries and cultures.",
+        "example": "London boasts a remarkably cosmopolitan milieu, where hundreds of cultural dialects coexist.",
+        "collocations": [
+          "cosmopolitan city",
+          "cosmopolitan atmosphere",
+          "cosmopolitan culture"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Sanitation",
+        "pos": "noun",
+        "meaning": "Conditions relating to public health, especially the provision of clean drinking water and sewage disposal.",
+        "example": "Inadequate municipal sanitation can swiftly precipitate waterborne epidemiological outbreaks.",
+        "collocations": [
+          "basic sanitation",
+          "sanitation facilities",
+          "improve sanitation"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Zoning",
+        "pos": "noun",
+        "meaning": "Municipal or local laws that govern how property in specific geographic zones can be used.",
+        "example": "Progressive mixed-use zoning permits grocery storefronts underneath residential flats, curtailing commute times.",
+        "collocations": [
+          "zoning laws",
+          "residential zoning",
+          "mixed-use zoning"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Commute",
+        "pos": "noun / verb",
+        "meaning": "A regular journey of some distance to and from one's place of work.",
+        "example": "A grueling two-hour daily commute profoundly degrades quality of life and subjective well-being.",
+        "collocations": [
+          "daily commute",
+          "long commute",
+          "stressful commute"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Densely",
+        "pos": "adverb",
+        "meaning": "In a closely packed or crowded manner.",
+        "example": "Manhattan is among the most densely populated urban parcels in the Western hemisphere.",
+        "collocations": [
+          "densely populated",
+          "densely packed",
+          "densely forested"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Exorbitant",
+        "pos": "adjective",
+        "meaning": "(Of a price or amount charged) unreasonably high.",
+        "example": "Tenants are forced to endure exorbitant rent hikes fueled by speculative corporate landlords.",
+        "collocations": [
+          "exorbitant prices",
+          "exorbitant rents",
+          "exorbitant fees"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Aesthetic",
+        "pos": "noun / adjective",
+        "meaning": "Concerned with beauty or the appreciation of beauty.",
+        "example": "Brutalist concrete architecture divides public opinion regarding its austere aesthetic value.",
+        "collocations": [
+          "aesthetic appeal",
+          "visual aesthetic",
+          "aesthetic value"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Subsidized",
+        "pos": "adjective",
+        "meaning": "Supported with financial assistance from a government or organization.",
+        "example": "Expanding heavily subsidized social housing cushions low-income families against homelessness.",
+        "collocations": [
+          "subsidized housing",
+          "subsidized transit",
+          "government subsidized"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Bustling",
+        "pos": "adjective",
+        "meaning": "(Of a place) full of activity; energetic and noisy.",
+        "example": "Vendors and tourists crowd the bustling night markets, creating an electric nocturnal ambiance.",
+        "collocations": [
+          "bustling streets",
+          "bustling marketplace",
+          "bustling atmosphere"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Deteriorate",
+        "pos": "verb",
+        "meaning": "To become progressively worse.",
+        "example": "Without ongoing preventative maintenance, asphalt overpasses and suspension bridges rapidly deteriorate.",
+        "collocations": [
+          "deteriorate rapidly",
+          "condition deteriorates",
+          "cause to deteriorate"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Revitalization",
+        "pos": "noun",
+        "meaning": "The action of imbuing something with new life and vitality.",
+        "example": "The waterfront revitalization converted abandoned shipping docks into an inspiring cultural esplanade.",
+        "collocations": [
+          "urban revitalization",
+          "economic revitalization",
+          "community revitalization"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Deprived",
+        "pos": "adjective",
+        "meaning": "Suffering a severe and damaging lack of basic material and cultural benefits.",
+        "example": "Targeted welfare investment must be channeled toward historically deprived peripheral boroughs.",
+        "collocations": [
+          "socially deprived",
+          "deprived area",
+          "economically deprived"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Demographic",
+        "pos": "adjective / noun",
+        "meaning": "Relating to the structure of populations; a particular sector of a population.",
+        "example": "An aging demographic profile compels city councils to design barrier-free pedestrian corridors.",
+        "collocations": [
+          "demographic shift",
+          "demographic changes",
+          "target demographic"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Proximity",
+        "pos": "noun",
+        "meaning": "Nearness in space, time, or relationship.",
+        "example": "Living in close proximity to light rail hubs dramatically slashes carbon footprints.",
+        "collocations": [
+          "close proximity",
+          "immediate proximity",
+          "geographical proximity"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Overhaul",
+        "pos": "verb / noun",
+        "meaning": "To take apart a piece of machinery or equipment to examine and repair it; a thorough examination and revision.",
+        "example": "City engineers embarked on an ambitious multi-billion dollar overhaul of the antiquated electrical grid.",
+        "collocations": [
+          "complete overhaul",
+          "major overhaul",
+          "systemic overhaul"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Harmonious",
+        "pos": "adjective",
+        "meaning": "Forming a pleasing or consistent whole; free from disagreement or dissent.",
+        "example": "Biophilic design strives for a harmonious coexistence between towering skyscrapers and lush foliage.",
+        "collocations": [
+          "harmonious blend",
+          "harmonious relationship",
+          "harmonious coexistence"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Stifle",
+        "pos": "verb",
+        "meaning": "To prevent or constrain an activity or idea from developing.",
+        "example": "Onerous bureaucratic red tape can stifle bold architectural innovation in public housing.",
+        "collocations": [
+          "stifle growth",
+          "stifle creativity",
+          "stifle innovation"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Avenue",
+        "pos": "noun",
+        "meaning": "A broad road; a way of approaching a problem or making progress.",
+        "example": "Urban planners are actively exploring every feasible avenue to curtail municipal carbon footprints.",
+        "collocations": [
+          "explore avenues",
+          "avenue of inquiry",
+          "fruitful avenue"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Epitome",
+        "pos": "noun",
+        "meaning": "A person or thing that is a perfect example of a particular quality or type.",
+        "example": "Singapore is widely regarded as the epitome of a clean, forward-thinking garden city.",
+        "collocations": [
+          "the epitome of",
+          "perfect epitome",
+          "serve as the epitome"
+        ]
+      }
+    ]
+  }
+]
