@@ -363,125 +363,127 @@
       </div>
     </div>
 
-    <!-- 30 Word Interactive Grid Buttons -->
-    <div class="card">
-      <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-        <div>
-          <span>Word Selector (Click any of the 30 words to practice sentences)</span>
-          <small style="color: var(--accent-emerald); margin-left: 0.5rem;">✓ Green = Completed</small>
-        </div>
-        <button class="btn btn-pdf-export" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="exportAll30WordsToPDF()">📚 Export All 30 Words (Single PDF)</button>
-      </div>
-      <div id="wordGrid" class="word-grid"></div>
-    </div>
-
-    <!-- Active Word Practice Box (Meaning, Example, 3-min Timer, 6 Sentences) -->
-    <div class="word-practice-panel">
+    <!-- Main Two-Column Workspace (1/3 Left Words List | 2/3 Right Meaning & Big Inputs) -->
+    <div class="vocab-workspace-grid">
       
-      <div class="word-hero-header">
-        <div>
-          <div class="word-main-title">
-            <span id="activeWordTitle">1. Mitigate</span>
-            <small id="activeWordPos" style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">(verb)</small>
+      <!-- LEFT COLUMN (1/3 Width): 30 Words Selector List -->
+      <div class="vocab-sidebar-panel">
+        <div class="sidebar-header">
+          <div>
+            <h3 style="font-size: 1.05rem; color: #fff; margin: 0; font-weight: 700;">30 Topic Words</h3>
+            <span style="font-size: 0.78rem; color: var(--text-secondary);">Click any word to practice</span>
           </div>
-          <div class="word-meaning-box">
-            <strong>Definition:</strong> <span id="activeWordMeaning">Loading...</span>
-            <div style="margin-top: 0.5rem; color: #93c5fd;">
-              <strong>Band 8.5 Model Sentence:</strong> <span id="activeWordExample">Loading...</span>
-            </div>
-            <div class="collocations-container" id="activeWordCollocations"></div>
-          </div>
+          <button class="btn btn-outline" style="font-size: 0.75rem; padding: 0.25rem 0.55rem; border-color: #8b5cf6; color: #c084fc;" onclick="exportAll30WordsToPDF()" title="Export all 30 words to PDF">📑 All 30 PDF</button>
         </div>
-
-        <!-- 3-Minute Word Timer & PDF Exporter -->
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.25rem; text-align: center; min-width: 200px;">
-          <div class="timer-label">3-MIN WORD TIMER</div>
-          <div id="wordTimerDisplay" class="timer-readout" style="font-size: 2.2rem; margin: 0.2rem 0;">03:00</div>
-          <div style="display: flex; gap: 0.4rem; justify-content: center; margin-top: 0.4rem;">
-            <button id="wordTimerBtn" class="btn btn-primary" style="padding: 0.45rem 0.8rem; font-size: 0.82rem;" onclick="toggleWordTimer()">⏱️ Start 3-Min Timer</button>
-            <button id="wordTimerResetBtn" class="btn btn-outline" style="padding: 0.45rem 0.6rem; font-size: 0.82rem;" title="Reset Timer" onclick="resetWordTimer()">🔄</button>
-          </div>
-          <button id="topExportPdfBtn" class="btn btn-pdf-export" style="margin-top: 0.6rem; width: 100%; justify-content: center;" onclick="exportWordToPDF()">📄 Export to PDF</button>
+        <div id="wordGrid" class="word-sidebar-list">
+          <!-- 30 words dynamically populated here as list items -->
         </div>
       </div>
 
-      <!-- 6 Sentence Input Fields (3 Simple + 3 Complex) -->
-      <div>
-        <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.3rem;">Sentence Construction Practice (6 Sentences Required)</h3>
-        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-          Write <strong>3 simple sentences</strong> focusing on accurate word collocations, followed by <strong>3 complex sentences</strong> demonstrating varied syntactic structures (subordinate clauses, conditionals, or inversions).
-        </p>
-
+      <!-- RIGHT COLUMN (2/3 Width): Active Word Meaning & Big Sentence Inputs -->
+      <div class="word-practice-right">
         
-        <div id="inputLockBanner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 0.85rem 1.15rem; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <span style="font-size: 1.6rem;">🔒</span>
+        <!-- Active Word Details & Meaning Box -->
+        <div class="word-details-hero">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px;">
+              <div class="word-main-title">
+                <span id="activeWordTitle">1. Mitigate</span>
+                <small id="activeWordPos" style="font-size: 1rem; color: var(--text-muted); font-weight: 500; margin-left: 0.4rem;">(verb)</small>
+              </div>
+              <div class="word-meaning-box">
+                <div style="font-size: 0.95rem; color: #f8fafc; line-height: 1.5;">
+                  <strong>Definition:</strong> <span id="activeWordMeaning">Loading...</span>
+                </div>
+                <div style="margin-top: 0.5rem; color: #93c5fd; font-size: 0.92rem; line-height: 1.45;">
+                  <strong>Cambridge Model Sentence:</strong> <span id="activeWordExample">Loading...</span>
+                </div>
+                <div class="collocations-container" id="activeWordCollocations" style="margin-top: 0.5rem;"></div>
+              </div>
+            </div>
+
+            <!-- Single Word Action -->
+            <div style="text-align: right; display: flex; flex-direction: column; gap: 0.5rem; min-width: 170px;">
+              <button id="topExportPdfBtn" class="btn btn-pdf-export" style="justify-content: center; width: 100%;" onclick="exportWordToPDF()">📄 Export to PDF</button>
+              <button class="btn btn-primary" style="font-size: 0.85rem; justify-content: center; width: 100%;" onclick="nextWord()">Next Word ➔</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Sentence Input Fields (Big Spacious Textareas, No Examples in Placeholders) -->
+        <div class="card" style="margin: 0; padding: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
             <div>
-              <strong style="color: #fff; font-size: 0.95rem;">3-Minute Time Limit Reached — Inputs Strictly Locked!</strong>
-              <div style="font-size: 0.82rem; color: #fca5a5; margin-top: 2px;">No further typing allowed. Completed sentences have been evaluated below. You can export this record to PDF at any time.</div>
+              <h3 style="font-size: 1.15rem; color: #fff; margin: 0; font-weight: 700;">Sentence Construction Practice</h3>
+              <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                Construct 3 simple sentences and 3 complex sentences using the target word or any of its natural morphological derivatives (e.g. <em>biodegradation</em> for <em>biodegrade</em>).
+              </p>
             </div>
           </div>
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <button class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>
-            <button class="btn btn-outline" style="font-size: 0.8rem; border-color: #ef4444; color: #fca5a5;" onclick="resetWordTimer()">🔄 Try Again</button>
+
+          <div class="sentences-split-container">
+            
+            <!-- Part A: 3 Simple Sentences -->
+            <div class="sentence-category-block">
+              <div class="sentence-category-header">
+                <span>Part A: 3 Simple Sentences</span>
+                <small style="color: #60a5fa; font-weight: 600;">Subject + Verb + Single Complete Thought</small>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="simpleSentence1">Simple Sentence #1:</label>
+                <textarea id="simpleSentence1" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="simpleSentence2">Simple Sentence #2:</label>
+                <textarea id="simpleSentence2" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="simpleSentence3">Simple Sentence #3:</label>
+                <textarea id="simpleSentence3" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+            </div>
+
+            <!-- Part B: 3 Complex Sentences -->
+            <div class="sentence-category-block">
+              <div class="sentence-category-header">
+                <span>Part B: 3 Complex Sentences</span>
+                <small style="color: #c084fc; font-weight: 600;">Subordinate / Conditional / Relative Clauses</small>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="complexSentence1">Complex Sentence #1 (Subordinate / Causal — <em>although, because, whereas, while</em>):</label>
+                <textarea id="complexSentence1" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="complexSentence2">Complex Sentence #2 (Conditional / Hypothetical — <em>if, unless, provided that</em>):</label>
+                <textarea id="complexSentence2" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+
+              <div class="sentence-input-group">
+                <label for="complexSentence3">Complex Sentence #3 (Relative / Inversion / Cleft — <em>which, whereby, not only... but also</em>):</label>
+                <textarea id="complexSentence3" class="sentence-textarea" rows="2" placeholder=""></textarea>
+              </div>
+            </div>
+
           </div>
+
+          <div id="sentenceValidationNotice" style="margin-top: 1.25rem;"></div>
+
+          <!-- Bottom Action Buttons -->
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap;">
+            <button id="saveSentencesBtn" class="btn btn-emerald" style="padding: 0.65rem 1.4rem; font-size: 0.92rem;" onclick="evaluateAndSaveSentences(false)">💾 Evaluate & Save Sentences</button>
+            <button id="bottomExportPdfBtn" class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>
+            <button class="btn btn-primary" onclick="nextWord()">Next Word ➔</button>
+          </div>
+
         </div>
-        <div class="sentences-section">
-          <!-- 3 Simple Sentences -->
-          <div class="sentence-category-block">
-            <div class="sentence-category-header">
-              <span>Part A: 3 Simple Sentences</span>
-              <small style="color: #60a5fa;">Subject + Verb + Clear Thought</small>
-            </div>
 
-            <div class="sentence-input-group">
-              <label>Simple Sentence #1:</label>
-              <input type="text" id="simpleSentence1" class="sentence-input" placeholder="e.g., Renewable energy will mitigate carbon emissions." />
-            </div>
-
-            <div class="sentence-input-group">
-              <label>Simple Sentence #2:</label>
-              <input type="text" id="simpleSentence2" class="sentence-input" placeholder="e.g., Planting urban trees helps mitigate summer heat." />
-            </div>
-
-            <div class="sentence-input-group">
-              <label>Simple Sentence #3:</label>
-              <input type="text" id="simpleSentence3" class="sentence-input" placeholder="e.g., Timely medical aid can mitigate long-term damage." />
-            </div>
-          </div>
-
-          <!-- 3 Complex Sentences -->
-          <div class="sentence-category-block">
-            <div class="sentence-category-header">
-              <span>Part B: 3 Complex Sentences</span>
-              <small style="color: #c084fc;">Subordinate / Conditional / Relative</small>
-            </div>
-
-            <div class="sentence-input-group">
-              <label>Complex Sentence #1 (Subordinate / Causal: <em>although, because, whereas</em>):</label>
-              <input type="text" id="complexSentence1" class="sentence-input" placeholder="e.g., Although initial costs are substantial, solar power effectively mitigates environmental harm." />
-            </div>
-
-            <div class="sentence-input-group">
-              <label>Complex Sentence #2 (Conditional / Hypothetical: <em>if, had I, unless</em>):</label>
-              <input type="text" id="complexSentence2" class="sentence-input" placeholder="e.g., If governments fail to enforce regulations, nothing will mitigate the impending resource depletion." />
-            </div>
-
-            <div class="sentence-input-group">
-              <label>Complex Sentence #3 (Relative / Inversion / Cleft: <em>which, not only... but also</em>):</label>
-              <input type="text" id="complexSentence3" class="sentence-input" placeholder="e.g., Modern waste treatment, which is widely praised, not only mitigates pollution but also generates biogas." />
-            </div>
-          </div>
-        </div>
-
-        <div id="sentenceValidationNotice" style="margin-top: 1rem;"></div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;">
-          <button id="saveSentencesBtn" class="btn btn-emerald" onclick="evaluateAndSaveSentences(false)">💾 Evaluate & Save Sentences</button>
-          <button id="bottomExportPdfBtn" class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>
-          <button class="btn btn-primary" onclick="nextWord()">Next Word ➔</button>
-        </div>
       </div>
+
     </div>
 
     <!-- Final 3-Minute Speech Challenge (Cue Card Style: 1m Prep + 2m Speak) -->

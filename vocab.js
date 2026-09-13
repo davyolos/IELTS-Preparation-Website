@@ -145,23 +145,26 @@ function renderWordGrid() {
     const isCompleted = topicData[w.id] && topicData[w.id].completed;
     if (isCompleted) completedCount++;
 
-    const btn = document.createElement('button');
-    btn.className = `word-grid-btn ${idx === currentWordIndex ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
-    btn.innerHTML = `
-      <div class="word-btn-top">
-        <span class="word-num">#${w.id}</span>
-        <span class="word-status">${isCompleted ? '✓' : '○'}</span>
+    const row = document.createElement('div');
+    row.className = `word-list-row ${idx === currentWordIndex ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+    row.innerHTML = `
+      <div class="word-row-left">
+        <span class="word-row-num">#${w.id}</span>
+        <span class="word-row-title">${w.word}</span>
       </div>
-      <div class="word-btn-title">${w.word}</div>
-      <div class="word-btn-pos">${w.pos || ''}</div>
+      <div class="word-row-right">
+        <span class="word-row-pos">${w.pos || ''}</span>
+        <span class="word-status-icon ${isCompleted ? 'done' : ''}">${isCompleted ? '✓' : '○'}</span>
+      </div>
     `;
-    btn.onclick = () => {
+    row.onclick = () => {
       currentWordIndex = idx;
-      resetWordTimer();
       renderWordGrid();
       loadActiveWord();
+      const hero = document.querySelector('.word-details-hero');
+      if (hero && window.innerWidth < 960) hero.scrollIntoView({ behavior: 'smooth' });
     };
-    grid.appendChild(btn);
+    grid.appendChild(row);
   });
 
   // Update progress bar
@@ -172,7 +175,6 @@ function renderWordGrid() {
   if (txt) txt.innerText = `${completedCount} / ${topic.words.length} Words Completed (${progressPercent}%)`;
 }
 
-// Load Active Word Details & Sentences
 function loadActiveWord() {
   const topic = vocabTopics[currentTopicIndex];
   if (!topic || !topic.words || !topic.words[currentWordIndex]) return;
@@ -210,89 +212,92 @@ function loadActiveWord() {
   document.getElementById('sentenceValidationNotice').innerHTML = '';
 }
 
-// 3-Minute Word Countdown Timer
-function toggleWordTimer() {
-  const btn = document.getElementById('wordTimerBtn');
-  if (!isWordTimerRunning) {
-    // Start
-    isWordTimerRunning = true;
-    btn.innerText = '⏸️ Pause';
-    btn.classList.add('btn-danger');
-    btn.classList.remove('btn-outline');
 
-    clearInterval(wordTimerInterval);
-    wordTimerInterval = setInterval(() => {
-      wordSecondsRemaining--;
-      updateWordTimerDisplay();
+// Timer removed per user request: Practice at your own pace
+function toggleWordTimer() {}
+function resetWordTimer() {}
+function updateWordTimerDisplay() {}
+function playTimerChime() {}
+function lockWordInputs(shouldLock) {}
 
-      if (wordSecondsRemaining <= 0) {
-        clearInterval(wordTimerInterval);
-        isWordTimerRunning = false;
-        btn.innerText = '🔒 3-Min Expired';
-        btn.disabled = true;
-        playTimerChime();
-        lockWordInputs(true);
-        evaluateAndSaveSentences(true);
-      }
-    }, 1000);
-  } else {
-    // Pause
-    isWordTimerRunning = false;
-    btn.innerText = '▶️ Resume';
-    btn.classList.remove('btn-danger');
-    btn.classList.add('btn-outline');
-    clearInterval(wordTimerInterval);
-  }
+function validateAndSaveSentences() {
+  evaluateAndSaveSentences(false);
 }
 
-function resetWordTimer() {
-  lockWordInputs(false);
-  clearInterval(wordTimerInterval);
-  isWordTimerRunning = false;
-  wordSecondsRemaining = 180;
-  updateWordTimerDisplay();
-  const btn = document.getElementById('wordTimerBtn');
-  if (btn) {
-    btn.innerText = '⏱️ Start 3-Min Timer';
-    btn.classList.remove('btn-danger');
-    btn.classList.add('btn-outline');
-  }
-}
-
-function updateWordTimerDisplay() {
-  const display = document.getElementById('wordTimerDisplay');
-  if (!display) return;
-  const m = String(Math.floor(wordSecondsRemaining / 60)).padStart(2, '0');
-  const s = String(wordSecondsRemaining % 60).padStart(2, '0');
-  display.innerText = `${m}:${s}`;
-  if (wordSecondsRemaining <= 30) {
-    display.style.color = 'var(--accent-rose)';
-  } else {
-    display.style.color = 'var(--primary)';
-  }
+function nextWord() {
+  const topic = vocabTopics[currentTopicIndex];
+  if (!topic || !topic.words) return;
+  currentWordIndex = (currentWordIndex + 1) % topic.words.length;
+  renderWordGrid();
+  loadActiveWord();
+  const hero = document.querySelector('.word-details-hero');
+  if (hero && window.innerWidth < 960) hero.scrollIntoView({ behavior: 'smooth' });
 }
 
 // ============================================================================
-// Deep Linguistic Evaluator & Sentence Quality Engine (Cambridge Standard)
+// ============================================================================
+// Robust Morphological Lemma & Derivative Matcher (Handles derivations)
+// E.g.: "biodegradation" matches "biodegrade", "sustainability" matches "sustainable"
 // ============================================================================
 
-// Helper: Get regex matching root stem and common English inflections
-function getWordInflectionsRegex(word) {
-  const w = (word || '').toLowerCase().trim();
-  let root = w;
-  if (w.endsWith('ing') && w.length > 5) root = w.slice(0, -3);
-  else if (w.endsWith('tion') && w.length > 6) root = w.slice(0, -4);
-  else if (w.endsWith('able') && w.length > 6) root = w.slice(0, -4);
-  else if (w.endsWith('ive') && w.length > 5) root = w.slice(0, -3);
-  else if (w.endsWith('ed') && w.length > 4) root = w.slice(0, -2);
-  else if (w.endsWith('es') && w.length > 4) root = w.slice(0, -2);
-  else if (w.endsWith('s') && w.length > 3) root = w.slice(0, -1);
-  else if (w.endsWith('e') && w.length > 4) root = w.slice(0, -1);
-
-  return new RegExp('\\b' + root + '[a-z]{0,6}\\b', 'i');
+function extractCoreStem(word) {
+  let w = (word || '').toLowerCase().trim().replace(/[^a-z]/g, '');
+  if (!w) return '';
+  const suffixes = [
+    'abilities', 'ability', 'ibilities', 'ibility',
+    'ation', 'ition', 'ution', 'ction', 'tion', 'sion',
+    'atively', 'itively', 'ative', 'itive',
+    'ableness', 'ibleness', 'able', 'ible',
+    'ement', 'ment', 'ance', 'ence', 'ancy', 'ency',
+    'lessly', 'lessness', 'fully', 'fulness', 'less', 'ful',
+    'ously', 'ous', 'ious', 'ically', 'ical', 'ic',
+    'ingly', 'edly', 'ing', 'ed',
+    'izes', 'ises', 'ized', 'ised', 'ize', 'ise',
+    'ities', 'ity', 'ness',
+    'ally', 'al', 'ly',
+    'es', 's', 'e'
+  ];
+  let stem = w;
+  for (const suf of suffixes) {
+    if (stem.endsWith(suf) && (stem.length - suf.length) >= 3) {
+      stem = stem.slice(0, -suf.length);
+      break;
+    }
+  }
+  return stem;
 }
 
-// Analyze a single sentence for grammar, contextual word fit, clause structure, and meaning
+function checkTargetWordPresent(sentence, targetWord) {
+  if (!sentence || !targetWord) return false;
+  const s = sentence.toLowerCase();
+  const target = targetWord.toLowerCase().trim();
+  const targetStem = extractCoreStem(target);
+
+  // 1. Direct whole target word regex (including normal suffixes)
+  const exactRegex = new RegExp('\\b' + target + '[a-z]{0,8}\\b', 'i');
+  if (exactRegex.test(s)) return true;
+
+  // 2. Token-by-token comparison against sentence words
+  const tokens = s.replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter(Boolean);
+  for (const token of tokens) {
+    if (token === target) return true;
+    if (token.startsWith(targetStem) && targetStem.length >= 4) return true;
+    if (target.startsWith(extractCoreStem(token)) && extractCoreStem(token).length >= 4) return true;
+
+    const tokenStem = extractCoreStem(token);
+    if (tokenStem && targetStem) {
+      if (tokenStem === targetStem) return true;
+      if (tokenStem.length >= 4 && targetStem.startsWith(tokenStem)) return true;
+      if (targetStem.length >= 4 && tokenStem.startsWith(targetStem)) return true;
+    }
+
+    // Compound or prefix words: e.g. 'biodegradation' for 'degradation'
+    if (token.includes(target) || (targetStem.length >= 5 && token.includes(targetStem))) return true;
+    if (target.includes(token) && token.length >= 5) return true;
+  }
+  return false;
+}
+
 function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
   const s = (rawSentence || '').trim();
   const word = (wordObj && wordObj.word) ? wordObj.word : '';
@@ -322,17 +327,16 @@ function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
   let grammarOk = true;
   let wordFitOk = true;
 
-  // 1. Check Target Word Presence & Inflection
-  const inflectRegex = getWordInflectionsRegex(word);
-  const wordFound = inflectRegex.test(s);
+  // 1. Check Target Word Presence & Inflection / Derivation
+  const wordFound = checkTargetWordPresent(s, word);
   if (!wordFound) {
     wordFitOk = false;
-    issues.push('Target word "' + word + '" is missing. Ensure you incorporate "' + word + '" or one of its grammatical forms.');
+    issues.push('Target word "' + word + '" (or any of its derivatives/forms) was not found in this sentence.');
   }
 
   // 2. Syntactic & Contextual Word Fit (Part-of-Speech Checks)
   if (wordFound) {
-    // Verb checks
+    // Verb checks - only apply if the exact verb form or verb inflection is used
     if (pos.includes('verb') || ['mitigate', 'exacerbate', 'subsidize', 'incentivize', 'contaminate', 'rehabilitate'].includes(word.toLowerCase())) {
       // Check if transitive verb is left dangling without an object
       const danglingVerbPattern = new RegExp('\\b' + word + '\\s*[.!?]$', 'i');
@@ -500,84 +504,6 @@ function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
   };
 }
 
-// ----------------------------------------------------------------------------
-// Validation, Auto-Lock, and Evaluation Actions
-// ----------------------------------------------------------------------------
-
-function validateAndSaveSentences() {
-  evaluateAndSaveSentences(false);
-}
-
-function nextWord() {
-  lockWordInputs(false);
-  const topic = vocabTopics[currentTopicIndex];
-  if (!topic || !topic.words) return;
-  currentWordIndex = (currentWordIndex + 1) % topic.words.length;
-  resetWordTimer();
-  renderWordGrid();
-  loadActiveWord();
-}
-
-function playTimerChime() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(880, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.4);
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.4);
-  } catch(e) {}
-}
-
-function lockWordInputs(shouldLock) {
-  const inputIds = [
-    'simpleSentence1', 'simpleSentence2', 'simpleSentence3',
-    'complexSentence1', 'complexSentence2', 'complexSentence3'
-  ];
-  inputIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.disabled = shouldLock;
-      el.readOnly = shouldLock;
-      if (shouldLock) {
-        el.classList.add('locked-input');
-        el.setAttribute('tabindex', '-1');
-      } else {
-        el.classList.remove('locked-input');
-        el.removeAttribute('tabindex');
-      }
-    }
-  });
-
-  const banner = document.getElementById('inputLockBanner');
-  if (banner) banner.style.display = shouldLock ? 'flex' : 'none';
-
-  const saveBtn = document.getElementById('saveSentencesBtn');
-  if (saveBtn) {
-    if (shouldLock) {
-      saveBtn.innerText = '🔒 Time Expired (Inputs Locked)';
-      saveBtn.disabled = true;
-    } else {
-      saveBtn.innerText = '💾 Evaluate & Save Sentences';
-      saveBtn.disabled = false;
-    }
-  }
-
-  const timerBtn = document.getElementById('wordTimerBtn');
-  if (timerBtn && shouldLock) {
-    timerBtn.innerText = '🔒 3-Min Expired';
-    timerBtn.disabled = true;
-    timerBtn.classList.remove('btn-danger');
-    timerBtn.classList.add('btn-outline');
-  }
-}
-
 function evaluateAndSaveSentences(autoTriggered = false) {
   const topic = vocabTopics[currentTopicIndex];
   if (!topic || !topic.words) return;
@@ -652,9 +578,7 @@ function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
   const notice = document.getElementById('sentenceValidationNotice');
   if (!notice) return;
 
-  const autoBadge = autoTriggered ? 
-    '<div style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;">' +
-    '<span>⏱️ 3-Minute Limit Reached</span> • <span>Inputs locked. All written sentences analyzed below.</span></div>' : '';
+  const autoBadge = '';
 
   let listHtml = '';
   (data.reports || []).forEach(r => {
