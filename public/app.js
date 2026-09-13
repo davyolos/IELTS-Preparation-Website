@@ -93,40 +93,32 @@ function selectPhase(phaseKey) {
 
   const stageNormal = document.getElementById('stageNormal');
   const stageHistory = document.getElementById('stageHistory');
-  const stageDeploy = document.getElementById('stageDeploy');
   const prepBtn = document.getElementById('prepBtn');
   const scratchpad = document.getElementById('cueScratchpad');
   const phaseBadge = document.getElementById('activePhaseBadge');
 
   if (phaseKey === 'history') {
-    stageNormal.style.display = 'none';
-    stageHistory.style.display = 'flex';
-    stageDeploy.style.display = 'none';
+    if (stageNormal) stageNormal.style.display = 'none';
+    if (stageHistory) stageHistory.style.display = 'flex';
     loadHistorySessions();
-    return;
-  } else if (phaseKey === 'deploy') {
-    stageNormal.style.display = 'none';
-    stageHistory.style.display = 'none';
-    stageDeploy.style.display = 'flex';
     return;
   }
 
-  stageNormal.style.display = 'flex';
-  stageHistory.style.display = 'none';
-  stageDeploy.style.display = 'none';
+  if (stageNormal) stageNormal.style.display = 'flex';
+  if (stageHistory) stageHistory.style.display = 'none';
 
   if (phaseKey === 'part1') {
-    phaseBadge.innerText = 'Part 1: Introduction';
-    prepBtn.style.display = 'none';
-    scratchpad.style.display = 'none';
+    if (phaseBadge) phaseBadge.innerText = 'Part 1: Introduction';
+    if (prepBtn) prepBtn.style.display = 'none';
+    if (scratchpad) scratchpad.style.display = 'none';
   } else if (phaseKey === 'part2') {
-    phaseBadge.innerText = 'Part 2: Cue Card (Long Turn)';
-    prepBtn.style.display = 'inline-flex';
-    scratchpad.style.display = 'block';
+    if (phaseBadge) phaseBadge.innerText = 'Part 2: Cue Card (Long Turn)';
+    if (prepBtn) prepBtn.style.display = 'inline-flex';
+    if (scratchpad) scratchpad.style.display = 'block';
   } else if (phaseKey === 'part3') {
-    phaseBadge.innerText = 'Part 3: Deep Analytical Discussion';
-    prepBtn.style.display = 'none';
-    scratchpad.style.display = 'none';
+    if (phaseBadge) phaseBadge.innerText = 'Part 3: Deep Analytical Discussion';
+    if (prepBtn) prepBtn.style.display = 'none';
+    if (scratchpad) scratchpad.style.display = 'none';
   }
 
   renderTopicList();
