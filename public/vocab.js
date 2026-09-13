@@ -450,7 +450,7 @@ function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
 
   // Determine Overall Status & Band
   let status = 'valid';
-  let badge = '✓ Band 8.5+ Quality';
+  let badge = '✓ Accurate & Natural';
   let color = 'var(--accent-emerald)';
   let score = 8.5;
 
@@ -471,7 +471,7 @@ function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
     score = 7.0;
   } else if (detectedColloc) {
     score = 9.0;
-    badge = '🌟 Band 9.0 Master';
+    badge = '🌟 Master Collocation';
   }
 
   let finalNote = '';
@@ -682,7 +682,7 @@ function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
         '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 3px;">' +
           '<strong style="color: #fff;">' + r.type + ' #' + r.num + ':</strong>' +
           '<span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.06); color: ' + r.color + '; font-weight: 700;">' + r.badge + '</span>' +
-          (r.score ? '<span style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">Band ' + r.score + '</span>' : '') +
+          '' +
         '</div>' +
         '<div style="color: ' + (r.text ? 'var(--text-primary)' : 'var(--text-muted)') + '; line-height: 1.4; margin-bottom: 4px;">' + displayText + '</div>' +
         '<div style="font-size: 0.8rem; color: ' + r.color + '; line-height: 1.3;">' + r.note + '</div>' +
@@ -691,7 +691,7 @@ function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
     '</div>';
   });
 
-  const attemptedLabel = (data.attemptedCount || 0) + ' / 6 Sentences Written (' + (data.validCount || 0) + ' Met Band 8.5+ Criteria)';
+  const attemptedLabel = (data.attemptedCount || 0) + ' / 6 Sentences Written (' + (data.validCount || 0) + ' Verified Accurate)';
 
   notice.innerHTML = '<div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">' +
     '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">' +
@@ -702,8 +702,8 @@ function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
       '</div>' +
       '<div style="display: flex; align-items: center; gap: 1rem;">' +
         '<div style="text-align: right;">' +
-          '<span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; font-weight: 700;">Word Score</span>' +
-          '<span style="font-family: monospace; font-size: 1.8rem; font-weight: 800; color: var(--accent-emerald);">Band ' + (data.score || '8.0') + '</span>' +
+          '<span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; font-weight: 700;">Practice Status</span>' +
+          '<span style="font-size: 1.15rem; font-weight: 800; color: ' + (data.validCount >= 3 ? 'var(--accent-emerald)' : (data.attemptedCount > 0 ? 'var(--accent-amber)' : 'var(--text-muted)')) + ';">' + (data.validCount >= 3 ? '✓ Verified Accurate' : (data.attemptedCount > 0 ? '◐ In Progress' : '○ Left Blank')) + '</span>' +
         '</div>' +
         '<button class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>' +
       '</div>' +
@@ -976,7 +976,7 @@ function exportWordToPDF() {
   '<div class="word-card">' +
     '<div class="word-card-top">' +
       '<div class="word-title">' + w.id + '. ' + w.word + ' <span class="word-pos">(' + (w.pos || 'academic') + ')</span></div>' +
-      '<div class="score-badge">Target Band: ' + displayScore + '</div>' +
+      '<div class="score-badge">' + (filledCount > 0 ? (filledCount + '/6 Sentences Completed') : 'Study Template') + '</div>' +
     '</div>' +
     '<div class="definition-row"><strong>Definition:</strong> ' + w.meaning + '</div>' +
     '<div class="model-box"><strong>Band 8.5 Model Sentence:</strong> “' + w.example + '”</div>' +
@@ -1004,8 +1004,8 @@ function exportWordToPDF() {
       '</div>' +
     '</div>' +
     '<div style="text-align: right;">' +
-      '<span style="font-size: 11px; text-transform: uppercase; color: #64748b;">Overall Band</span>' +
-      '<div style="font-size: 20px; font-weight: 800; color: #166534;">Band ' + displayScore + '</div>' +
+      '<span style="font-size: 11px; text-transform: uppercase; color: #64748b;">Linguistic Verification</span>' +
+      '<div style="font-size: 15px; font-weight: 800; color: #166534;">' + (filledCount >= 3 ? '✓ Verified Accurate' : (filledCount > 0 ? '◐ In Progress' : '○ Practice Space')) + '</div>' +
     '</div>' +
   '</div>' +
 
@@ -1242,7 +1242,7 @@ function exportAll30WordsToPDF() {
       const item = processedWords[i + col];
       if (item) {
         const isDone = item.wordFilledCount >= 2;
-        const statusIcon = isDone ? '<span style="color:#166534;font-weight:bold;">✓ ' + item.wordScore + '</span>' : '<span style="color:#94a3b8;">○ Blank</span>';
+        const statusIcon = isDone ? '<span style="color:#166534;font-weight:bold;">✓ Practiced</span>' : '<span style="color:#94a3b8;">○ Blank</span>';
         indexRowsHtml += '<td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-size: 11px;">' +
           '<strong>#' + item.index + ' ' + item.wordObj.word + '</strong> <small style="color:#64748b;">(' + (item.wordObj.pos || 'acad') + ')</small><br/>' +
           statusIcon +
@@ -1267,8 +1267,8 @@ function exportAll30WordsToPDF() {
           '<h2 class="sheet-title">#' + pw.index + '. ' + w.word + ' <span class="sheet-pos">(' + (w.pos || 'academic') + ')</span></h2>' +
         '</div>' +
         '<div class="sheet-score-badge">' +
-          '<span style="font-size: 9px; text-transform: uppercase; display: block; color: #166534;">Word Target</span>' +
-          'Band ' + pw.wordScore +
+          '<span style="font-size: 9px; text-transform: uppercase; display: block; color: #166534;">Practice Status</span>' +
+          (pw.wordFilledCount >= 2 ? '✓ Practiced' : '○ Practice Space') +
         '</div>' +
       '</div>' +
 
@@ -1572,8 +1572,8 @@ function exportAll30WordsToPDF() {
           '<div class="stat-label">Sentences Formed</div>' +
         '</div>' +
         '<div class="stat-card">' +
-          '<div class="stat-num">Band ' + overallTopicBand + '</div>' +
-          '<div class="stat-label">Target Lexical Score</div>' +
+          '<div class="stat-num">' + completedWordsCount + ' / 30</div>' +
+          '<div class="stat-label">Words Verified</div>' +
         '</div>' +
       '</div>' +
 
