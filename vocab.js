@@ -228,8 +228,11 @@ function toggleWordTimer() {
       if (wordSecondsRemaining <= 0) {
         clearInterval(wordTimerInterval);
         isWordTimerRunning = false;
-        btn.innerText = '▶️ Time Up!';
-        alert(`Time is up for word #${currentWordIndex + 1}! Review your sentences and click 'Validate & Save'.`);
+        btn.innerText = '🔒 3-Min Expired';
+        btn.disabled = true;
+        playTimerChime();
+        lockWordInputs(true);
+        evaluateAndSaveSentences(true);
       }
     }, 1000);
   } else {
@@ -243,6 +246,7 @@ function toggleWordTimer() {
 }
 
 function resetWordTimer() {
+  lockWordInputs(false);
   clearInterval(wordTimerInterval);
   isWordTimerRunning = false;
   wordSecondsRemaining = 180;
@@ -354,6 +358,7 @@ function validateAndSaveSentences() {
 }
 
 function nextWord() {
+  lockWordInputs(false);
   const topic = vocabTopics[currentTopicIndex];
   if (!topic || !topic.words) return;
   currentWordIndex = (currentWordIndex + 1) % topic.words.length;
@@ -365,6 +370,251 @@ function nextWord() {
 // ----------------------------------------------------------------------------
 // End-of-Session 3-Minute Speech Challenge (Cue Card Style)
 // ----------------------------------------------------------------------------
+
+// Audio Chime Alert via Web Audio API
+function playTimerChime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.4);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+function lockWordInputs(shouldLock) {
+  const inputIds = [
+    'simpleSentence1', 'simpleSentence2', 'simpleSentence3',
+    'complexSentence1', 'complexSentence2', 'complexSentence3'
+  ];
+  inputIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.disabled = shouldLock;
+      if (shouldLock) el.classList.add('locked-input');
+      else el.classList.remove('locked-input');
+    }
+  });
+
+  const banner = document.getElementById('inputLockBanner');
+  if (banner) banner.style.display = shouldLock ? 'flex' : 'none';
+
+  const saveBtn = document.getElementById('saveSentencesBtn');
+  if (saveBtn) {
+    if (shouldLock) {
+      saveBtn.innerText = '🔒 Inputs Locked (Evaluated)';
+      saveBtn.disabled = true;
+    } else {
+      saveBtn.innerText = '💾 Validate & Save 6 Sentences';
+      saveBtn.disabled = false;
+    }
+  }
+}
+
+// Deep Linguistic Evaluation & Scoring of 6 Sentences
+function evaluateAndSaveSentences(autoTriggered = false) {
+  const topic = vocabTopics[currentTopicIndex];
+  const w = topic.words[currentWordIndex];
+  const targetWord = w.word.toLowerCase();
+  const wordStem = targetWord.length > 5 ? targetWord.slice(0, targetWord.length - 2) : targetWord.slice(0, targetWord.length - 1);
+
+  const s1 = document.getElementById('simpleSentence1').value.trim();
+  const s2 = document.getElementById('simpleSentence2').value.trim();
+  const s3 = document.getElementById('simpleSentence3').value.trim();
+
+  const c1 = document.getElementById('complexSentence1').value.trim();
+  const c2 = document.getElementById('complexSentence2').value.trim();
+  const c3 = document.getElementById('complexSentence3').value.trim();
+
+  const simpleList = [s1, s2, s3];
+  const complexList = [c1, c2, c3];
+  const complexMarkers = /(although|even though|whereas|while|because|since|if|unless|provided that|had i|in spite of|despite|which|whose|whereby|not only|what is|were it not)/i;
+
+  let totalValid = 0;
+  let sentenceReports = [];
+
+  simpleList.forEach((s, idx) => {
+    let status = 'valid';
+    let note = 'Accurate simple sentence construction.';
+    if (!s) {
+      status = 'empty';
+      note = 'Sentence is blank.';
+    } else if (!s.toLowerCase().includes(wordStem)) {
+      status = 'missing_word';
+      note = 'Does not incorporate target word "' + w.word + '".';
+    } else if (s.split(/\s+/).length < 4) {
+      status = 'too_short';
+      note = 'Too short to form a complete thought.';
+    } else {
+      totalValid++;
+    }
+    sentenceReports.push({ type: 'Simple', num: idx + 1, text: s, status, note });
+  });
+
+  complexList.forEach((s, idx) => {
+    let status = 'valid';
+    let note = 'Demonstrates sophisticated complex clause linking.';
+    if (!s) {
+      status = 'empty';
+      note = 'Sentence is blank.';
+    } else if (!s.toLowerCase().includes(wordStem)) {
+      status = 'missing_word';
+      note = 'Does not incorporate target word "' + w.word + '".';
+    } else if (!complexMarkers.test(s)) {
+      status = 'lacks_complexity';
+      note = 'Lacks complex markers. Use subordinate conjunctions or conditionals.';
+    } else {
+      totalValid++;
+    }
+    sentenceReports.push({ type: 'Complex', num: idx + 1, text: s, status, note });
+  });
+
+  let bandScore = '5.5';
+  if (totalValid === 6) bandScore = '9.0';
+  else if (totalValid === 5) bandScore = '8.5';
+  else if (totalValid === 4) bandScore = '7.5';
+  else if (totalValid >= 2) bandScore = '6.5';
+
+  const wordRecord = {
+    word: w.word,
+    pos: w.pos,
+    meaning: w.meaning,
+    example: w.example,
+    collocations: w.collocations,
+    simple: simpleList,
+    complex: complexList,
+    completed: totalValid >= 4,
+    score: bandScore,
+    totalValid: totalValid,
+    reports: sentenceReports,
+    timestamp: new Date().toISOString()
+  };
+
+  if (!userSentencesData[topic.topicId]) {
+    userSentencesData[topic.topicId] = {};
+  }
+  userSentencesData[topic.topicId][w.id] = wordRecord;
+
+  try {
+    localStorage.setItem('ielts_vocab_sentences_data', JSON.stringify(userSentencesData));
+  } catch (e) {}
+
+  renderWordGrid();
+  displaySentenceEvaluationScorecard(wordRecord, autoTriggered);
+}
+
+function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
+  const notice = document.getElementById('sentenceValidationNotice');
+  if (!notice) return;
+
+  const autoBadge = autoTriggered ? '<div style="background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-bottom: 8px; font-weight: bold;">⏱️ Evaluated Automatically at 3:00 Expiration (Inputs Locked)</div>' : '';
+
+  let listHtml = '';
+  (data.reports || []).forEach(r => {
+    let icon = '✓';
+    let color = 'var(--accent-emerald)';
+    if (r.status === 'empty' || r.status === 'missing_word') {
+      icon = '✗';
+      color = 'var(--accent-rose)';
+    } else if (r.status === 'lacks_complexity' || r.status === 'too_short') {
+      icon = '⚠';
+      color = 'var(--accent-amber)';
+    }
+
+    listHtml += '<div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-top: 1px solid var(--border-color); font-size: 0.85rem;">' +
+      '<div><strong style="color: #fff;">' + r.type + ' #' + r.num + ':</strong> ' +
+      '<span style="color: ' + (r.text ? 'var(--text-primary)' : 'var(--text-muted)') + ';">' + (r.text ? '“' + r.text + '”' : '(Empty)') + '</span>' +
+      '<div style="font-size: 0.78rem; color: ' + color + '; margin-top: 2px;">' + r.note + '</div></div>' +
+      '<span style="font-weight: 800; color: ' + color + '; font-size: 1rem; padding-left: 8px;">' + icon + '</span></div>';
+  });
+
+  notice.innerHTML = '<div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">' +
+    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">' +
+    '<div>' + autoBadge + '<h4 style="color: #fff; font-size: 1.1rem; margin: 0;">Sentence Practice Evaluation</h4>' +
+    '<span style="font-size: 0.8rem; color: var(--text-secondary);">' + (data.totalValid || 0) + ' / 6 Sentences Met Band 8+ Criteria</span></div>' +
+    '<div style="text-align: right;"><span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); display: block;">Sentence Score</span>' +
+    '<span style="font-family: monospace; font-size: 1.8rem; font-weight: 800; color: var(--accent-emerald);">Band ' + (data.score || '8.0') + '</span></div></div>' +
+    '<div>' + listHtml + '</div></div>';
+}
+
+function exportWordToPDF() {
+  const topic = vocabTopics[currentTopicIndex];
+  const w = topic.words[currentWordIndex];
+  const topicData = userSentencesData[topic.topicId] || {};
+  const wordRecord = topicData[w.id] || {
+    simple: [
+      document.getElementById('simpleSentence1').value.trim(),
+      document.getElementById('simpleSentence2').value.trim(),
+      document.getElementById('simpleSentence3').value.trim()
+    ],
+    complex: [
+      document.getElementById('complexSentence1').value.trim(),
+      document.getElementById('complexSentence2').value.trim(),
+      document.getElementById('complexSentence3').value.trim()
+    ],
+    score: '8.0',
+    reports: []
+  };
+
+  const printWindow = window.open('', '_blank', 'width=850,height=900');
+  if (!printWindow) {
+    alert('Pop-up blocked. Please allow pop-ups for this site to generate PDF.');
+    return;
+  }
+
+  const htmlContent = '<!DOCTYPE html><html><head><meta charset="utf-8">' +
+    '<title>IELTS Vocabulary Study Sheet - ' + w.word + '</title>' +
+    '<style>' +
+    '@page { size: A4; margin: 20mm; }' +
+    'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1e293b; line-height: 1.6; margin: 0; padding: 20px; }' +
+    '.header { border-bottom: 2px solid #3b82f6; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }' +
+    '.header h1 { font-size: 22px; color: #1e3a8a; margin: 0; }' +
+    '.header .meta { font-size: 13px; color: #64748b; }' +
+    '.word-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 20px; }' +
+    '.word-title { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0; }' +
+    '.word-pos { font-size: 14px; color: #64748b; font-style: italic; margin-left: 6px; }' +
+    '.model-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-top: 10px; font-size: 14px; color: #1e40af; border-radius: 4px; }' +
+    '.colloc-tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 6px; margin-top: 4px; }' +
+    '.section-title { font-size: 16px; font-weight: 700; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-top: 24px; margin-bottom: 12px; }' +
+    '.sentence-item { margin-bottom: 10px; padding: 10px 14px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; }' +
+    '.sentence-label { font-weight: 700; color: #2563eb; margin-right: 6px; }' +
+    '.footer { margin-top: 35px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }' +
+    '.score-badge { float: right; background: #dcfce7; color: #166534; font-size: 18px; font-weight: 800; padding: 6px 14px; border-radius: 6px; border: 1px solid #bbf7d0; }' +
+    '</style></head><body>' +
+    '<div class="header"><div><h1>IELTS Band 8.5+ Vocabulary Study Record</h1>' +
+    '<div class="meta">Topic: <strong>' + topic.topicTitle + '</strong></div></div>' +
+    '<div class="meta">Date: ' + new Date().toLocaleDateString() + '</div></div>' +
+    '<div class="word-card"><div class="score-badge">Score: Band ' + (wordRecord.score || '8.0') + '</div>' +
+    '<div class="word-title">' + w.id + '. ' + w.word + ' <span class="word-pos">(' + (w.pos || 'academic') + ')</span></div>' +
+    '<div style="margin-top: 8px;"><strong>Definition:</strong> ' + w.meaning + '</div>' +
+    '<div class="model-box"><strong>Band 8.5 Model Sentence:</strong> “' + w.example + '”</div>' +
+    '<div style="margin-top: 10px;"><strong>Key Collocations:</strong> ' +
+    (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
+    '</div></div>' +
+    '<div class="section-title">Part A: 3 Simple Sentences (Candidate Practice)</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Simple #1:</span> ' + (wordRecord.simple[0] || '(Not entered)') + '</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Simple #2:</span> ' + (wordRecord.simple[1] || '(Not entered)') + '</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Simple #3:</span> ' + (wordRecord.simple[2] || '(Not entered)') + '</div>' +
+    '<div class="section-title">Part B: 3 Complex Sentences (Candidate Practice)</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Complex #1 (Subordinate):</span> ' + (wordRecord.complex[0] || '(Not entered)') + '</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Complex #2 (Conditional):</span> ' + (wordRecord.complex[1] || '(Not entered)') + '</div>' +
+    '<div class="sentence-item"><span class="sentence-label">Complex #3 (Relative/Cleft):</span> ' + (wordRecord.complex[2] || '(Not entered)') + '</div>' +
+    '<div class="footer">IELTS Mastery Platform • Target Band 8.5+ • Cambridge Standard Lexical Resource</div>' +
+    '<script>window.onload = function() { setTimeout(function() { window.print(); }, 400); };</script>' +
+    '</body></html>';
+
+  printWindow.document.open();
+  printWindow.document.write(htmlContent);
+  printWindow.document.close();
+}
+
 function setupCueCardView() {
   const topic = vocabTopics[currentTopicIndex];
   if (!topic) return;

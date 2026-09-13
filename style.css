@@ -1176,3 +1176,21 @@ header {
   color: #34d399;
   font-weight: 700;
 }
+
+/* Locked Input Styles */
+.locked-input {
+  background: #0d121c !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+  cursor: not-allowed !important;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  header, aside, .btn-group, .controls, #wordTimerBtn, #saveSentencesBtn {
+    display: none !important;
+  }
+}

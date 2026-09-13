@@ -404,6 +404,17 @@
           Write <strong>3 simple sentences</strong> focusing on accurate word collocations, followed by <strong>3 complex sentences</strong> demonstrating varied syntactic structures (subordinate clauses, conditionals, or inversions).
         </p>
 
+        
+        <div id="inputLockBanner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 1rem; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span style="font-size: 1.3rem;">🔒</span>
+            <div>
+              <strong>3-Minute Time Limit Reached!</strong>
+              <div style="font-size: 0.8rem; color: #f87171;">Inputs are locked. All sentences have been automatically analyzed and scored below.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.75rem; border-color: #ef4444; color: #fca5a5;" onclick="exportWordToPDF()">📄 Export PDF</button>
+        </div>
         <div class="sentences-section">
           <!-- 3 Simple Sentences -->
           <div class="sentence-category-block">
@@ -455,7 +466,8 @@
         <div id="sentenceValidationNotice" style="margin-top: 1rem;"></div>
 
         <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
-          <button class="btn btn-emerald" onclick="validateAndSaveSentences()">💾 Validate & Save 6 Sentences</button>
+          <button id="saveSentencesBtn" class="btn btn-emerald" onclick="evaluateAndSaveSentences(false)">💾 Validate & Save 6 Sentences</button>
+          <button class="btn btn-outline" style="border-color: #8b5cf6; color: #c084fc;" onclick="exportWordToPDF()">📄 Export to PDF</button>
           <button class="btn btn-primary" onclick="nextWord()">Next Word ➔</button>
         </div>
       </div>
