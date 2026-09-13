@@ -1112,6 +1112,600 @@ function showPDFExportToast(wordName, htmlContent) {
   }, 9000);
 }
 
+
+// ============================================================================
+// Master PDF Exporter: All 30 Words of Active Topic in a Single PDF
+// ============================================================================
+
+function exportAll30WordsToPDF() {
+  const topic = vocabTopics[currentTopicIndex];
+  if (!topic || !topic.words || !topic.words.length) {
+    alert('No active vocabulary topic found to export.');
+    return;
+  }
+
+  // 1. Sync active word DOM inputs into storage first so latest typing is captured
+  const activeW = topic.words[currentWordIndex];
+  if (activeW) {
+    const s1 = (document.getElementById('simpleSentence1') ? document.getElementById('simpleSentence1').value.trim() : '');
+    const s2 = (document.getElementById('simpleSentence2') ? document.getElementById('simpleSentence2').value.trim() : '');
+    const s3 = (document.getElementById('simpleSentence3') ? document.getElementById('simpleSentence3').value.trim() : '');
+    const c1 = (document.getElementById('complexSentence1') ? document.getElementById('complexSentence1').value.trim() : '');
+    const c2 = (document.getElementById('complexSentence2') ? document.getElementById('complexSentence2').value.trim() : '');
+    const c3 = (document.getElementById('complexSentence3') ? document.getElementById('complexSentence3').value.trim() : '');
+
+    if (s1 || s2 || s3 || c1 || c2 || c3) {
+      if (!userSentencesData[topic.topicId]) userSentencesData[topic.topicId] = {};
+      const existing = userSentencesData[topic.topicId][activeW.id] || {};
+      userSentencesData[topic.topicId][activeW.id] = {
+        ...existing,
+        word: activeW.word,
+        pos: activeW.pos,
+        meaning: activeW.meaning,
+        example: activeW.example,
+        collocations: activeW.collocations,
+        simple: [s1, s2, s3],
+        complex: [c1, c2, c3]
+      };
+    }
+  }
+
+  const topicData = userSentencesData[topic.topicId] || {};
+
+  // 2. Process all 30 words
+  let completedWordsCount = 0;
+  let totalSentencesWritten = 0;
+  let totalScoreSum = 0;
+  let scoredWordsCount = 0;
+
+  const processedWords = topic.words.map((w, idx) => {
+    const saved = topicData[w.id] || {};
+    const simple = saved.simple || ['', '', ''];
+    const complex = saved.complex || ['', '', ''];
+
+    const repSimple = [
+      analyzeSentenceLinguistics(simple[0], w, 'Simple', 1),
+      analyzeSentenceLinguistics(simple[1], w, 'Simple', 2),
+      analyzeSentenceLinguistics(simple[2], w, 'Simple', 3)
+    ];
+    const repComplex = [
+      analyzeSentenceLinguistics(complex[0], w, 'Complex', 1),
+      analyzeSentenceLinguistics(complex[1], w, 'Complex', 2),
+      analyzeSentenceLinguistics(complex[2], w, 'Complex', 3)
+    ];
+
+    let wordFilledCount = 0;
+    let wordScoreSum = 0;
+    [...repSimple, ...repComplex].forEach(r => {
+      if (r.status !== 'empty') {
+        wordFilledCount++;
+        wordScoreSum += r.score;
+        totalSentencesWritten++;
+      }
+    });
+
+    let wordScore = saved.score;
+    if (!wordScore) {
+      wordScore = wordFilledCount > 0 ? (wordScoreSum / wordFilledCount).toFixed(1) : '8.0';
+    }
+
+    if (wordFilledCount >= 2) {
+      completedWordsCount++;
+      totalScoreSum += parseFloat(wordScore);
+      scoredWordsCount++;
+    }
+
+    return {
+      wordObj: w,
+      index: idx + 1,
+      saved,
+      repSimple,
+      repComplex,
+      wordFilledCount,
+      wordScore
+    };
+  });
+
+  const overallTopicBand = scoredWordsCount > 0 ? (totalScoreSum / scoredWordsCount).toFixed(1) : '8.5';
+  const speechTranscript = (document.getElementById('vocabSpeechTranscript') ? document.getElementById('vocabSpeechTranscript').value.trim() : '');
+
+  // Helper to format sentence item in the master PDF
+  function formatMasterSentence(r, label, placeholderTip) {
+    if (r.status === 'empty') {
+      return '<div class="sentence-item empty">' +
+        '<div class="sentence-header">' +
+          '<span class="sentence-label">' + label + '</span>' +
+          '<span class="status-tag tag-empty">○ Practice Space</span>' +
+        '</div>' +
+        '<div class="sentence-text empty-text"><em>(Not attempted yet — ' + placeholderTip + ')</em></div>' +
+        '<div class="practice-line"></div>' +
+      '</div>';
+    }
+
+    const tagClass = r.status === 'valid' ? 'tag-valid' : (r.status === 'missing_word' ? 'tag-error' : 'tag-warning');
+
+    return '<div class="sentence-item">' +
+      '<div class="sentence-header">' +
+        '<span class="sentence-label">' + label + '</span>' +
+        '<span class="status-tag ' + tagClass + '">' + r.badge + '</span>' +
+      '</div>' +
+      '<div class="sentence-text">“' + r.text + '”</div>' +
+      '<div class="sentence-feedback">' + r.note + '</div>' +
+    '</div>';
+  }
+
+  // 3. Generate Index Table for Cover Page
+  let indexRowsHtml = '';
+  for (let i = 0; i < 30; i += 3) {
+    indexRowsHtml += '<tr>';
+    for (let col = 0; col < 3; col++) {
+      const item = processedWords[i + col];
+      if (item) {
+        const isDone = item.wordFilledCount >= 2;
+        const statusIcon = isDone ? '<span style="color:#166534;font-weight:bold;">✓ ' + item.wordScore + '</span>' : '<span style="color:#94a3b8;">○ Blank</span>';
+        indexRowsHtml += '<td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-size: 11px;">' +
+          '<strong>#' + item.index + ' ' + item.wordObj.word + '</strong> <small style="color:#64748b;">(' + (item.wordObj.pos || 'acad') + ')</small><br/>' +
+          statusIcon +
+        '</td>';
+      } else {
+        indexRowsHtml += '<td style="border: 1px solid #e2e8f0;"></td>';
+      }
+    }
+    indexRowsHtml += '</tr>';
+  }
+
+  // 4. Generate All 30 Word Study Sheets
+  let wordSheetsHtml = '';
+  processedWords.forEach((pw, i) => {
+    const w = pw.wordObj;
+    const isLast = (i === processedWords.length - 1);
+
+    wordSheetsHtml += '<div class="word-sheet' + (isLast ? '' : ' page-break') + '">' +
+      '<div class="sheet-header">' +
+        '<div>' +
+          '<div class="sheet-super">IELTS Band 8.5+ Lexical Resource • ' + topic.topicTitle + '</div>' +
+          '<h2 class="sheet-title">#' + pw.index + '. ' + w.word + ' <span class="sheet-pos">(' + (w.pos || 'academic') + ')</span></h2>' +
+        '</div>' +
+        '<div class="sheet-score-badge">' +
+          '<span style="font-size: 9px; text-transform: uppercase; display: block; color: #166534;">Word Target</span>' +
+          'Band ' + pw.wordScore +
+        '</div>' +
+      '</div>' +
+
+      '<div class="word-card-box">' +
+        '<div style="font-size: 13px; margin-bottom: 6px;"><strong>Academic Meaning:</strong> ' + w.meaning + '</div>' +
+        '<div class="model-sentence-box"><strong>Band 8.5 Cambridge Model:</strong> “' + w.example + '”</div>' +
+        '<div style="margin-top: 6px;">' +
+          '<strong>High-Frequency Collocations:</strong> ' +
+          (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
+        '</div>' +
+      '</div>' +
+
+      '<div class="section-divider">Part A: 3 Simple Sentences (Clarity & Collocation Focus)</div>' +
+      formatMasterSentence(pw.repSimple[0], 'Simple Sentence #1', 'Focus on clear subject + verb + direct collocation') +
+      formatMasterSentence(pw.repSimple[1], 'Simple Sentence #2', 'Express an independent academic proposition') +
+      formatMasterSentence(pw.repSimple[2], 'Simple Sentence #3', 'Aim for 7–12 words with natural context') +
+
+      '<div class="section-divider">Part B: 3 Complex Sentences (Syntactic Variety & Subordination)</div>' +
+      formatMasterSentence(pw.repComplex[0], 'Complex Sentence #1 (Subordinate)', 'Use although / because / whereas / while') +
+      formatMasterSentence(pw.repComplex[1], 'Complex Sentence #2 (Conditional)', 'Use if / unless / provided that / had I') +
+      formatMasterSentence(pw.repComplex[2], 'Complex Sentence #3 (Relative/Inversion)', 'Use which / whereby / not only... but also') +
+
+      '<div class="sheet-footer">' +
+        '<span>Word #' + pw.index + ' of 30 • ' + (pw.wordFilledCount > 0 ? (pw.wordFilledCount + '/6 Sentences Completed') : 'Template') + '</span>' +
+        '<span>IELTS Preparation Mastery • Cambridge Standard</span>' +
+      '</div>' +
+    '</div>';
+  });
+
+  // 5. Complete Master HTML Document
+  const masterHtml = '<!DOCTYPE html>' +
+'<html lang="en">' +
+'<head>' +
+  '<meta charset="utf-8">' +
+  '<title>IELTS 30-Word Master Lexical Portfolio - ' + topic.topicTitle + '</title>' +
+  '<style>' +
+    '@page { size: A4 portrait; margin: 12mm 15mm; }' +
+    '* { box-sizing: border-box; }' +
+    'body {' +
+      'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;' +
+      'color: #0f172a;' +
+      'line-height: 1.45;' +
+      'margin: 0;' +
+      'padding: 0;' +
+      'background: #ffffff;' +
+      '-webkit-print-color-adjust: exact;' +
+      'print-color-adjust: exact;' +
+    '}' +
+    '.page-break { page-break-after: always; break-after: page; }' +
+    '.cover-page {' +
+      'padding: 16px 8px;' +
+      'page-break-after: always;' +
+      'break-after: page;' +
+      'min-height: 98vh;' +
+      'display: flex;' +
+      'flex-direction: column;' +
+      'justify-content: space-between;' +
+    '}' +
+    '.cover-header {' +
+      'border-bottom: 3px solid #3b82f6;' +
+      'padding-bottom: 12px;' +
+      'margin-bottom: 16px;' +
+    '}' +
+    '.cover-badge {' +
+      'background: #dbeafe;' +
+      'color: #1e40af;' +
+      'padding: 4px 10px;' +
+      'border-radius: 999px;' +
+      'font-size: 11px;' +
+      'font-weight: 700;' +
+      'text-transform: uppercase;' +
+      'letter-spacing: 0.05em;' +
+    '}' +
+    '.cover-title {' +
+      'font-size: 26px;' +
+      'color: #1e3a8a;' +
+      'margin: 8px 0 4px 0;' +
+      'font-weight: 800;' +
+    '}' +
+    '.cover-subtitle {' +
+      'font-size: 14px;' +
+      'color: #475569;' +
+      'font-weight: 500;' +
+    '}' +
+    '.stats-grid {' +
+      'display: grid;' +
+      'grid-template-columns: repeat(4, 1fr);' +
+      'gap: 10px;' +
+      'margin: 14px 0;' +
+    '}' +
+    '.stat-card {' +
+      'background: #f8fafc;' +
+      'border: 1px solid #e2e8f0;' +
+      'border-radius: 8px;' +
+      'padding: 10px;' +
+      'text-align: center;' +
+    '}' +
+    '.stat-num {' +
+      'font-size: 20px;' +
+      'font-weight: 800;' +
+      'color: #2563eb;' +
+      'font-family: monospace;' +
+    '}' +
+    '.stat-label {' +
+      'font-size: 10px;' +
+      'color: #64748b;' +
+      'text-transform: uppercase;' +
+      'font-weight: 700;' +
+      'margin-top: 2px;' +
+    '}' +
+    '.cue-box {' +
+      'background: #eff6ff;' +
+      'border: 1px solid #bfdbfe;' +
+      'border-radius: 8px;' +
+      'padding: 12px 16px;' +
+      'margin-bottom: 16px;' +
+    '}' +
+    '.cue-title {' +
+      'font-size: 13px;' +
+      'font-weight: 800;' +
+      'color: #1e40af;' +
+      'margin-bottom: 4px;' +
+    '}' +
+    '.cue-bullets {' +
+      'font-size: 11.5px;' +
+      'color: #1e3a8a;' +
+      'margin: 0;' +
+      'padding-left: 18px;' +
+    '}' +
+    '.index-table {' +
+      'width: 100%;' +
+      'border-collapse: collapse;' +
+      'margin-top: 10px;' +
+    '}' +
+    '.word-sheet {' +
+      'padding: 14px 4px;' +
+      'min-height: 96vh;' +
+      'display: flex;' +
+      'flex-direction: column;' +
+      'justify-content: space-between;' +
+    '}' +
+    '.sheet-header {' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: flex-end;' +
+      'border-bottom: 2px solid #2563eb;' +
+      'padding-bottom: 8px;' +
+      'margin-bottom: 12px;' +
+    '}' +
+    '.sheet-super {' +
+      'font-size: 10.5px;' +
+      'color: #64748b;' +
+      'text-transform: uppercase;' +
+      'letter-spacing: 0.04em;' +
+      'font-weight: 700;' +
+    '}' +
+    '.sheet-title {' +
+      'font-size: 22px;' +
+      'color: #0f172a;' +
+      'margin: 2px 0 0 0;' +
+      'font-weight: 800;' +
+    '}' +
+    '.sheet-pos {' +
+      'font-size: 13px;' +
+      'color: #64748b;' +
+      'font-style: italic;' +
+    '}' +
+    '.sheet-score-badge {' +
+      'background: #dcfce7;' +
+      'color: #166534;' +
+      'font-size: 15px;' +
+      'font-weight: 800;' +
+      'padding: 4px 12px;' +
+      'border-radius: 6px;' +
+      'border: 1px solid #86efac;' +
+      'text-align: right;' +
+    '}' +
+    '.word-card-box {' +
+      'background: #f8fafc;' +
+      'border: 1px solid #cbd5e1;' +
+      'border-radius: 8px;' +
+      'padding: 12px 16px;' +
+      'margin-bottom: 14px;' +
+    '}' +
+    '.model-sentence-box {' +
+      'background: #eff6ff;' +
+      'border-left: 3px solid #3b82f6;' +
+      'padding: 8px 12px;' +
+      'font-size: 12.5px;' +
+      'color: #1e40af;' +
+      'border-radius: 4px;' +
+      'margin: 6px 0;' +
+    '}' +
+    '.colloc-tag {' +
+      'display: inline-block;' +
+      'background: #e0e7ff;' +
+      'color: #3730a3;' +
+      'padding: 2px 7px;' +
+      'border-radius: 4px;' +
+      'font-size: 11px;' +
+      'font-weight: 600;' +
+      'margin-right: 5px;' +
+      'margin-top: 3px;' +
+    '}' +
+    '.section-divider {' +
+      'font-size: 12.5px;' +
+      'font-weight: 800;' +
+      'color: #1e3a8a;' +
+      'border-bottom: 1px solid #cbd5e1;' +
+      'padding-bottom: 3px;' +
+      'margin-top: 10px;' +
+      'margin-bottom: 8px;' +
+      'text-transform: uppercase;' +
+      'letter-spacing: 0.03em;' +
+    '}' +
+    '.sentence-item {' +
+      'background: #ffffff;' +
+      'border: 1px solid #e2e8f0;' +
+      'border-radius: 6px;' +
+      'padding: 8px 12px;' +
+      'margin-bottom: 8px;' +
+    '}' +
+    '.sentence-item.empty {' +
+      'background: #fdfdfd;' +
+      'border: 1px dashed #cbd5e1;' +
+    '}' +
+    '.sentence-header {' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: center;' +
+      'margin-bottom: 3px;' +
+    '}' +
+    '.sentence-label {' +
+      'font-weight: 700;' +
+      'color: #2563eb;' +
+      'font-size: 12px;' +
+    '}' +
+    '.status-tag {' +
+      'font-size: 10px;' +
+      'font-weight: 700;' +
+      'padding: 2px 6px;' +
+      'border-radius: 4px;' +
+    '}' +
+    '.tag-valid { background: #dcfce7; color: #166534; }' +
+    '.tag-warning { background: #fef3c7; color: #92400e; }' +
+    '.tag-error { background: #fee2e2; color: #991b1b; }' +
+    '.tag-empty { background: #f1f5f9; color: #64748b; }' +
+    '.sentence-text {' +
+      'font-size: 12.5px;' +
+      'color: #0f172a;' +
+      'line-height: 1.4;' +
+    '}' +
+    '.empty-text {' +
+      'color: #94a3b8;' +
+      'font-size: 12px;' +
+    '}' +
+    '.practice-line {' +
+      'border-bottom: 1px dotted #cbd5e1;' +
+      'margin-top: 10px;' +
+      'height: 2px;' +
+    '}' +
+    '.sentence-feedback {' +
+      'font-size: 11px;' +
+      'color: #475569;' +
+      'margin-top: 3px;' +
+      'border-top: 1px dotted #e2e8f0;' +
+      'padding-top: 3px;' +
+    '}' +
+    '.sheet-footer {' +
+      'margin-top: 14px;' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'font-size: 10.5px;' +
+      'color: #94a3b8;' +
+      'border-top: 1px solid #e2e8f0;' +
+      'padding-top: 6px;' +
+    '}' +
+  '</style>' +
+'</head>' +
+'<body>' +
+  '<!-- MASTER COVER & OVERVIEW PAGE -->' +
+  '<div class="cover-page">' +
+    '<div>' +
+      '<div class="cover-header">' +
+        '<span class="cover-badge">IELTS Band 8.5+ Lexical Resource Master Guide</span>' +
+        '<h1 class="cover-title">Complete 30-Word Academic Vocabulary Portfolio</h1>' +
+        '<div class="cover-subtitle">Theme: <strong>' + topic.topicTitle + '</strong></div>' +
+      '</div>' +
+
+      '<div class="stats-grid">' +
+        '<div class="stat-card">' +
+          '<div class="stat-num">30</div>' +
+          '<div class="stat-label">Total C1/C2 Words</div>' +
+        '</div>' +
+        '<div class="stat-card">' +
+          '<div class="stat-num">' + completedWordsCount + ' / 30</div>' +
+          '<div class="stat-label">Words Practiced</div>' +
+        '</div>' +
+        '<div class="stat-card">' +
+          '<div class="stat-num">' + totalSentencesWritten + ' / 180</div>' +
+          '<div class="stat-label">Sentences Formed</div>' +
+        '</div>' +
+        '<div class="stat-card">' +
+          '<div class="stat-num">Band ' + overallTopicBand + '</div>' +
+          '<div class="stat-label">Target Lexical Score</div>' +
+        '</div>' +
+      '</div>' +
+
+      (topic.speechCueCard ? (
+        '<div class="cue-box">' +
+          '<div class="cue-title">Grand Speech Cue Card Challenge: ' + topic.speechCueCard.title + '</div>' +
+          '<ul class="cue-bullets">' +
+            (topic.speechCueCard.prompts || []).map(p => '<li>' + p + '</li>').join('') +
+          '</ul>' +
+          (speechTranscript ? ('<div style="margin-top: 8px; font-size: 11.5px; color: #1e3a8a; border-top: 1px dashed #bfdbfe; padding-top: 6px;"><strong>Candidate Speech Response:</strong> “' + speechTranscript + '”</div>') : '') +
+        '</div>'
+      ) : '') +
+
+      '<div>' +
+        '<div style="font-size: 12px; font-weight: 800; color: #1e3a8a; text-transform: uppercase; margin-bottom: 4px;">' +
+          'Master Lexical Index (30 Topic Words & Practice Status)' +
+        '</div>' +
+        '<table class="index-table">' + indexRowsHtml + '</table>' +
+      '</div>' +
+    '</div>' +
+
+    '<div style="text-align: center; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 8px;">' +
+      'Official IELTS Preparation Simulator • Complete 30-Word Master Study Portfolio • Cambridge C1/C2 Standard' +
+    '</div>' +
+  '</div>' +
+
+  '<!-- 30 INDIVIDUAL WORD DRILL PAGES -->' +
+  wordSheetsHtml +
+'</body>' +
+'</html>';
+
+  // Trigger print dialog using dedicated master iframe
+  let masterPrintFrame = document.getElementById('vocabMasterPrintIframe');
+  if (!masterPrintFrame) {
+    masterPrintFrame = document.createElement('iframe');
+    masterPrintFrame.id = 'vocabMasterPrintIframe';
+    masterPrintFrame.style.position = 'fixed';
+    masterPrintFrame.style.right = '0';
+    masterPrintFrame.style.bottom = '0';
+    masterPrintFrame.style.width = '0';
+    masterPrintFrame.style.height = '0';
+    masterPrintFrame.style.border = '0';
+    masterPrintFrame.style.visibility = 'hidden';
+    document.body.appendChild(masterPrintFrame);
+  }
+
+  const iframeDoc = masterPrintFrame.contentWindow.document;
+  iframeDoc.open();
+  iframeDoc.write(masterHtml);
+  iframeDoc.close();
+
+  showMasterPDFToast(topic.topicTitle, masterHtml);
+
+  setTimeout(() => {
+    try {
+      masterPrintFrame.contentWindow.focus();
+      masterPrintFrame.contentWindow.print();
+    } catch(err) {
+      console.warn('Iframe print failed, opening fallback window:', err);
+      const wnd = window.open('', '_blank');
+      if (wnd) {
+        wnd.document.open();
+        wnd.document.write(masterHtml);
+        wnd.document.close();
+        wnd.focus();
+        wnd.print();
+      }
+    }
+  }, 400);
+}
+
+function showMasterPDFToast(topicTitle, masterHtml) {
+  let toast = document.getElementById('masterPdfToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'masterPdfToast';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '24px';
+    toast.style.right = '24px';
+    toast.style.zIndex = '9999';
+    toast.style.maxWidth = '460px';
+    toast.style.background = '#172033';
+    toast.style.border = '2px solid #8b5cf6';
+    toast.style.borderRadius = '10px';
+    toast.style.boxShadow = '0 12px 35px rgba(0,0,0,0.7)';
+    toast.style.padding = '16px 20px';
+    toast.style.color = '#fff';
+    toast.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+    document.body.appendChild(toast);
+  }
+
+  const safeTopic = (topicTitle || 'Master').replace(/[^a-zA-Z0-9]/g, '_');
+
+  toast.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">' +
+    '<div>' +
+      '<div style="font-weight: 800; color: #c084fc; font-size: 1rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">' +
+        '<span>📚 30-Word Master PDF Ready</span>' +
+      '</div>' +
+      '<div style="font-size: 0.83rem; color: #cbd5e1; line-height: 1.4;">' +
+        'In your browser print dialog, select <strong>"Save as PDF"</strong> to save the complete 30-word booklet to your computer.' +
+      '</div>' +
+      '<div style="margin-top: 10px; display: flex; gap: 8px;">' +
+        '<button id="directDownloadMasterHtmlBtn" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); border: none; color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 0.78rem; cursor: pointer; font-weight: 700;">' +
+          '💾 Direct Download All 30 Words (.html)' +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+    '<button onclick="this.closest(\'#masterPdfToast\').style.display=\'none\'" style="background: none; border: none; color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 0 4px;">&times;</button>' +
+  '</div>';
+  toast.style.display = 'block';
+
+  const dlBtn = document.getElementById('directDownloadMasterHtmlBtn');
+  if (dlBtn) {
+    dlBtn.onclick = () => {
+      const blob = new Blob([masterHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'IELTS_All_30_Words_' + safeTopic + '.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  setTimeout(() => {
+    if (toast) toast.style.display = 'none';
+  }, 10000);
+}
+
+
 function setupCueCardView() {
   const topic = vocabTopics[currentTopicIndex];
   if (!topic) return;

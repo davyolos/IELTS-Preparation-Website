@@ -348,6 +348,7 @@
           <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">Active Topic:</label>
           <select id="vocabTopicSelect" class="vocab-select" onchange="onTopicChanged()"></select>
           <button id="aiVocabGenBtn" class="btn btn-ai" onclick="generateNewAIVocab()">✨ AI Generate 30 Words</button>
+          <button id="exportAll30PdfBtn" class="btn btn-pdf-export" onclick="exportAll30WordsToPDF()">📚 Export All 30 Words (Master PDF)</button>
         </div>
       </div>
 
@@ -364,9 +365,12 @@
 
     <!-- 30 Word Interactive Grid Buttons -->
     <div class="card">
-      <div class="card-title">
-        <span>Word Selector (Click any of the 30 words to practice sentences)</span>
-        <small style="color: var(--accent-emerald);">✓ Green = Completed</small>
+      <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <span>Word Selector (Click any of the 30 words to practice sentences)</span>
+          <small style="color: var(--accent-emerald); margin-left: 0.5rem;">✓ Green = Completed</small>
+        </div>
+        <button class="btn btn-pdf-export" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="exportAll30WordsToPDF()">📚 Export All 30 Words (Single PDF)</button>
       </div>
       <div id="wordGrid" class="word-grid"></div>
     </div>
@@ -491,7 +495,10 @@
           </p>
         </div>
 
-        <button class="btn btn-outline" onclick="speakVocabCueCard()">🔊 Read Cue Card (TTS)</button>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="btn btn-pdf-export" style="font-size: 0.82rem;" onclick="exportAll30WordsToPDF()">📚 Export All 30 Words to PDF</button>
+          <button class="btn btn-outline" onclick="speakVocabCueCard()">🔊 Read Cue Card (TTS)</button>
+        </div>
       </div>
 
       <!-- Cue Card Prompts -->
