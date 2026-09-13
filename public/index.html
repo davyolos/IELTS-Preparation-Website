@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IELTS Mastery Platform (Target Band 8.5+)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="assets/medieval_logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,17 +16,17 @@
   <!-- Top Header Navigation -->
   <header>
     <div class="brand-container">
-      <div class="brand-logo">8+</div>
+      <img src="assets/medieval_logo.jpg" alt="IELTS Mastery Royal Crest" class="brand-crest-logo" />
       <div class="brand-text">
-        <h1>IELTS <span>Mastery</span></h1>
-        <div class="brand-subtitle">Band 8.5+ Preparation Platform</div>
+        <h1>IELTS <span class="gold-shimmer">MASTERY</span></h1>
+        <div class="brand-subtitle">⚜️ Royal Language Academy • Band 8+ Scriptorium</div>
       </div>
       
       <!-- Top Navigation Tabs -->
       <nav class="top-nav">
-        <button class="top-nav-link active" data-view="dashboardView" onclick="showView('dashboardView')">🏠 Dashboard</button>
-        <button class="top-nav-link" data-view="speakingView" onclick="showView('speakingView')">🎙️ Speaking</button>
-        <button class="top-nav-link" data-view="vocabsView" onclick="showView('vocabsView')">📚 Vocabs (30-Word Drills)</button>
+        <button class="top-nav-link active" data-view="dashboardView" onclick="showView('dashboardView')">🏛️ Grand Hall</button>
+        <button class="top-nav-link" data-view="speakingView" onclick="showView('speakingView')">⚔️ Speaking Arena</button>
+        <button class="top-nav-link" data-view="vocabsView" onclick="showView('vocabsView')">📜 Scriptorium Vocabs</button>
       </nav>
     </div>
 
@@ -43,11 +46,11 @@
     
     <div class="dashboard-hero">
       <div>
-        <h2>Welcome to IELTS Preparation Mastery</h2>
-        <p>Your comprehensive private simulator designed to elevate your English proficiency to <strong>Band 8.0 - 9.0</strong> across all four official IELTS testing modules and academic vocabulary.</p>
+        <h2>Imperial Academy of IELTS Mastery</h2>
+        <p>An esteemed scholarly sanctuary engineered to elevate your lexicon, rhetoric, and fluency to <strong>Band 8.0 – 9.0</strong> across the sacred examinations of Cambridge English.</p>
       </div>
       <div style="text-align: right;">
-        <div class="badge" style="font-size: 0.9rem; padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2);">Target: Band 8.5+</div>
+        <div class="badge" style="font-size: 0.9rem; padding: 0.5rem 1.1rem; background: rgba(212, 175, 55, 0.15); border-color: #d4af37; color: #f5eedc;"><span style="color: #d4af37;">👑</span> Royal Target: Band 8.5+</div>
       </div>
     </div>
 
@@ -60,7 +63,7 @@
           <span class="module-status-badge status-active">● Active Simulator</span>
         </div>
         <div class="module-body">
-          <h3>Speaking Module</h3>
+          <h3>Speaking Arena (Royal Oratory)</h3>
           <p>Full 3-phase Cambridge speaking exam simulator with real-time speech recognition, 7-criteria evaluation, and Band 8.5+ native rephrasing.</p>
           <ul class="module-features">
             <li>Part 1: 15+ Familiar Topic Categories</li>
@@ -70,7 +73,7 @@
             <li>AI Dynamic Question Generator for Custom Themes</li>
           </ul>
         </div>
-        <button class="module-btn btn-primary">Launch Speaking Module ➔</button>
+        <button class="module-btn btn-primary">Enter Speaking Arena ➔</button>
       </div>
 
       <!-- 2. Vocabulary Practice Module (Active) -->
@@ -80,8 +83,8 @@
           <span class="module-status-badge status-active" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border-color: rgba(139, 92, 246, 0.4);">✨ AI Feature - Active</span>
         </div>
         <div class="module-body">
-          <h3>Vocabulary Practice Arena</h3>
-          <p>Intensive topic-based vocabulary drills. Learn 30 curated C1/C2 words, practice 3 simple + 3 complex sentences per word (3-min timer), and finish with a 3-minute cue card speech challenge.</p>
+          <h3>Imperial Scriptorium (Lexicon)</h3>
+          <p>Sacred daily vocabulary drills. Master 30 curated Band 8+ academic words rotated every 24 hours, construct 3 simple and 3 complex sentences without time pressure, and culminate in the Grand Speech Challenge.</p>
           <ul class="module-features">
             <li>30 Band 8+ Words under a Single Cohesive Topic</li>
             <li>Interactive 30-Word Selection Grid</li>
@@ -91,7 +94,7 @@
             <li>Target Vocabulary Density Scoring & C2 Rephrasing</li>
           </ul>
         </div>
-        <button class="module-btn" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: #fff;">Launch Vocab Arena ➔</button>
+        <button class="module-btn" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: #fff;">Enter Scriptorium ➔</button>
       </div>
 
       <!-- 3. Writing Module (Under Development) -->
@@ -101,7 +104,7 @@
           <span class="module-status-badge status-soon">⏳ Under Development</span>
         </div>
         <div class="module-body">
-          <h3>Writing Module</h3>
+          <h3>Royal Chancellery (Script & Rhetoric)</h3>
           <p>Automated essay analysis and graph reporting with feedback on Task Achievement, Coherence & Cohesion, Lexical Resource, and Grammatical Range.</p>
           <ul class="module-features">
             <li>Task 1: Line Graphs, Bar Charts, Tables & Processes</li>
@@ -120,7 +123,7 @@
           <span class="module-status-badge status-soon">⏳ Under Development</span>
         </div>
         <div class="module-body">
-          <h3>Reading Module</h3>
+          <h3>Ancient Archives (Scholarly Texts)</h3>
           <p>Time-pressured passage drills with automatic grading for True/False/Not Given, Paragraph Headings, and Summary Completion.</p>
           <ul class="module-features">
             <li>Academic & General Reading Passages</li>
@@ -139,7 +142,7 @@
           <span class="module-status-badge status-soon">⏳ Under Development</span>
         </div>
         <div class="module-body">
-          <h3>Listening Module</h3>
+          <h3>Acoustic Hall (Monologues & Dialects)</h3>
           <p>Full 4-section listening practice featuring British, Australian, and North American accents with instant transcript and distractor analysis.</p>
           <ul class="module-features">
             <li>Section 1: Social Everyday Dialogues</li>
