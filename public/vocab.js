@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // IELTS Vocabulary Mastery Module (30 Words per Topic + Speech Challenge)
 // ============================================================================
 
@@ -452,25 +452,25 @@ function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
   let status = 'valid';
   let badge = '✓ Accurate & Natural';
   let color = 'var(--accent-emerald)';
-  let score = 8.5;
+  let score = null;
 
   if (!wordFound) {
     status = 'missing_word';
     badge = '✗ Word Missing';
     color = 'var(--accent-rose)';
-    score = 5.5;
+    score = null;
   } else if (!grammarOk || !wordFitOk) {
     status = 'grammar_issue';
     badge = '⚠ Grammar / Word Fit';
     color = 'var(--accent-amber)';
-    score = 6.5;
+    score = null;
   } else if (!clauseStructureOk) {
     status = 'lacks_complexity';
     badge = '⚠ Needs Complexity';
     color = 'var(--accent-amber)';
-    score = 7.0;
+    score = null;
   } else if (detectedColloc) {
-    score = 9.0;
+    score = null;
     badge = '🌟 Master Collocation';
   }
 
@@ -615,13 +615,9 @@ function evaluateAndSaveSentences(autoTriggered = false) {
     }
   });
 
-  let overallBand = '5.0';
-  if (attemptedCount > 0) {
-    const rawAvg = totalScoreSum / attemptedCount;
-    const scaledScore = attemptedCount >= 3 ? rawAvg : (rawAvg * 0.85 + 1.0);
-    overallBand = (Math.round(scaledScore * 2) / 2).toFixed(1);
-    if (parseFloat(overallBand) > 9.0) overallBand = '9.0';
-  }
+  let practiceStatus = '○ Not Attempted';
+  if (validCount >= 3) practiceStatus = '✓ Verified Accurate (' + attemptedCount + '/6)';
+  else if (attemptedCount > 0) practiceStatus = '◐ In Progress (' + attemptedCount + '/6)';
 
   const wordRecord = {
     word: w.word,
@@ -632,7 +628,7 @@ function evaluateAndSaveSentences(autoTriggered = false) {
     simple: simpleList,
     complex: complexList,
     completed: attemptedCount >= 3 && validCount >= 2,
-    score: overallBand,
+    status: practiceStatus,
     attemptedCount,
     validCount,
     reports,
@@ -752,7 +748,9 @@ function exportWordToPDF() {
     }
   });
 
-  const displayScore = filledCount > 0 ? (totalScore / filledCount).toFixed(1) : (savedRecord.score || '8.0');
+  let singleWordStatus = 'Practice Space';
+  if (filledCount >= 3) singleWordStatus = '✓ Verified Accurate (' + filledCount + '/6)';
+  else if (filledCount > 0) singleWordStatus = '◐ In Progress (' + filledCount + '/6)';
 
   function formatPDFSentenceItem(r, label) {
     if (r.status === 'empty') {
@@ -963,7 +961,7 @@ function exportWordToPDF() {
 '<body>' +
   '<div class="header">' +
     '<div>' +
-      '<span class="badge-top">IELTS Band 8.5+ Academic Mastery</span>' +
+      '<span class="badge-top">IELTS Academic Lexical Mastery</span>' +
       '<h1>Candidate Vocabulary Study Record</h1>' +
       '<div class="meta">Topic: <strong>' + topic.topicTitle + '</strong></div>' +
     '</div>' +
@@ -979,7 +977,7 @@ function exportWordToPDF() {
       '<div class="score-badge">' + (filledCount > 0 ? (filledCount + '/6 Sentences Completed') : 'Study Template') + '</div>' +
     '</div>' +
     '<div class="definition-row"><strong>Definition:</strong> ' + w.meaning + '</div>' +
-    '<div class="model-box"><strong>Band 8.5 Model Sentence:</strong> “' + w.example + '”</div>' +
+    '<div class="model-box"><strong>Cambridge Model Sentence:</strong> “' + w.example + '”</div>' +
     '<div>' +
       '<strong>High-Scoring Collocations:</strong> ' +
       (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
@@ -1184,15 +1182,13 @@ function exportAll30WordsToPDF() {
       }
     });
 
-    let wordScore = saved.score;
-    if (!wordScore) {
-      wordScore = wordFilledCount > 0 ? (wordScoreSum / wordFilledCount).toFixed(1) : '8.0';
-    }
-
-    if (wordFilledCount >= 2) {
+    let wordStatus = '○ Practice Space';
+    if (wordFilledCount >= 3) {
+      wordStatus = '✓ Verified (' + wordFilledCount + '/6)';
       completedWordsCount++;
-      totalScoreSum += parseFloat(wordScore);
-      scoredWordsCount++;
+    } else if (wordFilledCount > 0) {
+      wordStatus = '◐ In Progress (' + wordFilledCount + '/6)';
+      completedWordsCount++;
     }
 
     return {
@@ -1202,11 +1198,11 @@ function exportAll30WordsToPDF() {
       repSimple,
       repComplex,
       wordFilledCount,
-      wordScore
+      wordStatus
     };
   });
 
-  const overallTopicBand = scoredWordsCount > 0 ? (totalScoreSum / scoredWordsCount).toFixed(1) : '8.5';
+  const topicStatus = completedWordsCount >= 15 ? '✓ Highly Active (' + completedWordsCount + '/30)' : (completedWordsCount > 0 ? '◐ In Progress (' + completedWordsCount + '/30)' : '○ Not Started (0/30)');
   const speechTranscript = (document.getElementById('vocabSpeechTranscript') ? document.getElementById('vocabSpeechTranscript').value.trim() : '');
 
   // Helper to format sentence item in the master PDF
@@ -1242,7 +1238,7 @@ function exportAll30WordsToPDF() {
       const item = processedWords[i + col];
       if (item) {
         const isDone = item.wordFilledCount >= 2;
-        const statusIcon = isDone ? '<span style="color:#166534;font-weight:bold;">✓ Practiced</span>' : '<span style="color:#94a3b8;">○ Blank</span>';
+        const statusIcon = item.wordFilledCount >= 3 ? '<span style="color:#166534;font-weight:bold;">✓ Done (' + item.wordFilledCount + '/6)</span>' : (item.wordFilledCount > 0 ? '<span style="color:#d97706;font-weight:bold;">◐ ' + item.wordFilledCount + '/6</span>' : '<span style="color:#94a3b8;">○ Blank</span>');
         indexRowsHtml += '<td style="padding: 5px 8px; border: 1px solid #e2e8f0; font-size: 11px;">' +
           '<strong>#' + item.index + ' ' + item.wordObj.word + '</strong> <small style="color:#64748b;">(' + (item.wordObj.pos || 'acad') + ')</small><br/>' +
           statusIcon +
@@ -1263,18 +1259,15 @@ function exportAll30WordsToPDF() {
     wordSheetsHtml += '<div class="word-sheet' + (isLast ? '' : ' page-break') + '">' +
       '<div class="sheet-header">' +
         '<div>' +
-          '<div class="sheet-super">IELTS Band 8.5+ Lexical Resource • ' + topic.topicTitle + '</div>' +
+          '<div class="sheet-super">IELTS Academic Lexical Resource • ' + topic.topicTitle + '</div>' +
           '<h2 class="sheet-title">#' + pw.index + '. ' + w.word + ' <span class="sheet-pos">(' + (w.pos || 'academic') + ')</span></h2>' +
         '</div>' +
-        '<div class="sheet-score-badge">' +
-          '<span style="font-size: 9px; text-transform: uppercase; display: block; color: #166534;">Practice Status</span>' +
-          (pw.wordFilledCount >= 2 ? '✓ Practiced' : '○ Practice Space') +
-        '</div>' +
+        '<div class="sheet-score-badge"><span style="font-size: 9px; text-transform: uppercase; display: block; color: #166534;">Drill Status</span>' + pw.wordStatus + '</div>' +
       '</div>' +
 
       '<div class="word-card-box">' +
         '<div style="font-size: 13px; margin-bottom: 6px;"><strong>Academic Meaning:</strong> ' + w.meaning + '</div>' +
-        '<div class="model-sentence-box"><strong>Band 8.5 Cambridge Model:</strong> “' + w.example + '”</div>' +
+        '<div class="model-sentence-box"><strong>Cambridge Model Sentence:</strong> “' + w.example + '”</div>' +
         '<div style="margin-top: 6px;">' +
           '<strong>High-Frequency Collocations:</strong> ' +
           (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
@@ -1553,7 +1546,7 @@ function exportAll30WordsToPDF() {
   '<div class="cover-page">' +
     '<div>' +
       '<div class="cover-header">' +
-        '<span class="cover-badge">IELTS Band 8.5+ Lexical Resource Master Guide</span>' +
+        '<span class="cover-badge">IELTS Academic Lexical Resource Master Guide</span>' +
         '<h1 class="cover-title">Complete 30-Word Academic Vocabulary Portfolio</h1>' +
         '<div class="cover-subtitle">Theme: <strong>' + topic.topicTitle + '</strong></div>' +
       '</div>' +
@@ -1572,8 +1565,8 @@ function exportAll30WordsToPDF() {
           '<div class="stat-label">Sentences Formed</div>' +
         '</div>' +
         '<div class="stat-card">' +
-          '<div class="stat-num">' + completedWordsCount + ' / 30</div>' +
-          '<div class="stat-label">Words Verified</div>' +
+          '<div class="stat-num" style="font-size: 15px; font-weight: 800; color: ' + (completedWordsCount > 0 ? '#2563eb' : '#94a3b8') + ';">' + (completedWordsCount > 0 ? (completedWordsCount + ' / 30') : '0 / 30') + '</div>' +
+          '<div class="stat-label">Words Practiced</div>' +
         '</div>' +
       '</div>' +
 
