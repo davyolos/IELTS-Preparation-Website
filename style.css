@@ -1401,3 +1401,42 @@ header {
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
   background: #0c1424;
 }
+
+/* ==========================================================================
+   24-Hour Daily Topic Cycle Banner & Indicators
+   ========================================================================== */
+
+.daily-cycle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.daily-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-emerald);
+  display: inline-block;
+  animation: pulse-emerald 2s infinite ease-in-out;
+}
+
+@keyframes pulse-emerald {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.daily-timer-divider {
+  color: #475569;
+  font-weight: 700;
+}
+

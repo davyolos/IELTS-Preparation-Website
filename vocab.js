@@ -5,9 +5,18 @@
 let vocabTopics = [];
 let currentTopicIndex = 0;
 let currentWordIndex = 0;
-let wordTimerInterval = null;
-let wordSecondsRemaining = 180; // 3 minutes per word
-let isWordTimerRunning = false;
+
+// 24-Hour Daily Topic Cycle State (Timezone-Aware / Midnight Local Time)
+let dailyTopicIndex = 0;
+let dailyCountdownTimer = null;
+let isKeepTopicActive = false;
+try {
+  isKeepTopicActive = localStorage.getItem('ielts_vocab_keep_topic') === 'true';
+} catch(e) {}
+let userSelectedTopicId = null;
+try {
+  userSelectedTopicId = localStorage.getItem('ielts_vocab_selected_topic_id') || null;
+} catch(e) {}
 
 // Sentence storage: topicIndex -> wordIndex -> { simple: ["", "", ""], complex: ["", "", ""], completed: bool }
 let userSentencesData = {};
@@ -19,6 +28,114 @@ let prepSecondsLeft = 60; // 1 min prep
 let speechSecondsElapsed = 0; // 2 min speak
 let isVocabSpeaking = false;
 let vocabSpeechRecognition = null;
+
+// ============================================================================
+// 24-Hour Daily Cycle Logic (Midnight IST / Local System Midnight)
+// ============================================================================
+
+function getLocalDayIndex() {
+  const now = new Date();
+  const startEpoch = new Date(2026, 0, 1).getTime();
+  const currentEpoch = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  return Math.floor((currentEpoch - startEpoch) / (24 * 60 * 60 * 1000));
+}
+
+function computeDailyTopicIndex() {
+  if (!vocabTopics || !vocabTopics.length) return 0;
+  const dayIdx = Math.abs(getLocalDayIndex());
+  return dayIdx % vocabTopics.length;
+}
+
+function getLocalMidnightMs() {
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0);
+  return Math.max(0, nextMidnight.getTime() - now.getTime());
+}
+
+function formatDailyCountdown(ms) {
+  if (ms <= 0) return '00h 00m 00s';
+  const totalSec = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSec / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+  return `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+}
+
+function startDailyCountdownTicker() {
+  if (dailyCountdownTimer) clearInterval(dailyCountdownTimer);
+  updateDailyCountdown();
+  dailyCountdownTimer = setInterval(updateDailyCountdown, 1000);
+}
+
+function updateDailyCountdown() {
+  const msLeft = getLocalMidnightMs();
+  const readout = document.getElementById('dailyCountdownReadout');
+  if (readout) {
+    readout.innerText = formatDailyCountdown(msLeft);
+  }
+
+  // Check if midnight struck and day index shifted
+  const computedIndex = computeDailyTopicIndex();
+  if (computedIndex !== dailyTopicIndex) {
+    dailyTopicIndex = computedIndex;
+    if (!isKeepTopicActive) {
+      currentTopicIndex = dailyTopicIndex;
+      currentWordIndex = 0;
+      renderTopicSelector();
+      renderWordGrid();
+      loadActiveWord();
+      setupCueCardView();
+    }
+  }
+
+  // Update UI indicators
+  const badge = document.getElementById('dailyTopicBadgeText');
+  const switchBtn = document.getElementById('switchToTodayBtn');
+  const keepBtn = document.getElementById('keepTopicToggleBtn');
+  
+  const isCurrentToday = (currentTopicIndex === dailyTopicIndex);
+  if (badge) {
+    badge.innerText = isCurrentToday ? "📅 Today's Daily Topic" : "📂 Past Topic Archive";
+  }
+  if (switchBtn) {
+    switchBtn.style.display = isCurrentToday ? 'none' : 'inline-flex';
+  }
+  if (keepBtn) {
+    keepBtn.innerText = isKeepTopicActive ? "📌 Topic Kept (Locked)" : "📌 Keep This Topic";
+    keepBtn.style.borderColor = isKeepTopicActive ? "#10b981" : "var(--border-color)";
+    keepBtn.style.color = isKeepTopicActive ? "#6ee7b7" : "var(--text-primary)";
+    keepBtn.style.background = isKeepTopicActive ? "rgba(16, 185, 129, 0.15)" : "transparent";
+  }
+}
+
+function toggleKeepTopic() {
+  isKeepTopicActive = !isKeepTopicActive;
+  try {
+    localStorage.setItem('ielts_vocab_keep_topic', isKeepTopicActive ? 'true' : 'false');
+    if (isKeepTopicActive) {
+      const topic = vocabTopics[currentTopicIndex];
+      if (topic) localStorage.setItem('ielts_vocab_selected_topic_id', topic.topicId);
+    } else {
+      localStorage.removeItem('ielts_vocab_selected_topic_id');
+    }
+  } catch(e) {}
+  updateDailyCountdown();
+}
+
+function switchToTodayTopic() {
+  isKeepTopicActive = false;
+  try {
+    localStorage.setItem('ielts_vocab_keep_topic', 'false');
+    localStorage.removeItem('ielts_vocab_selected_topic_id');
+  } catch(e) {}
+  currentTopicIndex = dailyTopicIndex;
+  currentWordIndex = 0;
+  renderTopicSelector();
+  renderWordGrid();
+  loadActiveWord();
+  setupCueCardView();
+  updateDailyCountdown();
+}
 
 // Initialize Vocab Speech Engine
 function initVocabSpeech() {
@@ -99,21 +216,38 @@ async function loadVocabBank() {
     if (saved) userSentencesData = JSON.parse(saved);
   } catch (e) {}
 
+    // Calculate and set 24-Hour Daily Topic
+  dailyTopicIndex = computeDailyTopicIndex();
+
+  if (isKeepTopicActive && userSelectedTopicId) {
+    const foundIdx = vocabTopics.findIndex(t => t.topicId === userSelectedTopicId);
+    if (foundIdx !== -1) currentTopicIndex = foundIdx;
+    else currentTopicIndex = dailyTopicIndex;
+  } else {
+    currentTopicIndex = dailyTopicIndex;
+  }
+
   renderTopicSelector();
   renderWordGrid();
   loadActiveWord();
   setupCueCardView();
+  startDailyCountdownTicker();
 }
 
-// Render Topic Selector Dropdown
+
+// Render Topic Selector Dropdown with Daily Focus & Past Archive
 function renderTopicSelector() {
   const sel = document.getElementById('vocabTopicSelect');
   if (!sel) return;
   sel.innerHTML = '';
+
   vocabTopics.forEach((t, idx) => {
     const opt = document.createElement('option');
     opt.value = idx;
-    opt.innerText = `${idx + 1}. ${t.topicTitle}`;
+    const isToday = (idx === dailyTopicIndex);
+    opt.innerText = isToday 
+      ? `🌟 Today's Daily Topic: ${t.topicTitle}`
+      : `📂 Archive #${idx + 1}: ${t.topicTitle}`;
     sel.appendChild(opt);
   });
   sel.value = currentTopicIndex;
@@ -123,10 +257,16 @@ function onTopicChanged() {
   const sel = document.getElementById('vocabTopicSelect');
   currentTopicIndex = parseInt(sel.value, 10) || 0;
   currentWordIndex = 0;
-  resetWordTimer();
+  const topic = vocabTopics[currentTopicIndex];
+  if (topic) {
+    try {
+      localStorage.setItem('ielts_vocab_selected_topic_id', topic.topicId);
+    } catch(e) {}
+  }
   renderWordGrid();
   loadActiveWord();
   setupCueCardView();
+  updateDailyCountdown();
 }
 
 // Render 30 Word Grid Buttons

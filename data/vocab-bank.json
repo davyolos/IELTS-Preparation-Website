@@ -1125,5 +1125,1509 @@
         ]
       }
     ]
+  },
+  {
+    "topicId": "edu_1",
+    "topicTitle": "Higher Education, Pedagogical Methods & Academic Rigor",
+    "description": "High-frequency Band 8+ academic vocabulary for universities, modern teaching pedagogies, cognitive development, and student assessment.",
+    "speechCueCard": {
+      "title": "Describe an educational reform or pedagogical method that could enhance critical thinking in modern universities.",
+      "prompts": [
+        "What the reform or teaching methodology is",
+        "How it differs from conventional rote-learning systems",
+        "What challenges instructors or academic institutions might encounter in implementing it",
+        "And explain why cognitive autonomy and critical inquiry are paramount for future graduates."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Pedagogical",
+        "pos": "adjective",
+        "meaning": "Relating to the theory and practice of teaching methods.",
+        "example": "Innovative pedagogical strategies emphasize problem-based learning over passive lecture attendance.",
+        "collocations": [
+          "pedagogical approach",
+          "pedagogical methods",
+          "pedagogical practice"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Curriculum",
+        "pos": "noun",
+        "meaning": "The subjects comprising a course of study in a school or college.",
+        "example": "Universities are revising their national curriculum to incorporate machine learning and ethical literacy.",
+        "collocations": [
+          "core curriculum",
+          "revise the curriculum",
+          "curriculum design"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Cognition",
+        "pos": "noun",
+        "meaning": "The mental action or process of acquiring knowledge and understanding through thought and experience.",
+        "example": "Early bilingual education fosters superior neural plasticity and cognitive flexibility in young children.",
+        "collocations": [
+          "cognitive development",
+          "cognitive skills",
+          "cognitive ability"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Rigor",
+        "pos": "noun",
+        "meaning": "The quality of being extremely thorough, exhaustive, or strict in academic standards.",
+        "example": "Doctoral research demands immense intellectual rigor, methodological discipline, and relentless scrutiny.",
+        "collocations": [
+          "academic rigor",
+          "intellectual rigor",
+          "methodological rigor"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Disseminate",
+        "pos": "verb",
+        "meaning": "To spread or disperse information, knowledge, or ideas widely.",
+        "example": "Open-access scientific journals rapidly disseminate peer-reviewed medical discoveries across developing countries.",
+        "collocations": [
+          "disseminate knowledge",
+          "disseminate findings",
+          "widely disseminated"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Erudite",
+        "pos": "adjective",
+        "meaning": "Having or showing great knowledge or learning; scholarly.",
+        "example": "The visiting professor delivered an erudite lecture examining post-colonial literature and linguistics.",
+        "collocations": [
+          "erudite scholar",
+          "erudite discourse",
+          "erudite lecture"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Autonomy",
+        "pos": "noun",
+        "meaning": "The capacity of a rational individual to make an informed, un-coerced decision.",
+        "example": "Granting tertiary students academic autonomy empowers them to pursue interdisciplinary investigations.",
+        "collocations": [
+          "learner autonomy",
+          "greater autonomy",
+          "intellectual autonomy"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Paradigm",
+        "pos": "noun",
+        "meaning": "A typical example, pattern, or overarching theoretical framework.",
+        "example": "The advent of remote digital learning precipitated an undeniable paradigm shift across global academia.",
+        "collocations": [
+          "paradigm shift",
+          "dominant paradigm",
+          "new paradigm"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Competence",
+        "pos": "noun",
+        "meaning": "The ability to do something successfully or efficiently to an established standard.",
+        "example": "Demonstrated linguistic competence in academic English is indispensable for postgraduate admissions.",
+        "collocations": [
+          "linguistic competence",
+          "core competence",
+          "professional competence"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Assimilate",
+        "pos": "verb",
+        "meaning": "To absorb and integrate people, ideas, or information into a wider culture or knowledge base.",
+        "example": "International scholars often take several semesters to fully assimilate unfamiliar Western essay formats.",
+        "collocations": [
+          "assimilate information",
+          "assimilate knowledge",
+          "assimilate into culture"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Didactic",
+        "pos": "adjective",
+        "meaning": "Intended to teach, particularly in having moral instruction as an ulterior motive.",
+        "example": "Modern secondary classrooms favor interactive discussions rather than purely didactic, top-down lecturing.",
+        "collocations": [
+          "didactic approach",
+          "didactic purpose",
+          "didactic materials"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Methodology",
+        "pos": "noun",
+        "meaning": "A system of methods used in a particular area of study or activity.",
+        "example": "A flawed sampling methodology can compromise the validity of sociological conclusions.",
+        "collocations": [
+          "research methodology",
+          "robust methodology",
+          "rigorous methodology"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Empirical",
+        "pos": "adjective",
+        "meaning": "Based on, concerned with, or verifiable by observation or experience rather than theory.",
+        "example": "Policy analysts require rigorous empirical evidence before authorizing country-wide curriculum revisions.",
+        "collocations": [
+          "empirical evidence",
+          "empirical data",
+          "empirical research"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Proficiency",
+        "pos": "noun",
+        "meaning": "A high degree of competence or skill; expertise.",
+        "example": "Achieving fluent communicative proficiency in multiple languages bestows undeniable career benefits.",
+        "collocations": [
+          "language proficiency",
+          "high proficiency",
+          "demonstrate proficiency"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Cultivate",
+        "pos": "verb",
+        "meaning": "To develop or nurture a quality, skill, or habit.",
+        "example": "Liberal arts syllabi are deliberately curated to cultivate critical reasoning and analytical discernment.",
+        "collocations": [
+          "cultivate critical thinking",
+          "cultivate skills",
+          "cultivate talent"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Aptitude",
+        "pos": "noun",
+        "meaning": "A natural ability or capacity to learn something quickly.",
+        "example": "Standardized entrance exams often measure test-taking speed rather than innate intellectual aptitude.",
+        "collocations": [
+          "natural aptitude",
+          "academic aptitude",
+          "scholastic aptitude"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Scrutiny",
+        "pos": "noun",
+        "meaning": "Critical observation or examination.",
+        "example": "Groundbreaking scientific assertions must withstand exhaustive peer scrutiny before achieving textbook status.",
+        "collocations": [
+          "intense scrutiny",
+          "under close scrutiny",
+          "withstand scrutiny"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Foster",
+        "pos": "verb",
+        "meaning": "To encourage the development or growth of ideas or feelings.",
+        "example": "Collaborative group seminars foster vibrant intellectual exchange and egalitarian teamwork.",
+        "collocations": [
+          "foster collaboration",
+          "foster innovation",
+          "foster understanding"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Academia",
+        "pos": "noun",
+        "meaning": "The environment or community concerned with the pursuit of research, education, and scholarship.",
+        "example": "Transitioning from academia into private venture capital requires adapting to radically accelerated deadlines.",
+        "collocations": [
+          "in academia",
+          "pursue a career in academia",
+          "academic circles"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Holistic",
+        "pos": "adjective",
+        "meaning": "Characterized by the belief that parts of something are intimately interconnected.",
+        "example": "Admissions committees now utilize holistic assessments encompassing extracurricular leadership and portfolios.",
+        "collocations": [
+          "holistic approach",
+          "holistic assessment",
+          "holistic perspective"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Illiteracy",
+        "pos": "noun",
+        "meaning": "The inability to read or write.",
+        "example": "Eradicating rural illiteracy remains the foundational stepping stone toward eliminating systemic poverty.",
+        "collocations": [
+          "combat illiteracy",
+          "functional illiteracy",
+          "rates of illiteracy"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Standardized",
+        "pos": "adjective",
+        "meaning": "Conforming to a standard; made uniform.",
+        "example": "Critics argue that standardized examinations fail to reflect students divergent creative gifts.",
+        "collocations": [
+          "standardized testing",
+          "standardized curriculum",
+          "standardized assessment"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Epistemology",
+        "pos": "noun",
+        "meaning": "The theory of knowledge, especially with regard to its methods, validity, and scope.",
+        "example": "Philosophy undergraduates explore classical epistemology to critique what constitutes objective truth.",
+        "collocations": [
+          "feminist epistemology",
+          "epistemological framework",
+          "study of epistemology"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Facilitate",
+        "pos": "verb",
+        "meaning": "To make an action or process easier or less difficult.",
+        "example": "Interactive smartboards and digital portals facilitate dynamic student-instructor feedback loops.",
+        "collocations": [
+          "facilitate learning",
+          "facilitate discussion",
+          "facilitate understanding"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Disparity",
+        "pos": "noun",
+        "meaning": "A great difference or inequality.",
+        "example": "Funding disparities between elite private academies and under-resourced public schools perpetuate class inequality.",
+        "collocations": [
+          "educational disparity",
+          "growing disparity",
+          "stark disparity"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Scholarship",
+        "pos": "noun",
+        "meaning": "Academic study or achievement; learning of a high level.",
+        "example": "Her monumental treatise on Renaissance rhetoric represents exemplary historical scholarship.",
+        "collocations": [
+          "rigorous scholarship",
+          "original scholarship",
+          "contribution to scholarship"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Inquisitive",
+        "pos": "adjective",
+        "meaning": "Curious or inquiring; eager for knowledge.",
+        "example": "Nurturing naturally inquisitive minds should supersede the rote memorization of factual dates.",
+        "collocations": [
+          "inquisitive nature",
+          "inquisitive mind",
+          "highly inquisitive"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Benchmark",
+        "pos": "noun",
+        "meaning": "A standard or point of reference against which things may be compared.",
+        "example": "International PISA rankings establish global benchmarks for teenage mathematics and science competence.",
+        "collocations": [
+          "international benchmark",
+          "set a benchmark",
+          "performance benchmark"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Cognitive",
+        "pos": "adjective",
+        "meaning": "Relating to the mental process of knowing, perceiving, and judging.",
+        "example": "Sleep deprivation inflicts immediate detriment upon working memory and complex cognitive reasoning.",
+        "collocations": [
+          "cognitive impairment",
+          "cognitive load",
+          "cognitive capacity"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Illumination",
+        "pos": "noun",
+        "meaning": "Spiritual or intellectual enlightenment; clarification.",
+        "example": "Socratic seminars provide profound intellectual illumination on difficult ethical and political dilemmas.",
+        "collocations": [
+          "intellectual illumination",
+          "provide illumination",
+          "source of illumination"
+        ]
+      }
+    ]
+  },
+  {
+    "topicId": "econ_1",
+    "topicTitle": "Global Economy, International Trade & Socio-Economic Disparity",
+    "description": "High-yield IELTS vocabulary covering fiscal policies, macroeconomics, income inequality, trade globalization, and consumerism.",
+    "speechCueCard": {
+      "title": "Describe an economic reform or policy that could address escalating income inequality in modern nations.",
+      "prompts": [
+        "What the economic policy is and how it would be structured",
+        "Which demographic groups would benefit most directly from it",
+        "What objections or economic consequences fiscal conservatives might raise",
+        "And explain why closing the socio-economic wealth divide is vital for societal stability."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Globalization",
+        "pos": "noun",
+        "meaning": "The process by which businesses or organizations develop international influence or start operating on an international scale.",
+        "example": "Rapid globalization has interconnected capital markets while exposing domestic manufacturing to offshore competition.",
+        "collocations": [
+          "economic globalization",
+          "era of globalization",
+          "accelerate globalization"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Fiscal",
+        "pos": "adjective",
+        "meaning": "Relating to government revenue, especially taxes and public debt.",
+        "example": "Central banks coordinated aggressive fiscal stimulus packages to insulate households during the recession.",
+        "collocations": [
+          "fiscal policy",
+          "fiscal deficit",
+          "fiscal austerity"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Inflation",
+        "pos": "noun",
+        "meaning": "A general increase in prices and fall in the purchasing power of money.",
+        "example": "Spiraling energy prices sparked soaring inflation, eroding the real wages of working-class families.",
+        "collocations": [
+          "curb inflation",
+          "rampant inflation",
+          "rate of inflation"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Subsidize",
+        "pos": "verb",
+        "meaning": "To support financially with a government subsidy.",
+        "example": "Federal ministries chose to heavily subsidize nascent domestic semiconductor manufacturing plants.",
+        "collocations": [
+          "heavily subsidize",
+          "subsidize public transit",
+          "subsidize agriculture"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Tariff",
+        "pos": "noun",
+        "meaning": "A tax or duty to be paid on a particular class of imports or exports.",
+        "example": "Imposing punitive import tariffs on foreign steel triggered retaliatory trade countermeasures.",
+        "collocations": [
+          "impose tariffs",
+          "protective tariff",
+          "tariff barriers"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Recession",
+        "pos": "noun",
+        "meaning": "A period of temporary economic decline during which trade and industrial activity are reduced.",
+        "example": "Skyrocketing interest rates plunged the national economy into a prolonged, painful recession.",
+        "collocations": [
+          "economic recession",
+          "deep recession",
+          "recover from recession"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Monopolize",
+        "pos": "verb",
+        "meaning": "To obtain exclusive possession or control of the trade in a commodity or service.",
+        "example": "Antitrust regulators acted decisively to prevent tech conglomerates from monopolizing search advertising.",
+        "collocations": [
+          "monopolize the market",
+          "attempt to monopolize",
+          "monopolize supply"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Deficit",
+        "pos": "noun",
+        "meaning": "The amount by which something, especially a sum of money, is too small; excess of liabilities over assets.",
+        "example": "Chronic budgetary deficits threaten sovereign bond ratings and balloon national borrowing costs.",
+        "collocations": [
+          "budget deficit",
+          "trade deficit",
+          "accumulated deficit"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Prosperity",
+        "pos": "noun",
+        "meaning": "The state of flourishing, thriving, good fortune, and successful social status.",
+        "example": "Equitable investments in infrastructure and primary education are foundational to enduring national prosperity.",
+        "collocations": [
+          "economic prosperity",
+          "shared prosperity",
+          "long-term prosperity"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Commodity",
+        "pos": "noun",
+        "meaning": "A raw material or primary agricultural product that can be bought and sold.",
+        "example": "Global financial shocks caused severe volatility across vital food and oil commodity markets.",
+        "collocations": [
+          "basic commodity",
+          "commodity prices",
+          "trade commodities"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Revenue",
+        "pos": "noun",
+        "meaning": "Income, especially when of a company or organization and of a substantial nature.",
+        "example": "Closing corporate offshore tax loopholes could generate billions in vital public revenue.",
+        "collocations": [
+          "generate revenue",
+          "tax revenue",
+          "annual revenue"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Allocate",
+        "pos": "verb",
+        "meaning": "To distribute resources or duties for a particular purpose.",
+        "example": "Parliaments must allocate substantial capital toward rebuilding deteriorating highway bridges.",
+        "collocations": [
+          "allocate resources",
+          "allocate funds",
+          "efficiently allocate"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Inequity",
+        "pos": "noun",
+        "meaning": "Lack of fairness or justice; unfair behavior.",
+        "example": "Unchecked real estate speculation intensifies systemic wealth inequity between generations.",
+        "collocations": [
+          "gross inequity",
+          "address inequities",
+          "wealth inequity"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Austerity",
+        "pos": "noun",
+        "meaning": "Difficult economic conditions created by government measures to reduce public expenditure.",
+        "example": "Severe austerity budgets slashed communal healthcare funding, triggering widespread public unrest.",
+        "collocations": [
+          "austerity measures",
+          "austerity policy",
+          "implement austerity"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Capitalist",
+        "pos": "adjective / noun",
+        "meaning": "Practicing, supporting, or based on the principles of capitalism.",
+        "example": "A pure capitalist paradigm without social safety nets risks leaving disenfranchised citizens destitute.",
+        "collocations": [
+          "capitalist economy",
+          "capitalist system",
+          "modern capitalist"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Lucrative",
+        "pos": "adjective",
+        "meaning": "Producing a great deal of profit; financially rewarding.",
+        "example": "Biotechnology patents have evolved into extraordinarily lucrative investments for pharmaceutical corporations.",
+        "collocations": [
+          "lucrative market",
+          "lucrative career",
+          "highly lucrative"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Conglomerate",
+        "pos": "noun",
+        "meaning": "A number of different things or parts that are grouped together to form a whole; a large corporation formed by merger.",
+        "example": "The multinational media conglomerate acquired dozens of local newspaper syndicates.",
+        "collocations": [
+          "multinational conglomerate",
+          "media conglomerate",
+          "corporate conglomerate"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Volatility",
+        "pos": "noun",
+        "meaning": "Liability to change rapidly and unpredictably, especially for the worse.",
+        "example": "Geopolitical instability in the Gulf region triggered unprecedented volatility across Brent crude indexes.",
+        "collocations": [
+          "market volatility",
+          "price volatility",
+          "extreme volatility"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Affluence",
+        "pos": "noun",
+        "meaning": "The state of having a great deal of money; wealth.",
+        "example": "Pockets of dazzling metropolitan affluence stand in stark contrast to neglected rural poverty.",
+        "collocations": [
+          "growing affluence",
+          "symbol of affluence",
+          "unprecedented affluence"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Impoverish",
+        "pos": "verb",
+        "meaning": "To make a person or area poor; exhaust the strength or vitality of.",
+        "example": "Extortionate predatory loan interest rates continue to impoverish vulnerable agrarian workers.",
+        "collocations": [
+          "impoverish communities",
+          "impoverish farmers",
+          "severely impoverished"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Microfinance",
+        "pos": "noun",
+        "meaning": "A type of banking service provided to unemployed or low-income individuals or groups.",
+        "example": "Collateral-free microfinance initiatives have empowered rural women to launch independent artisanal cooperatives.",
+        "collocations": [
+          "microfinance institutions",
+          "microfinance loans",
+          "pioneer of microfinance"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Socioeconomic",
+        "pos": "adjective",
+        "meaning": "Relating to or concerned with the interaction of social and economic factors.",
+        "example": "Parental socioeconomic background remains a tragically strong predictor of academic attainment.",
+        "collocations": [
+          "socioeconomic status",
+          "socioeconomic background",
+          "socioeconomic factors"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Sanction",
+        "pos": "noun",
+        "meaning": "A threatened penalty for disobeying a law or rule; commercial or financial penalties applied by countries.",
+        "example": "Multilateral economic sanctions were enforced to penalize international treaty violations.",
+        "collocations": [
+          "impose sanctions",
+          "economic sanctions",
+          "lift sanctions"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Remittance",
+        "pos": "noun",
+        "meaning": "A sum of money sent, especially by a foreign worker to their home country.",
+        "example": "Overseas remittances from expatriate laborers constitute nearly twenty percent of the nation GDP.",
+        "collocations": [
+          "foreign remittances",
+          "inward remittances",
+          "send remittances"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Equilibrium",
+        "pos": "noun",
+        "meaning": "A state in which opposing forces or influences are balanced.",
+        "example": "Market forces will eventually restore equilibrium between consumer demand and manufacturing capacity.",
+        "collocations": [
+          "economic equilibrium",
+          "market equilibrium",
+          "restore equilibrium"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Expenditure",
+        "pos": "noun",
+        "meaning": "The action of spending funds; an amount of money spent.",
+        "example": "Annual governmental expenditure on defense frequently dwarfs investments allocated to preventative medicine.",
+        "collocations": [
+          "public expenditure",
+          "consumer expenditure",
+          "capital expenditure"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Sovereign",
+        "pos": "adjective",
+        "meaning": "Possessing supreme or ultimate power; relating to an independent state.",
+        "example": "Massive borrowing from external creditors compromised the island nation sovereign financial independence.",
+        "collocations": [
+          "sovereign debt",
+          "sovereign nation",
+          "sovereign wealth fund"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Diversification",
+        "pos": "noun",
+        "meaning": "The process of a business enlarging or varying its range of products or field of operation.",
+        "example": "Economic diversification away from petroleum extraction protects national treasuries from oil price crashes.",
+        "collocations": [
+          "economic diversification",
+          "portfolio diversification",
+          "encourage diversification"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Depression",
+        "pos": "noun",
+        "meaning": "A long and severe recession in an economy or market.",
+        "example": "The collapse of sovereign banks triggered a multi-year economic depression marked by mass joblessness.",
+        "collocations": [
+          "economic depression",
+          "great depression",
+          "severe depression"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Commerce",
+        "pos": "noun",
+        "meaning": "The activity of buying and selling, especially on a large scale.",
+        "example": "Cross-border electronic commerce has democratized retail access for rural craftspeople worldwide.",
+        "collocations": [
+          "international commerce",
+          "electronic commerce",
+          "chamber of commerce"
+        ]
+      }
+    ]
+  },
+  {
+    "topicId": "health_1",
+    "topicTitle": "Public Healthcare Systems, Medical Innovation & Disease Prevention",
+    "description": "Band 8+ lexical bank covering epidemiology, universal healthcare access, medical ethics, preventative lifestyle choices, and biotechnology.",
+    "speechCueCard": {
+      "title": "Describe a public health initiative or medical innovation that has substantially improved human life expectancy.",
+      "prompts": [
+        "What the healthcare initiative or technology is",
+        "Which illnesses or health hazards it addresses",
+        "What challenges healthcare providers face in expanding its access globally",
+        "And explain why preventative medicine is far more sustainable than reactive acute care."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Epidemic",
+        "pos": "noun",
+        "meaning": "A widespread occurrence of an infectious disease in a community at a particular time.",
+        "example": "Unchecked urbanization and poor sanitation can accelerate the outbreak of a cholera epidemic.",
+        "collocations": [
+          "fight an epidemic",
+          "epidemic proportions",
+          "contain an epidemic"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Inoculate",
+        "pos": "verb",
+        "meaning": "To treat with a vaccine to produce immunity against a disease; immunize.",
+        "example": "Public health nurses mobilized mobile clinics to inoculate remote mountain villages against polio.",
+        "collocations": [
+          "inoculate against",
+          "mass inoculation",
+          "fully inoculated"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Chronic",
+        "pos": "adjective",
+        "meaning": "Persisting for a long time or constantly recurring.",
+        "example": "Sedentary modern lifestyles have catalyzed a surge in chronic ailments such as type 2 diabetes.",
+        "collocations": [
+          "chronic illness",
+          "chronic condition",
+          "chronic disease"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Morbidity",
+        "pos": "noun",
+        "meaning": "The condition of suffering from a disease or medical condition; rate of disease in a population.",
+        "example": "Early medical interventions correlate with dramatic reductions in maternal and infant morbidity.",
+        "collocations": [
+          "morbidity rate",
+          "co-morbidity",
+          "reduce morbidity"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Universal",
+        "pos": "adjective",
+        "meaning": "Applicable to all cases; done by all people or things in the world.",
+        "example": "Health advocates contend that universal access to primary medical care is an inalienable human right.",
+        "collocations": [
+          "universal healthcare",
+          "universal coverage",
+          "universal access"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Pathogen",
+        "pos": "noun",
+        "meaning": "A bacterium, virus, or other microorganism that can cause disease.",
+        "example": "Overusing synthetic antibiotics encourages the evolutionary emergence of drug-resistant pathogens.",
+        "collocations": [
+          "airborne pathogen",
+          "deadly pathogen",
+          "novel pathogen"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Diagnostics",
+        "pos": "noun",
+        "meaning": "The practice or techniques of medical diagnosis.",
+        "example": "AI-assisted diagnostics enable radiologists to pinpoint micro-tumors years before clinical symptoms manifest.",
+        "collocations": [
+          "early diagnostics",
+          "medical diagnostics",
+          "diagnostic tools"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Pharmaceuticals",
+        "pos": "noun",
+        "meaning": "Medicinal drugs manufactured and sold by companies.",
+        "example": "Stringent multi-phase clinical trials ensure that newly synthesized pharmaceuticals possess proven safety.",
+        "collocations": [
+          "manufacture pharmaceuticals",
+          "pharmaceutical company",
+          "prescribe pharmaceuticals"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Sanitation",
+        "pos": "noun",
+        "meaning": "Conditions relating to public health, especially the provision of clean drinking water and sewage disposal.",
+        "example": "Investing in communal sanitation networks produces immediate reductions in waterborne infant mortality.",
+        "collocations": [
+          "basic sanitation",
+          "improve sanitation",
+          "sanitation infrastructure"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Prognosis",
+        "pos": "noun",
+        "meaning": "The likely course of a medical condition; a forecast of the likely outcome.",
+        "example": "With cutting-edge immunotherapy therapies, the five-year prognosis for advanced melanoma has improved radically.",
+        "collocations": [
+          "favorable prognosis",
+          "poor prognosis",
+          "medical prognosis"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Preventative",
+        "pos": "adjective",
+        "meaning": "Designed to keep something undesirable such as illness from happening.",
+        "example": "Subsidizing annual cardiovascular health screenings represents high-yield preventative public health spending.",
+        "collocations": [
+          "preventative medicine",
+          "preventative care",
+          "preventative measures"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Immunization",
+        "pos": "noun",
+        "meaning": "The action of making a person or animal immune to infection, typically by inoculation.",
+        "example": "Nationwide immunization mandates eliminated endemic rubella and measles across several continents.",
+        "collocations": [
+          "routine immunization",
+          "immunization coverage",
+          "immunization campaign"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Contagion",
+        "pos": "noun",
+        "meaning": "The communication of disease from one person or organism to another by close contact.",
+        "example": "Strict quarantine protocols were swiftly instituted to curb the transmission of the lethal contagion.",
+        "collocations": [
+          "spread of contagion",
+          "contain contagion",
+          "deadly contagion"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Vulnerability",
+        "pos": "noun",
+        "meaning": "The quality or state of being exposed to the possibility of being attacked or harmed.",
+        "example": "Extreme seasonal heatwaves heighten cardiovascular vulnerability among senior citizens.",
+        "collocations": [
+          "heightened vulnerability",
+          "reduce vulnerability",
+          "clinical vulnerability"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Efficacy",
+        "pos": "noun",
+        "meaning": "The ability to produce a desired or intended result.",
+        "example": "Rigorous peer-reviewed trials confirmed the extraordinary efficacy of the experimental vaccine.",
+        "collocations": [
+          "vaccine efficacy",
+          "therapeutic efficacy",
+          "demonstrate efficacy"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Rehabilitation",
+        "pos": "noun",
+        "meaning": "The action of restoring someone to health or normal life through training and therapy.",
+        "example": "Comprehensive physical rehabilitation assists post-stroke patients in regaining essential motor coordination.",
+        "collocations": [
+          "physical rehabilitation",
+          "rehabilitation clinic",
+          "undergo rehabilitation"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Malnutrition",
+        "pos": "noun",
+        "meaning": "Lack of proper nutrition, caused by not having enough to eat or not eating enough of the right things.",
+        "example": "Severe drought-induced malnutrition severely impairs early neurological development in toddlers.",
+        "collocations": [
+          "suffer from malnutrition",
+          "chronic malnutrition",
+          "combat malnutrition"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Well-being",
+        "pos": "noun",
+        "meaning": "The state of being comfortable, healthy, or happy.",
+        "example": "Workplace psychological well-being initiatives lower stress hormone levels and absenteeism.",
+        "collocations": [
+          "mental well-being",
+          "overall well-being",
+          "promote well-being"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Geriatric",
+        "pos": "adjective",
+        "meaning": "Relating to old people, especially with regard to their healthcare.",
+        "example": "An aging global population necessitates expanded training for specialized geriatric medical practitioners.",
+        "collocations": [
+          "geriatric care",
+          "geriatric medicine",
+          "geriatric ward"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Palliative",
+        "pos": "adjective",
+        "meaning": "Relieving pain or alleviating a problem without dealing with the underlying cause.",
+        "example": "Compassionate palliative care ensures that terminally ill patients experience comfort and human dignity.",
+        "collocations": [
+          "palliative care",
+          "palliative treatment",
+          "palliative medicine"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Longevity",
+        "pos": "noun",
+        "meaning": "Long life or existence.",
+        "example": "Adhering to a nutrient-dense Mediterranean diet correlates with remarkable cardiovascular longevity.",
+        "collocations": [
+          "exceptional longevity",
+          "promote longevity",
+          "human longevity"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Transmissible",
+        "pos": "adjective",
+        "meaning": "Able to be passed on from one person or animal to another.",
+        "example": "Tuberculosis remains a dangerously transmissible bacterial infection in overcrowded living spaces.",
+        "collocations": [
+          "highly transmissible",
+          "transmissible disease",
+          "transmissible pathogen"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Mortality",
+        "pos": "noun",
+        "meaning": "The state of being subject to death; death, especially on a large scale.",
+        "example": "Equipping village birthing centers with sterile instruments dramatically curtailed maternal mortality.",
+        "collocations": [
+          "infant mortality",
+          "mortality rate",
+          "reduce mortality"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Epidemiology",
+        "pos": "noun",
+        "meaning": "The branch of medicine which deals with the incidence, distribution, and control of diseases.",
+        "example": "Experts in molecular epidemiology traced the virus genetic ancestry back to an international transport hub.",
+        "collocations": [
+          "field of epidemiology",
+          "study of epidemiology",
+          "epidemiological data"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Therapy",
+        "pos": "noun",
+        "meaning": "Treatment intended to relieve or heal a disorder.",
+        "example": "Targeted gene therapy holds revolutionary potential for curing previously fatal inherited blood disorders.",
+        "collocations": [
+          "gene therapy",
+          "physical therapy",
+          "undergo therapy"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Hygiene",
+        "pos": "noun",
+        "meaning": "Conditions or practices conducive to maintaining health and preventing disease, especially cleanliness.",
+        "example": "Instilling rigorous hand hygiene protocols in surgical theaters eliminated postoperative septic infections.",
+        "collocations": [
+          "personal hygiene",
+          "hospital hygiene",
+          "basic hygiene"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Antibiotic",
+        "pos": "noun",
+        "meaning": "A medicine that inhibits the growth of or destroys microorganisms.",
+        "example": "Physicians must exercise prudence and avoid overprescribing antibiotics for routine viral colds.",
+        "collocations": [
+          "prescribe antibiotics",
+          "antibiotic resistance",
+          "broad-spectrum antibiotic"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Immunity",
+        "pos": "noun",
+        "meaning": "The ability of an organism to resist a particular infection or toxin.",
+        "example": "Widespread vaccination fosters communal herd immunity, shielding individuals who cannot be immunized.",
+        "collocations": [
+          "herd immunity",
+          "natural immunity",
+          "lifelong immunity"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Sedentary",
+        "pos": "adjective",
+        "meaning": "Tending to spend much time seated; somewhat inactive.",
+        "example": "A sedentary lifestyle combined with ultra-processed foods exacerbates systemic metabolic dysfunction.",
+        "collocations": [
+          "sedentary lifestyle",
+          "sedentary behavior",
+          "sedentary habits"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Congenital",
+        "pos": "adjective",
+        "meaning": "Present from birth (of a disease or physical abnormality).",
+        "example": "Fetal echocardiograms enable pediatric cardiologists to intervene promptly for congenital heart anomalies.",
+        "collocations": [
+          "congenital defect",
+          "congenital heart condition",
+          "congenital anomaly"
+        ]
+      }
+    ]
+  },
+  {
+    "topicId": "crime_1",
+    "topicTitle": "Criminal Justice, Penal Reform & Crime Deterrence",
+    "description": "High-frequency IELTS academic vocabulary exploring judicial sentencing, restorative rehabilitation, penal incarceration, and systemic deterrence.",
+    "speechCueCard": {
+      "title": "Describe a justice reform or crime prevention policy that you believe is more effective than standard prison sentences.",
+      "prompts": [
+        "What the justice reform or rehabilitative policy is",
+        "How it treats offenders compared to punitive incarceration",
+        "What reservations public prosecutors or conservative politicians might have",
+        "And explain why societal rehabilitation produces lower recidivism rates than pure punishment."
+      ]
+    },
+    "words": [
+      {
+        "id": 1,
+        "word": "Deterrence",
+        "pos": "noun",
+        "meaning": "The action of discouraging an action or event through instilling doubt or fear of the consequences.",
+        "example": "Criminologists argue that swift apprehension provides a far more potent deterrence than draconian prison sentences.",
+        "collocations": [
+          "effective deterrence",
+          "serve as a deterrence",
+          "act as a deterrence"
+        ]
+      },
+      {
+        "id": 2,
+        "word": "Incarceration",
+        "pos": "noun",
+        "meaning": "The state of being confined in prison; imprisonment.",
+        "example": "Mass incarceration imposes astronomical fiscal burdens on state treasuries without curing root social vices.",
+        "collocations": [
+          "mass incarceration",
+          "rates of incarceration",
+          "alternatives to incarceration"
+        ]
+      },
+      {
+        "id": 3,
+        "word": "Rehabilitation",
+        "pos": "noun",
+        "meaning": "The action of restoring someone to health or normal life through training and therapy.",
+        "example": "Penal systems in Scandinavia prioritize vocational education and psychological rehabilitation over sensory deprivation.",
+        "collocations": [
+          "offender rehabilitation",
+          "prisoner rehabilitation",
+          "successful rehabilitation"
+        ]
+      },
+      {
+        "id": 4,
+        "word": "Delinquency",
+        "pos": "noun",
+        "meaning": "Minor crime, especially that committed by young people.",
+        "example": "After-school sports leagues and community mentorship centers significantly diminish juvenile delinquency.",
+        "collocations": [
+          "juvenile delinquency",
+          "youth delinquency",
+          "curb delinquency"
+        ]
+      },
+      {
+        "id": 5,
+        "word": "Legislation",
+        "pos": "noun",
+        "meaning": "Laws, considered collectively; the process of making or enacting laws.",
+        "example": "Parliament enacted emergency legislation to criminalize algorithmic cyber-harassment and identity extortion.",
+        "collocations": [
+          "enact legislation",
+          "introduce legislation",
+          "strict legislation"
+        ]
+      },
+      {
+        "id": 6,
+        "word": "Perpetrator",
+        "pos": "noun",
+        "meaning": "A person who carries out a harmful, illegal, or immoral act.",
+        "example": "Forensic genetic tracing enabled detectives to identify the elusive perpetrator three decades after the felony.",
+        "collocations": [
+          "perpetrator of crime",
+          "identify the perpetrator",
+          "apprehend the perpetrator"
+        ]
+      },
+      {
+        "id": 7,
+        "word": "Recidivism",
+        "pos": "noun",
+        "meaning": "The tendency of a convicted criminal to reoffend.",
+        "example": "Providing inmates with accredited university diplomas upon release slashes post-release recidivism by forty percent.",
+        "collocations": [
+          "rate of recidivism",
+          "reduce recidivism",
+          "high recidivism"
+        ]
+      },
+      {
+        "id": 8,
+        "word": "Judicial",
+        "pos": "adjective",
+        "meaning": "Relating to a court of law, judicial procedures, or the administration of justice.",
+        "example": "Maintaining strict judicial impartiality is the cornerstone of public confidence in the legal system.",
+        "collocations": [
+          "judicial system",
+          "judicial review",
+          "judicial independence"
+        ]
+      },
+      {
+        "id": 9,
+        "word": "Prosecution",
+        "pos": "noun",
+        "meaning": "The institution and conducting of legal proceedings against someone in respect of a criminal charge.",
+        "example": "The district attorney commenced prosecution against corporate officers implicated in illegal dumping.",
+        "collocations": [
+          "face prosecution",
+          "lead the prosecution",
+          "criminal prosecution"
+        ]
+      },
+      {
+        "id": 10,
+        "word": "Culpability",
+        "pos": "noun",
+        "meaning": "Responsibility for a fault or wrong; blameworthiness.",
+        "example": "The jury established clear legal culpability after reviewing incriminating dashboard camera recordings.",
+        "collocations": [
+          "establish culpability",
+          "degree of culpability",
+          "diminished culpability"
+        ]
+      },
+      {
+        "id": 11,
+        "word": "Enforcement",
+        "pos": "noun",
+        "meaning": "The act of compelling observance of or compliance with a law, rule, or obligation.",
+        "example": "Vigorous traffic law enforcement through automated radar cameras curtailed vehicular pedestrian casualties.",
+        "collocations": [
+          "law enforcement",
+          "strict enforcement",
+          "rigorous enforcement"
+        ]
+      },
+      {
+        "id": 12,
+        "word": "Felony",
+        "pos": "noun",
+        "meaning": "A crime, typically one involving violence, regarded as more serious than a misdemeanor.",
+        "example": "Perjury before a grand jury constitutes an indictable federal felony punishable by imprisonment.",
+        "collocations": [
+          "commit a felony",
+          "convicted of a felony",
+          "felony charge"
+        ]
+      },
+      {
+        "id": 13,
+        "word": "Penalty",
+        "pos": "noun",
+        "meaning": "A punishment imposed for breaking a law, rule, or contract.",
+        "example": "Judges handed down stiff financial penalties to deter deceptive commercial advertising practices.",
+        "collocations": [
+          "stiff penalty",
+          "impose a penalty",
+          "maximum penalty"
+        ]
+      },
+      {
+        "id": 14,
+        "word": "Surveillance",
+        "pos": "noun",
+        "meaning": "Close observation, especially of a suspected spy or criminal.",
+        "example": "High-definition closed-circuit surveillance networks throughout transport hubs deter opportunistic pickpocketing.",
+        "collocations": [
+          "under surveillance",
+          "surveillance cameras",
+          "video surveillance"
+        ]
+      },
+      {
+        "id": 15,
+        "word": "Vigilance",
+        "pos": "noun",
+        "meaning": "The action or state of keeping careful watch for possible danger or difficulties.",
+        "example": "Heightened border vigilance prevented the illicit smuggling of endangered wildlife contraband.",
+        "collocations": [
+          "constant vigilance",
+          "exercise vigilance",
+          "heightened vigilance"
+        ]
+      },
+      {
+        "id": 16,
+        "word": "Amnesty",
+        "pos": "noun",
+        "meaning": "An official pardon for people who have been convicted of political offenses.",
+        "example": "The newly elected government declared an unconditional amnesty for non-violent political dissidents.",
+        "collocations": [
+          "grant amnesty",
+          "general amnesty",
+          "declare an amnesty"
+        ]
+      },
+      {
+        "id": 17,
+        "word": "Jurisprudence",
+        "pos": "noun",
+        "meaning": "The theory or philosophy of law; a legal system.",
+        "example": "Comparative constitutional jurisprudence sheds valuable light on differing interpretations of civil liberties.",
+        "collocations": [
+          "medical jurisprudence",
+          "principles of jurisprudence",
+          "modern jurisprudence"
+        ]
+      },
+      {
+        "id": 18,
+        "word": "Integrity",
+        "pos": "noun",
+        "meaning": "The quality of being honest and having strong moral principles.",
+        "example": "Any systemic compromise to police ethical integrity erodes the essential legitimacy of municipal authority.",
+        "collocations": [
+          "moral integrity",
+          "personal integrity",
+          "preserve integrity"
+        ]
+      },
+      {
+        "id": 19,
+        "word": "Misdemeanor",
+        "pos": "noun",
+        "meaning": "A minor wrongdoing or non-indictable offense.",
+        "example": "Trespassing on railway property was categorized as a minor misdemeanor penalized with community service.",
+        "collocations": [
+          "minor misdemeanor",
+          "charge with a misdemeanor",
+          "commit a misdemeanor"
+        ]
+      },
+      {
+        "id": 20,
+        "word": "Punitive",
+        "pos": "adjective",
+        "meaning": "Inflicting or intended as punishment.",
+        "example": "Critics contend that punitive solitary confinement inflicts irreversible psychological trauma on detainees.",
+        "collocations": [
+          "punitive measures",
+          "punitive damages",
+          "punitive approach"
+        ]
+      },
+      {
+        "id": 21,
+        "word": "Conviction",
+        "pos": "noun",
+        "meaning": "A formal declaration that someone is guilty of a criminal offense.",
+        "example": "DNA exoneration overturned the wrongful murder conviction after eighteen years of imprisonment.",
+        "collocations": [
+          "criminal conviction",
+          "secure a conviction",
+          "prior conviction"
+        ]
+      },
+      {
+        "id": 22,
+        "word": "Restitution",
+        "pos": "noun",
+        "meaning": "The restoration of something lost or stolen to its proper owner; compensation.",
+        "example": "The white-collar embezzler was sentenced to full financial restitution alongside five years of house arrest.",
+        "collocations": [
+          "make restitution",
+          "financial restitution",
+          "order restitution"
+        ]
+      },
+      {
+        "id": 23,
+        "word": "Forensic",
+        "pos": "adjective",
+        "meaning": "Relating to or denoting the application of scientific methods and techniques to the investigation of crime.",
+        "example": "Microscopic forensic analysis of ballistic striations matched the firearm to the crime scene bullet.",
+        "collocations": [
+          "forensic science",
+          "forensic evidence",
+          "forensic analysis"
+        ]
+      },
+      {
+        "id": 24,
+        "word": "Statutory",
+        "pos": "adjective",
+        "meaning": "Required, permitted, or enacted by statute; legal.",
+        "example": "Corporate directors bear an inescapable statutory duty to guarantee workplace occupational safety.",
+        "collocations": [
+          "statutory duty",
+          "statutory requirement",
+          "statutory authority"
+        ]
+      },
+      {
+        "id": 25,
+        "word": "Retribution",
+        "pos": "noun",
+        "meaning": "Punishment inflicted on someone as vengeance for a wrong or criminal act.",
+        "example": "Enlightened societies increasingly reject eye-for-an-eye retribution in favor of transformative community restitution.",
+        "collocations": [
+          "seek retribution",
+          "exact retribution",
+          "divine retribution"
+        ]
+      },
+      {
+        "id": 26,
+        "word": "Abolish",
+        "pos": "verb",
+        "meaning": "Formally put an end to a system, practice, or institution.",
+        "example": "Over one hundred sovereign democracies have chosen to abolish capital punishment permanently.",
+        "collocations": [
+          "abolish capital punishment",
+          "abolish the death penalty",
+          "abolish slavery"
+        ]
+      },
+      {
+        "id": 27,
+        "word": "Judiciary",
+        "pos": "noun",
+        "meaning": "The judicial authorities of a country; judges collectively.",
+        "example": "A fiercely independent judiciary serves as an essential constitutional bulwark against executive overreach.",
+        "collocations": [
+          "independent judiciary",
+          "members of the judiciary",
+          "corrupt judiciary"
+        ]
+      },
+      {
+        "id": 28,
+        "word": "Precedent",
+        "pos": "noun",
+        "meaning": "An earlier event or action that is regarded as an example or guide to be considered in subsequent similar circumstances.",
+        "example": "The landmark Supreme Court ruling established an unshakeable legal precedent for digital privacy rights.",
+        "collocations": [
+          "legal precedent",
+          "set a precedent",
+          "binding precedent"
+        ]
+      },
+      {
+        "id": 29,
+        "word": "Deter",
+        "pos": "verb",
+        "meaning": "Discourage someone from doing something by instilling doubt or fear of the consequences.",
+        "example": "Well-lit pedestrian sidewalks and visible community wardens actively deter opportunistic street robbery.",
+        "collocations": [
+          "deter crime",
+          "deter offenders",
+          "deter criminals"
+        ]
+      },
+      {
+        "id": 30,
+        "word": "Illicit",
+        "pos": "adjective",
+        "meaning": "Forbidden by law, rules, or custom.",
+        "example": "International maritime patrols intercepted an oceanic vessel trafficking millions in illicit synthetic opioids.",
+        "collocations": [
+          "illicit trade",
+          "illicit drugs",
+          "illicit activities"
+        ]
+      }
+    ]
   }
 ]

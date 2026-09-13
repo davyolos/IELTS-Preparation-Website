@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -342,11 +342,25 @@
     
     <!-- Topic Selection & Progress Bar -->
     <div class="vocab-header-card">
-      <div>
-        <div class="card-title">IELTS Academic Vocabulary Module (30 Words Under One Cohesive Topic)</div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+          <div class="card-title" style="margin: 0;">IELTS Academic Vocabulary Module (30 Words Under One Cohesive Topic)</div>
+          
+          <!-- 24-Hour Daily Topic Status & Live Countdown -->
+          <div class="daily-cycle-pill" id="dailyCyclePill">
+            <span class="daily-pulse-dot"></span>
+            <span id="dailyTopicBadgeText" style="font-weight: 700; color: #fff;">📅 Today's Daily Topic</span>
+            <span class="daily-timer-divider">•</span>
+            <span style="color: var(--text-secondary); font-size: 0.78rem;">Refreshes in:</span>
+            <strong id="dailyCountdownReadout" style="color: #60a5fa; font-family: monospace; font-size: 0.92rem; font-weight: 700;">00h 00m 00s</strong>
+          </div>
+        </div>
+
         <div class="vocab-topic-picker">
-          <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">Active Topic:</label>
+          <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">Topic Focus:</label>
           <select id="vocabTopicSelect" class="vocab-select" onchange="onTopicChanged()"></select>
+          <button id="keepTopicToggleBtn" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;" onclick="toggleKeepTopic()" title="Keep practicing this topic beyond midnight">📌 Keep This Topic</button>
+          <button id="switchToTodayBtn" class="btn btn-outline" style="display: none; font-size: 0.8rem; padding: 0.35rem 0.75rem; border-color: #3b82f6; color: #60a5fa;" onclick="switchToTodayTopic()">🌟 Switch to Today's Topic</button>
           <button id="aiVocabGenBtn" class="btn btn-ai" onclick="generateNewAIVocab()">✨ AI Generate 30 Words</button>
           <button id="exportAll30PdfBtn" class="btn btn-pdf-export" onclick="exportAll30WordsToPDF()">📚 Export All 30 Words (Master PDF)</button>
         </div>
