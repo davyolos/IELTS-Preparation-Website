@@ -1194,3 +1194,35 @@ header {
     display: none !important;
   }
 }
+
+/* PDF Export Button & Strict Lock Styling */
+.btn-pdf-export {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: 1px solid #a78bfa !important;
+  padding: 0.55rem 1.1rem !important;
+  border-radius: var(--radius-sm) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.35) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-pdf-export:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.locked-input {
+  background: #090e17 !important;
+  color: #64748b !important;
+  border-color: #1e293b !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  opacity: 0.75 !important;
+}

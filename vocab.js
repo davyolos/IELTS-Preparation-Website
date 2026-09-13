@@ -272,89 +272,240 @@ function updateWordTimerDisplay() {
   }
 }
 
-// Validate & Save 6 Sentences
-function validateAndSaveSentences() {
-  const topic = vocabTopics[currentTopicIndex];
-  const w = topic.words[currentWordIndex];
-  const targetWord = w.word.toLowerCase();
+// ============================================================================
+// Deep Linguistic Evaluator & Sentence Quality Engine (Cambridge Standard)
+// ============================================================================
 
-  const s1 = document.getElementById('simpleSentence1').value.trim();
-  const s2 = document.getElementById('simpleSentence2').value.trim();
-  const s3 = document.getElementById('simpleSentence3').value.trim();
+// Helper: Get regex matching root stem and common English inflections
+function getWordInflectionsRegex(word) {
+  const w = (word || '').toLowerCase().trim();
+  let root = w;
+  if (w.endsWith('ing') && w.length > 5) root = w.slice(0, -3);
+  else if (w.endsWith('tion') && w.length > 6) root = w.slice(0, -4);
+  else if (w.endsWith('able') && w.length > 6) root = w.slice(0, -4);
+  else if (w.endsWith('ive') && w.length > 5) root = w.slice(0, -3);
+  else if (w.endsWith('ed') && w.length > 4) root = w.slice(0, -2);
+  else if (w.endsWith('es') && w.length > 4) root = w.slice(0, -2);
+  else if (w.endsWith('s') && w.length > 3) root = w.slice(0, -1);
+  else if (w.endsWith('e') && w.length > 4) root = w.slice(0, -1);
 
-  const c1 = document.getElementById('complexSentence1').value.trim();
-  const c2 = document.getElementById('complexSentence2').value.trim();
-  const c3 = document.getElementById('complexSentence3').value.trim();
+  return new RegExp('\\b' + root + '[a-z]{0,6}\\b', 'i');
+}
 
-  const simpleList = [s1, s2, s3];
-  const complexList = [c1, c2, c3];
+// Analyze a single sentence for grammar, contextual word fit, clause structure, and meaning
+function analyzeSentenceLinguistics(rawSentence, wordObj, sentenceType, index) {
+  const s = (rawSentence || '').trim();
+  const word = (wordObj && wordObj.word) ? wordObj.word : '';
+  const pos = ((wordObj && wordObj.pos) || '').toLowerCase();
+  const collocations = (wordObj && wordObj.collocations) || [];
 
-  let missingWordErrors = [];
-  let complexFeedback = [];
+  // Case 1: Unanswered / Left Blank
+  if (!s) {
+    return {
+      status: 'empty',
+      text: '',
+      type: sentenceType,
+      num: index,
+      score: null,
+      badge: '○ Left Blank',
+      color: 'var(--text-muted)',
+      wordFound: false,
+      grammarOk: false,
+      note: 'Sentence was left blank. (Unanswered fields are skipped without blocking evaluation or export).'
+    };
+  }
 
-  // Check simple sentences
-  simpleList.forEach((s, idx) => {
-    if (!s) {
-      missingWordErrors.push(`Simple Sentence #${idx + 1} is empty.`);
-    } else if (!s.toLowerCase().includes(targetWord.slice(0, -1))) {
-      missingWordErrors.push(`Simple Sentence #${idx + 1} does not include "${w.word}".`);
+  const words = s.split(/\s+/);
+  const wordCount = words.length;
+  let issues = [];
+  let strengths = [];
+  let grammarOk = true;
+  let wordFitOk = true;
+
+  // 1. Check Target Word Presence & Inflection
+  const inflectRegex = getWordInflectionsRegex(word);
+  const wordFound = inflectRegex.test(s);
+  if (!wordFound) {
+    wordFitOk = false;
+    issues.push('Target word "' + word + '" is missing. Ensure you incorporate "' + word + '" or one of its grammatical forms.');
+  }
+
+  // 2. Syntactic & Contextual Word Fit (Part-of-Speech Checks)
+  if (wordFound) {
+    // Verb checks
+    if (pos.includes('verb') || ['mitigate', 'exacerbate', 'subsidize', 'incentivize', 'contaminate', 'rehabilitate'].includes(word.toLowerCase())) {
+      // Check if transitive verb is left dangling without an object
+      const danglingVerbPattern = new RegExp('\\b' + word + '\\s*[.!?]$', 'i');
+      if (danglingVerbPattern.test(s)) {
+        wordFitOk = false;
+        issues.push('Transitive verb "' + word + '" requires a direct object (e.g., "' + word + ' climate risks", "' + word + ' emissions").');
+      }
+      // Check for ungrammatical "is + base verb"
+      const isBaseVerb = new RegExp('\\b(is|are|was|were|am)\\s+' + word + '\\b', 'i');
+      if (isBaseVerb.test(s)) {
+        grammarOk = false;
+        issues.push('Grammar flaw: After auxiliary "to be", use passive ("is ' + word + 'd") or continuous ("is ' + word + 'ing").');
+      }
+    }
+
+    // Adjective checks
+    if (pos.includes('adj') || ['sustainable', 'detrimental', 'unprecedented', 'paramount', 'imperative', 'viable', 'equitable', 'catastrophic', 'negligent', 'pristine', 'indispensable', 'ubiquitous', 'profound'].includes(word.toLowerCase())) {
+      const modalAdj = new RegExp('\\b(will|can|could|should|must|might|to)\\s+' + word + '\\b', 'i');
+      if (modalAdj.test(s)) {
+        grammarOk = false;
+        wordFitOk = false;
+        issues.push('"' + word + '" is an adjective. Combine it with a copula (e.g., "is ' + word + '") or place it before a noun.');
+      }
+    }
+
+    // Noun checks
+    if (pos.includes('noun') || ['biodiversity', 'depletion', 'proliferation', 'resilience', 'ecosystem', 'emissions', 'degradation', 'nuance', 'autonomy'].includes(word.toLowerCase())) {
+      const modalNoun = new RegExp('\\b(will|can|could|should|must)\\s+' + word + '\\b', 'i');
+      if (modalNoun.test(s)) {
+        grammarOk = false;
+        wordFitOk = false;
+        issues.push('"' + word + '" is an academic noun. Use it as a subject or object rather than an action verb.');
+      }
+    }
+  }
+
+  // 3. Grammar & Mechanics Validation
+  // A. Capitalization
+  if (!/^[A-Z"“']/.test(s)) {
+    grammarOk = false;
+    issues.push('Mechanics: Sentence must begin with a capital letter.');
+  }
+
+  // B. Punctuation
+  if (!/[.!?]["”']?$/.test(s)) {
+    grammarOk = false;
+    issues.push('Punctuation: Sentence must conclude with an appropriate end mark (period or question mark).');
+  }
+
+  // C. Word Duplication (Stuttering error)
+  const dupMatch = s.match(/\b(the|is|are|was|were|in|on|at|to|that|of|it|a|an|we|they|and)\s+\1\b/i);
+  if (dupMatch) {
+    grammarOk = false;
+    issues.push('Repeated consecutive word error: "' + dupMatch[0] + '".');
+  }
+
+  // D. Common Subject-Verb Agreement / Syntax Flaws
+  if (/\b(he|she|it)\s+(have|are|were|do)\b/i.test(s)) {
+    grammarOk = false;
+    issues.push('Subject-verb agreement error: 3rd-person singular subject requires singular verb ("has", "is", "does").');
+  }
+  if (/\b(they|we|you)\s+(is|was|has)\b/i.test(s)) {
+    grammarOk = false;
+    issues.push('Subject-verb agreement error: Plural subject requires plural verb ("are", "were", "have").');
+  }
+  if (/\b(does|did|do)\s+not\s+([a-z]+(?:s|ed))\b/i.test(s)) {
+    grammarOk = false;
+    issues.push('Auxiliary verb flaw: Use base form of the main verb following "do not / does not / did not".');
+  }
+  if (/\b(can|could|will|would|should|must|might)\s+([a-z]+(?:s|ed))\b/i.test(s)) {
+    grammarOk = false;
+    issues.push('Modal verb flaw: Modal verbs must be followed immediately by a base infinitive without inflections.');
+  }
+  if (/\ba\s+([aeiou][a-z]{2,})\b/i.test(s) && !/\ba\s+(university|unique|useful|one|european)/i.test(s)) {
+    grammarOk = false;
+    issues.push('Article usage: Use "an" before vowel-initial words.');
+  }
+
+  // 4. Semantic Meaning & Depth
+  if (wordCount < 4) {
+    grammarOk = false;
+    issues.push('Sentence is too brief (only ' + wordCount + ' words). A complete IELTS thought should contain at least 6–10 words.');
+  }
+
+  // Collocation Detection
+  let detectedColloc = null;
+  collocations.forEach(c => {
+    if (s.toLowerCase().includes(c.toLowerCase())) {
+      detectedColloc = c;
     }
   });
+  if (detectedColloc) {
+    strengths.push('🌟 Collocation bonus: "' + detectedColloc + '" naturally integrated.');
+  }
 
-  // Check complex sentences
-  const complexMarkers = /\b(although|even though|whereas|while|because|since|if|unless|provided that|had i|in spite of|despite|which means|whereby|not only|what is)\b/i;
-
-  complexList.forEach((s, idx) => {
-    if (!s) {
-      missingWordErrors.push(`Complex Sentence #${idx + 1} is empty.`);
+  // 5. Sentence Type & Complexity Check
+  let clauseStructureOk = true;
+  if (sentenceType === 'Simple') {
+    if (wordCount >= 6 && grammarOk && wordFitOk) {
+      strengths.push('✓ Clear independent clause conveying a coherent, singular academic thought.');
+    }
+  } else {
+    const complexMarkers = /\b(although|even though|whereas|while|because|since|unless|provided that|inasmuch as|in order that|so that|despite|in spite of|if|had [a-z]+|were [a-z]+ to|which|whom|whose|whereby|not only\b.*\bbut also|rarely|seldom)\b/i;
+    if (!complexMarkers.test(s)) {
+      clauseStructureOk = false;
+      issues.push('Complexity note: Sentence lacks a complex clause marker. For IELTS Band 8+, introduce a subordinate clause ("although", "whereas", "because"), conditional ("if", "unless"), or relative pronoun ("which", "whereby").');
     } else {
-      if (!s.toLowerCase().includes(targetWord.slice(0, -1))) {
-        missingWordErrors.push(`Complex Sentence #${idx + 1} does not include "${w.word}".`);
-      }
-      if (!complexMarkers.test(s)) {
-        complexFeedback.push(`Complex Sentence #${idx + 1} appears too simple. Use subordinate conjunctions like 'although', 'because', 'whereas', or conditionals ('if').`);
-      }
+      strengths.push('✓ Sophisticated syntactic clause linking demonstrated.');
     }
-  });
 
-  const notice = document.getElementById('sentenceValidationNotice');
-
-  if (missingWordErrors.length > 0) {
-    notice.innerHTML = `<div style="color: var(--accent-rose); background: rgba(239, 68, 68, 0.1); padding: 0.75rem; border-radius: 6px;">
-      <strong>Please complete all 6 sentences using "${w.word}":</strong>
-      <ul style="margin-left: 1.2rem; margin-top: 0.3rem;">${missingWordErrors.map(e => `<li>${e}</li>`).join('')}</ul>
-    </div>`;
-    return;
+    if (/^(Although|Even though|While|Since|Because|If|Unless|Provided that)\b/i.test(s) && !/,/.test(s)) {
+      issues.push('Punctuation tip: When starting with a subordinate clause, separate it from the main clause with a comma.');
+    }
   }
 
-  // Save successful
-  if (!userSentencesData[topic.topicId]) {
-    userSentencesData[topic.topicId] = {};
+  // Determine Overall Status & Band
+  let status = 'valid';
+  let badge = '✓ Band 8.5+ Quality';
+  let color = 'var(--accent-emerald)';
+  let score = 8.5;
+
+  if (!wordFound) {
+    status = 'missing_word';
+    badge = '✗ Word Missing';
+    color = 'var(--accent-rose)';
+    score = 5.5;
+  } else if (!grammarOk || !wordFitOk) {
+    status = 'grammar_issue';
+    badge = '⚠ Grammar / Word Fit';
+    color = 'var(--accent-amber)';
+    score = 6.5;
+  } else if (!clauseStructureOk) {
+    status = 'lacks_complexity';
+    badge = '⚠ Needs Complexity';
+    color = 'var(--accent-amber)';
+    score = 7.0;
+  } else if (detectedColloc) {
+    score = 9.0;
+    badge = '🌟 Band 9.0 Master';
   }
-  userSentencesData[topic.topicId][w.id] = {
-    simple: simpleList,
-    complex: complexList,
-    completed: true,
-    timestamp: new Date().toISOString()
+
+  let finalNote = '';
+  if (issues.length > 0) {
+    finalNote = issues.join(' ');
+  } else if (strengths.length > 0) {
+    finalNote = strengths.join(' ');
+  } else {
+    finalNote = 'Grammatically accurate with clear academic meaning.';
+  }
+
+  return {
+    status,
+    text: s,
+    type: sentenceType,
+    num: index,
+    score,
+    badge,
+    color,
+    wordFound,
+    grammarOk,
+    wordFitOk,
+    clauseStructureOk,
+    detectedColloc,
+    note: finalNote
   };
+}
 
-  try {
-    localStorage.setItem('ielts_vocab_sentences_data', JSON.stringify(userSentencesData));
-  } catch (e) {}
+// ----------------------------------------------------------------------------
+// Validation, Auto-Lock, and Evaluation Actions
+// ----------------------------------------------------------------------------
 
-  renderWordGrid();
-
-  let adviceHtml = '';
-  if (complexFeedback.length > 0) {
-    adviceHtml = `<div style="color: var(--accent-amber); margin-top: 0.5rem; font-size: 0.85rem;">
-      <strong>Tip:</strong> ${complexFeedback.join(' ')}
-    </div>`;
-  }
-
-  notice.innerHTML = `<div style="color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); padding: 0.75rem; border-radius: 6px;">
-    ✓ <strong>Saved successfully!</strong> All 6 sentences recorded for "${w.word}".
-    ${adviceHtml}
-  </div>`;
+function validateAndSaveSentences() {
+  evaluateAndSaveSentences(false);
 }
 
 function nextWord() {
@@ -367,11 +518,6 @@ function nextWord() {
   loadActiveWord();
 }
 
-// ----------------------------------------------------------------------------
-// End-of-Session 3-Minute Speech Challenge (Cue Card Style)
-// ----------------------------------------------------------------------------
-
-// Audio Chime Alert via Web Audio API
 function playTimerChime() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -398,8 +544,14 @@ function lockWordInputs(shouldLock) {
     const el = document.getElementById(id);
     if (el) {
       el.disabled = shouldLock;
-      if (shouldLock) el.classList.add('locked-input');
-      else el.classList.remove('locked-input');
+      el.readOnly = shouldLock;
+      if (shouldLock) {
+        el.classList.add('locked-input');
+        el.setAttribute('tabindex', '-1');
+      } else {
+        el.classList.remove('locked-input');
+        el.removeAttribute('tabindex');
+      }
     }
   });
 
@@ -409,78 +561,67 @@ function lockWordInputs(shouldLock) {
   const saveBtn = document.getElementById('saveSentencesBtn');
   if (saveBtn) {
     if (shouldLock) {
-      saveBtn.innerText = '🔒 Inputs Locked (Evaluated)';
+      saveBtn.innerText = '🔒 Time Expired (Inputs Locked)';
       saveBtn.disabled = true;
     } else {
-      saveBtn.innerText = '💾 Validate & Save 6 Sentences';
+      saveBtn.innerText = '💾 Evaluate & Save Sentences';
       saveBtn.disabled = false;
     }
   }
+
+  const timerBtn = document.getElementById('wordTimerBtn');
+  if (timerBtn && shouldLock) {
+    timerBtn.innerText = '🔒 3-Min Expired';
+    timerBtn.disabled = true;
+    timerBtn.classList.remove('btn-danger');
+    timerBtn.classList.add('btn-outline');
+  }
 }
 
-// Deep Linguistic Evaluation & Scoring of 6 Sentences
 function evaluateAndSaveSentences(autoTriggered = false) {
   const topic = vocabTopics[currentTopicIndex];
+  if (!topic || !topic.words) return;
   const w = topic.words[currentWordIndex];
-  const targetWord = w.word.toLowerCase();
-  const wordStem = targetWord.length > 5 ? targetWord.slice(0, targetWord.length - 2) : targetWord.slice(0, targetWord.length - 1);
 
-  const s1 = document.getElementById('simpleSentence1').value.trim();
-  const s2 = document.getElementById('simpleSentence2').value.trim();
-  const s3 = document.getElementById('simpleSentence3').value.trim();
+  const s1 = (document.getElementById('simpleSentence1') ? document.getElementById('simpleSentence1').value.trim() : '');
+  const s2 = (document.getElementById('simpleSentence2') ? document.getElementById('simpleSentence2').value.trim() : '');
+  const s3 = (document.getElementById('simpleSentence3') ? document.getElementById('simpleSentence3').value.trim() : '');
 
-  const c1 = document.getElementById('complexSentence1').value.trim();
-  const c2 = document.getElementById('complexSentence2').value.trim();
-  const c3 = document.getElementById('complexSentence3').value.trim();
+  const c1 = (document.getElementById('complexSentence1') ? document.getElementById('complexSentence1').value.trim() : '');
+  const c2 = (document.getElementById('complexSentence2') ? document.getElementById('complexSentence2').value.trim() : '');
+  const c3 = (document.getElementById('complexSentence3') ? document.getElementById('complexSentence3').value.trim() : '');
 
   const simpleList = [s1, s2, s3];
   const complexList = [c1, c2, c3];
-  const complexMarkers = /(although|even though|whereas|while|because|since|if|unless|provided that|had i|in spite of|despite|which|whose|whereby|not only|what is|were it not)/i;
 
-  let totalValid = 0;
-  let sentenceReports = [];
+  const reports = [
+    analyzeSentenceLinguistics(s1, w, 'Simple', 1),
+    analyzeSentenceLinguistics(s2, w, 'Simple', 2),
+    analyzeSentenceLinguistics(s3, w, 'Simple', 3),
+    analyzeSentenceLinguistics(c1, w, 'Complex', 1),
+    analyzeSentenceLinguistics(c2, w, 'Complex', 2),
+    analyzeSentenceLinguistics(c3, w, 'Complex', 3),
+  ];
 
-  simpleList.forEach((s, idx) => {
-    let status = 'valid';
-    let note = 'Accurate simple sentence construction.';
-    if (!s) {
-      status = 'empty';
-      note = 'Sentence is blank.';
-    } else if (!s.toLowerCase().includes(wordStem)) {
-      status = 'missing_word';
-      note = 'Does not incorporate target word "' + w.word + '".';
-    } else if (s.split(/\s+/).length < 4) {
-      status = 'too_short';
-      note = 'Too short to form a complete thought.';
-    } else {
-      totalValid++;
+  let attemptedCount = 0;
+  let validCount = 0;
+  let totalScoreSum = 0;
+
+  reports.forEach(r => {
+    if (r.status !== 'empty') {
+      attemptedCount++;
+      totalScoreSum += r.score;
+      if (r.status === 'valid') validCount++;
     }
-    sentenceReports.push({ type: 'Simple', num: idx + 1, text: s, status, note });
   });
 
-  complexList.forEach((s, idx) => {
-    let status = 'valid';
-    let note = 'Demonstrates sophisticated complex clause linking.';
-    if (!s) {
-      status = 'empty';
-      note = 'Sentence is blank.';
-    } else if (!s.toLowerCase().includes(wordStem)) {
-      status = 'missing_word';
-      note = 'Does not incorporate target word "' + w.word + '".';
-    } else if (!complexMarkers.test(s)) {
-      status = 'lacks_complexity';
-      note = 'Lacks complex markers. Use subordinate conjunctions or conditionals.';
-    } else {
-      totalValid++;
-    }
-    sentenceReports.push({ type: 'Complex', num: idx + 1, text: s, status, note });
-  });
-
-  let bandScore = '5.5';
-  if (totalValid === 6) bandScore = '9.0';
-  else if (totalValid === 5) bandScore = '8.5';
-  else if (totalValid === 4) bandScore = '7.5';
-  else if (totalValid >= 2) bandScore = '6.5';
+  let overallBand = '5.0';
+  if (attemptedCount > 0) {
+    const rawAvg = totalScoreSum / attemptedCount;
+    const scaledScore = attemptedCount >= 3 ? rawAvg : (rawAvg * 0.85 + 1.0);
+    overallBand = (Math.round(scaledScore * 2) / 2).toFixed(1);
+    if (parseFloat(overallBand) > 9.0) overallBand = '9.0';
+  }
 
   const wordRecord = {
     word: w.word,
@@ -490,10 +631,11 @@ function evaluateAndSaveSentences(autoTriggered = false) {
     collocations: w.collocations,
     simple: simpleList,
     complex: complexList,
-    completed: totalValid >= 4,
-    score: bandScore,
-    totalValid: totalValid,
-    reports: sentenceReports,
+    completed: attemptedCount >= 3 && validCount >= 2,
+    score: overallBand,
+    attemptedCount,
+    validCount,
+    reports,
     timestamp: new Date().toISOString()
   };
 
@@ -514,105 +656,460 @@ function displaySentenceEvaluationScorecard(data, autoTriggered = false) {
   const notice = document.getElementById('sentenceValidationNotice');
   if (!notice) return;
 
-  const autoBadge = autoTriggered ? '<div style="background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-bottom: 8px; font-weight: bold;">⏱️ Evaluated Automatically at 3:00 Expiration (Inputs Locked)</div>' : '';
+  const autoBadge = autoTriggered ? 
+    '<div style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;">' +
+    '<span>⏱️ 3-Minute Limit Reached</span> • <span>Inputs locked. All written sentences analyzed below.</span></div>' : '';
 
   let listHtml = '';
   (data.reports || []).forEach(r => {
     let icon = '✓';
-    let color = 'var(--accent-emerald)';
-    if (r.status === 'empty' || r.status === 'missing_word') {
+    let iconColor = 'var(--accent-emerald)';
+    if (r.status === 'empty') {
+      icon = '○';
+      iconColor = 'var(--text-muted)';
+    } else if (r.status === 'missing_word') {
       icon = '✗';
-      color = 'var(--accent-rose)';
-    } else if (r.status === 'lacks_complexity' || r.status === 'too_short') {
+      iconColor = 'var(--accent-rose)';
+    } else if (r.status === 'grammar_issue' || r.status === 'lacks_complexity') {
       icon = '⚠';
-      color = 'var(--accent-amber)';
+      iconColor = 'var(--accent-amber)';
     }
 
-    listHtml += '<div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-top: 1px solid var(--border-color); font-size: 0.85rem;">' +
-      '<div><strong style="color: #fff;">' + r.type + ' #' + r.num + ':</strong> ' +
-      '<span style="color: ' + (r.text ? 'var(--text-primary)' : 'var(--text-muted)') + ';">' + (r.text ? '“' + r.text + '”' : '(Empty)') + '</span>' +
-      '<div style="font-size: 0.78rem; color: ' + color + '; margin-top: 2px;">' + r.note + '</div></div>' +
-      '<span style="font-weight: 800; color: ' + color + '; font-size: 1rem; padding-left: 8px;">' + icon + '</span></div>';
+    const displayText = r.text ? ('“' + r.text + '”') : '<em style="color: var(--text-muted); font-size: 0.85rem;">(Left blank / Unanswered)</em>';
+
+    listHtml += '<div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border-color); font-size: 0.88rem; gap: 1rem;">' +
+      '<div style="flex: 1;">' +
+        '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 3px;">' +
+          '<strong style="color: #fff;">' + r.type + ' #' + r.num + ':</strong>' +
+          '<span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.06); color: ' + r.color + '; font-weight: 700;">' + r.badge + '</span>' +
+          (r.score ? '<span style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">Band ' + r.score + '</span>' : '') +
+        '</div>' +
+        '<div style="color: ' + (r.text ? 'var(--text-primary)' : 'var(--text-muted)') + '; line-height: 1.4; margin-bottom: 4px;">' + displayText + '</div>' +
+        '<div style="font-size: 0.8rem; color: ' + r.color + '; line-height: 1.3;">' + r.note + '</div>' +
+      '</div>' +
+      '<span style="font-weight: 800; color: ' + iconColor + '; font-size: 1.15rem; padding-left: 4px;">' + icon + '</span>' +
+    '</div>';
   });
 
+  const attemptedLabel = (data.attemptedCount || 0) + ' / 6 Sentences Written (' + (data.validCount || 0) + ' Met Band 8.5+ Criteria)';
+
   notice.innerHTML = '<div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">' +
-    '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">' +
-    '<div>' + autoBadge + '<h4 style="color: #fff; font-size: 1.1rem; margin: 0;">Sentence Practice Evaluation</h4>' +
-    '<span style="font-size: 0.8rem; color: var(--text-secondary);">' + (data.totalValid || 0) + ' / 6 Sentences Met Band 8+ Criteria</span></div>' +
-    '<div style="text-align: right;"><span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); display: block;">Sentence Score</span>' +
-    '<span style="font-family: monospace; font-size: 1.8rem; font-weight: 800; color: var(--accent-emerald);">Band ' + (data.score || '8.0') + '</span></div></div>' +
-    '<div>' + listHtml + '</div></div>';
+    '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">' +
+      '<div>' +
+        autoBadge +
+        '<h4 style="color: #fff; font-size: 1.15rem; margin: 0; font-weight: 700;">Sentence Practice Evaluation & Feedback</h4>' +
+        '<span style="font-size: 0.84rem; color: var(--text-secondary);">' + attemptedLabel + '</span>' +
+      '</div>' +
+      '<div style="display: flex; align-items: center; gap: 1rem;">' +
+        '<div style="text-align: right;">' +
+          '<span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); display: block; font-weight: 700;">Word Score</span>' +
+          '<span style="font-family: monospace; font-size: 1.8rem; font-weight: 800; color: var(--accent-emerald);">Band ' + (data.score || '8.0') + '</span>' +
+        '</div>' +
+        '<button class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>' +
+      '</div>' +
+    '</div>' +
+    '<div>' + listHtml + '</div>' +
+  '</div>';
 }
+
+// ----------------------------------------------------------------------------
+// PDF Exporter (Unblocked, Supports Partial/Empty Fields, Save As Picker)
+// ----------------------------------------------------------------------------
 
 function exportWordToPDF() {
   const topic = vocabTopics[currentTopicIndex];
+  if (!topic || !topic.words) return;
   const w = topic.words[currentWordIndex];
-  const topicData = userSentencesData[topic.topicId] || {};
-  const wordRecord = topicData[w.id] || {
-    simple: [
-      document.getElementById('simpleSentence1').value.trim(),
-      document.getElementById('simpleSentence2').value.trim(),
-      document.getElementById('simpleSentence3').value.trim()
-    ],
-    complex: [
-      document.getElementById('complexSentence1').value.trim(),
-      document.getElementById('complexSentence2').value.trim(),
-      document.getElementById('complexSentence3').value.trim()
-    ],
-    score: '8.0',
-    reports: []
-  };
 
-  const printWindow = window.open('', '_blank', 'width=850,height=900');
-  if (!printWindow) {
-    alert('Pop-up blocked. Please allow pop-ups for this site to generate PDF.');
-    return;
+  const topicData = userSentencesData[topic.topicId] || {};
+  const savedRecord = topicData[w.id] || {};
+
+  const s1 = (document.getElementById('simpleSentence1') ? document.getElementById('simpleSentence1').value.trim() : '') || (savedRecord.simple && savedRecord.simple[0]) || '';
+  const s2 = (document.getElementById('simpleSentence2') ? document.getElementById('simpleSentence2').value.trim() : '') || (savedRecord.simple && savedRecord.simple[1]) || '';
+  const s3 = (document.getElementById('simpleSentence3') ? document.getElementById('simpleSentence3').value.trim() : '') || (savedRecord.simple && savedRecord.simple[2]) || '';
+
+  const c1 = (document.getElementById('complexSentence1') ? document.getElementById('complexSentence1').value.trim() : '') || (savedRecord.complex && savedRecord.complex[0]) || '';
+  const c2 = (document.getElementById('complexSentence2') ? document.getElementById('complexSentence2').value.trim() : '') || (savedRecord.complex && savedRecord.complex[1]) || '';
+  const c3 = (document.getElementById('complexSentence3') ? document.getElementById('complexSentence3').value.trim() : '') || (savedRecord.complex && savedRecord.complex[2]) || '';
+
+  const repSimple = [
+    analyzeSentenceLinguistics(s1, w, 'Simple', 1),
+    analyzeSentenceLinguistics(s2, w, 'Simple', 2),
+    analyzeSentenceLinguistics(s3, w, 'Simple', 3)
+  ];
+  const repComplex = [
+    analyzeSentenceLinguistics(c1, w, 'Complex', 1),
+    analyzeSentenceLinguistics(c2, w, 'Complex', 2),
+    analyzeSentenceLinguistics(c3, w, 'Complex', 3)
+  ];
+
+  let filledCount = 0;
+  let totalScore = 0;
+  [...repSimple, ...repComplex].forEach(r => {
+    if (r.status !== 'empty') {
+      filledCount++;
+      totalScore += r.score;
+    }
+  });
+
+  const displayScore = filledCount > 0 ? (totalScore / filledCount).toFixed(1) : (savedRecord.score || '8.0');
+
+  function formatPDFSentenceItem(r, label) {
+    if (r.status === 'empty') {
+      return '<div class="sentence-item empty">' +
+        '<div class="sentence-header">' +
+          '<span class="sentence-label">' + label + '</span>' +
+          '<span class="status-tag tag-empty">○ Left Blank</span>' +
+        '</div>' +
+        '<div class="sentence-text empty-text"><em>(Left blank / Unanswered in candidate drill)</em></div>' +
+      '</div>';
+    }
+
+    const tagClass = r.status === 'valid' ? 'tag-valid' : (r.status === 'missing_word' ? 'tag-error' : 'tag-warning');
+
+    return '<div class="sentence-item">' +
+      '<div class="sentence-header">' +
+        '<span class="sentence-label">' + label + '</span>' +
+        '<span class="status-tag ' + tagClass + '">' + r.badge + '</span>' +
+      '</div>' +
+      '<div class="sentence-text">“' + r.text + '”</div>' +
+      '<div class="sentence-feedback">' + r.note + '</div>' +
+    '</div>';
   }
 
-  const htmlContent = '<!DOCTYPE html><html><head><meta charset="utf-8">' +
-    '<title>IELTS Vocabulary Study Sheet - ' + w.word + '</title>' +
-    '<style>' +
-    '@page { size: A4; margin: 20mm; }' +
-    'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1e293b; line-height: 1.6; margin: 0; padding: 20px; }' +
-    '.header { border-bottom: 2px solid #3b82f6; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }' +
-    '.header h1 { font-size: 22px; color: #1e3a8a; margin: 0; }' +
-    '.header .meta { font-size: 13px; color: #64748b; }' +
-    '.word-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 20px; }' +
-    '.word-title { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0; }' +
-    '.word-pos { font-size: 14px; color: #64748b; font-style: italic; margin-left: 6px; }' +
-    '.model-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 14px; margin-top: 10px; font-size: 14px; color: #1e40af; border-radius: 4px; }' +
-    '.colloc-tag { display: inline-block; background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 6px; margin-top: 4px; }' +
-    '.section-title { font-size: 16px; font-weight: 700; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-top: 24px; margin-bottom: 12px; }' +
-    '.sentence-item { margin-bottom: 10px; padding: 10px 14px; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px; }' +
-    '.sentence-label { font-weight: 700; color: #2563eb; margin-right: 6px; }' +
-    '.footer { margin-top: 35px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }' +
-    '.score-badge { float: right; background: #dcfce7; color: #166534; font-size: 18px; font-weight: 800; padding: 6px 14px; border-radius: 6px; border: 1px solid #bbf7d0; }' +
-    '</style></head><body>' +
-    '<div class="header"><div><h1>IELTS Band 8.5+ Vocabulary Study Record</h1>' +
-    '<div class="meta">Topic: <strong>' + topic.topicTitle + '</strong></div></div>' +
-    '<div class="meta">Date: ' + new Date().toLocaleDateString() + '</div></div>' +
-    '<div class="word-card"><div class="score-badge">Score: Band ' + (wordRecord.score || '8.0') + '</div>' +
-    '<div class="word-title">' + w.id + '. ' + w.word + ' <span class="word-pos">(' + (w.pos || 'academic') + ')</span></div>' +
-    '<div style="margin-top: 8px;"><strong>Definition:</strong> ' + w.meaning + '</div>' +
-    '<div class="model-box"><strong>Band 8.5 Model Sentence:</strong> “' + w.example + '”</div>' +
-    '<div style="margin-top: 10px;"><strong>Key Collocations:</strong> ' +
-    (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
-    '</div></div>' +
-    '<div class="section-title">Part A: 3 Simple Sentences (Candidate Practice)</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Simple #1:</span> ' + (wordRecord.simple[0] || '(Not entered)') + '</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Simple #2:</span> ' + (wordRecord.simple[1] || '(Not entered)') + '</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Simple #3:</span> ' + (wordRecord.simple[2] || '(Not entered)') + '</div>' +
-    '<div class="section-title">Part B: 3 Complex Sentences (Candidate Practice)</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Complex #1 (Subordinate):</span> ' + (wordRecord.complex[0] || '(Not entered)') + '</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Complex #2 (Conditional):</span> ' + (wordRecord.complex[1] || '(Not entered)') + '</div>' +
-    '<div class="sentence-item"><span class="sentence-label">Complex #3 (Relative/Cleft):</span> ' + (wordRecord.complex[2] || '(Not entered)') + '</div>' +
-    '<div class="footer">IELTS Mastery Platform • Target Band 8.5+ • Cambridge Standard Lexical Resource</div>' +
-    '<script>window.onload = function() { setTimeout(function() { window.print(); }, 400); };</script>' +
-    '</body></html>';
+  const htmlContent = '<!DOCTYPE html>' +
+'<html lang="en">' +
+'<head>' +
+  '<meta charset="utf-8">' +
+  '<title>IELTS Vocabulary Study Sheet - ' + w.word + '</title>' +
+  '<style>' +
+    '@page { size: A4 portrait; margin: 15mm 20mm; }' +
+    '* { box-sizing: border-box; }' +
+    'body {' +
+      'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;' +
+      'color: #0f172a;' +
+      'line-height: 1.5;' +
+      'margin: 0;' +
+      'padding: 24px;' +
+      'background: #ffffff;' +
+      '-webkit-print-color-adjust: exact;' +
+      'print-color-adjust: exact;' +
+    '}' +
+    '.header {' +
+      'border-bottom: 3px solid #2563eb;' +
+      'padding-bottom: 14px;' +
+      'margin-bottom: 22px;' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: flex-end;' +
+    '}' +
+    '.header h1 {' +
+      'font-size: 24px;' +
+      'color: #1e3a8a;' +
+      'margin: 0 0 4px 0;' +
+      'font-weight: 800;' +
+      'letter-spacing: -0.02em;' +
+    '}' +
+    '.header .meta {' +
+      'font-size: 13px;' +
+      'color: #64748b;' +
+    '}' +
+    '.badge-top {' +
+      'background: #dbeafe;' +
+      'color: #1e40af;' +
+      'padding: 4px 10px;' +
+      'border-radius: 999px;' +
+      'font-size: 12px;' +
+      'font-weight: 700;' +
+    '}' +
+    '.word-card {' +
+      'background: #f8fafc;' +
+      'border: 1px solid #cbd5e1;' +
+      'border-radius: 10px;' +
+      'padding: 18px 22px;' +
+      'margin-bottom: 22px;' +
+    '}' +
+    '.word-card-top {' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: center;' +
+      'margin-bottom: 8px;' +
+    '}' +
+    '.word-title {' +
+      'font-size: 26px;' +
+      'font-weight: 800;' +
+      'color: #0f172a;' +
+    '}' +
+    '.word-pos {' +
+      'font-size: 14px;' +
+      'color: #64748b;' +
+      'font-style: italic;' +
+      'margin-left: 8px;' +
+    '}' +
+    '.score-badge {' +
+      'background: #dcfce7;' +
+      'color: #166534;' +
+      'font-size: 16px;' +
+      'font-weight: 800;' +
+      'padding: 6px 14px;' +
+      'border-radius: 6px;' +
+      'border: 1px solid #86efac;' +
+    '}' +
+    '.definition-row {' +
+      'font-size: 14px;' +
+      'color: #1e293b;' +
+      'margin-bottom: 10px;' +
+    '}' +
+    '.model-box {' +
+      'background: #eff6ff;' +
+      'border-left: 4px solid #3b82f6;' +
+      'padding: 10px 14px;' +
+      'font-size: 13.5px;' +
+      'color: #1e40af;' +
+      'border-radius: 4px;' +
+      'margin-bottom: 10px;' +
+    '}' +
+    '.colloc-tag {' +
+      'display: inline-block;' +
+      'background: #e0e7ff;' +
+      'color: #3730a3;' +
+      'padding: 3px 9px;' +
+      'border-radius: 4px;' +
+      'font-size: 12px;' +
+      'font-weight: 600;' +
+      'margin-right: 6px;' +
+      'margin-top: 4px;' +
+    '}' +
+    '.section-title {' +
+      'font-size: 15px;' +
+      'font-weight: 800;' +
+      'color: #0f172a;' +
+      'border-bottom: 1px solid #cbd5e1;' +
+      'padding-bottom: 4px;' +
+      'margin-top: 20px;' +
+      'margin-bottom: 12px;' +
+      'text-transform: uppercase;' +
+      'letter-spacing: 0.04em;' +
+    '}' +
+    '.sentence-item {' +
+      'background: #ffffff;' +
+      'border: 1px solid #e2e8f0;' +
+      'border-radius: 8px;' +
+      'padding: 10px 14px;' +
+      'margin-bottom: 10px;' +
+      'page-break-inside: avoid;' +
+    '}' +
+    '.sentence-item.empty {' +
+      'background: #f8fafc;' +
+      'border: 1px dashed #cbd5e1;' +
+    '}' +
+    '.sentence-header {' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: center;' +
+      'margin-bottom: 4px;' +
+    '}' +
+    '.sentence-label {' +
+      'font-weight: 700;' +
+      'color: #2563eb;' +
+      'font-size: 13px;' +
+    '}' +
+    '.status-tag {' +
+      'font-size: 11px;' +
+      'font-weight: 700;' +
+      'padding: 2px 8px;' +
+      'border-radius: 4px;' +
+    '}' +
+    '.tag-valid { background: #dcfce7; color: #166534; }' +
+    '.tag-warning { background: #fef3c7; color: #92400e; }' +
+    '.tag-error { background: #fee2e2; color: #991b1b; }' +
+    '.tag-empty { background: #f1f5f9; color: #64748b; }' +
+    '.sentence-text {' +
+      'font-size: 13.5px;' +
+      'color: #0f172a;' +
+      'line-height: 1.45;' +
+    '}' +
+    '.empty-text {' +
+      'color: #94a3b8;' +
+      'font-size: 13px;' +
+    '}' +
+    '.sentence-feedback {' +
+      'font-size: 12px;' +
+      'color: #475569;' +
+      'margin-top: 4px;' +
+      'border-top: 1px dotted #e2e8f0;' +
+      'padding-top: 4px;' +
+    '}' +
+    '.summary-box {' +
+      'margin-top: 24px;' +
+      'background: #f1f5f9;' +
+      'border-radius: 8px;' +
+      'padding: 12px 18px;' +
+      'display: flex;' +
+      'justify-content: space-between;' +
+      'align-items: center;' +
+      'page-break-inside: avoid;' +
+    '}' +
+    '.footer {' +
+      'margin-top: 30px;' +
+      'text-align: center;' +
+      'font-size: 11px;' +
+      'color: #94a3b8;' +
+      'border-top: 1px solid #e2e8f0;' +
+      'padding-top: 10px;' +
+    '}' +
+  '</style>' +
+'</head>' +
+'<body>' +
+  '<div class="header">' +
+    '<div>' +
+      '<span class="badge-top">IELTS Band 8.5+ Academic Mastery</span>' +
+      '<h1>Candidate Vocabulary Study Record</h1>' +
+      '<div class="meta">Topic: <strong>' + topic.topicTitle + '</strong></div>' +
+    '</div>' +
+    '<div class="meta" style="text-align: right;">' +
+      '<div>Generated: ' + new Date().toLocaleDateString() + '</div>' +
+      '<div>Cambridge Standard Lexical Evaluation</div>' +
+    '</div>' +
+  '</div>' +
 
-  printWindow.document.open();
-  printWindow.document.write(htmlContent);
-  printWindow.document.close();
+  '<div class="word-card">' +
+    '<div class="word-card-top">' +
+      '<div class="word-title">' + w.id + '. ' + w.word + ' <span class="word-pos">(' + (w.pos || 'academic') + ')</span></div>' +
+      '<div class="score-badge">Target Band: ' + displayScore + '</div>' +
+    '</div>' +
+    '<div class="definition-row"><strong>Definition:</strong> ' + w.meaning + '</div>' +
+    '<div class="model-box"><strong>Band 8.5 Model Sentence:</strong> “' + w.example + '”</div>' +
+    '<div>' +
+      '<strong>High-Scoring Collocations:</strong> ' +
+      (w.collocations || []).map(c => '<span class="colloc-tag">' + c + '</span>').join('') +
+    '</div>' +
+  '</div>' +
+
+  '<div class="section-title">Part A: 3 Simple Sentences (Clarity & Collocation)</div>' +
+  formatPDFSentenceItem(repSimple[0], 'Simple Sentence #1') +
+  formatPDFSentenceItem(repSimple[1], 'Simple Sentence #2') +
+  formatPDFSentenceItem(repSimple[2], 'Simple Sentence #3') +
+
+  '<div class="section-title">Part B: 3 Complex Sentences (Subordination & Syntax)</div>' +
+  formatPDFSentenceItem(repComplex[0], 'Complex Sentence #1 (Subordinate / Causal)') +
+  formatPDFSentenceItem(repComplex[1], 'Complex Sentence #2 (Conditional / Hypothetical)') +
+  formatPDFSentenceItem(repComplex[2], 'Complex Sentence #3 (Relative / Inversion / Cleft)') +
+
+  '<div class="summary-box">' +
+    '<div>' +
+      '<strong>Practice Session Summary:</strong>' +
+      '<div style="font-size: 13px; color: #475569;">' +
+        filledCount + ' of 6 sentences completed • ' + (6 - filledCount) + ' left blank • Evaluated against Cambridge C1/C2 descriptors.' +
+      '</div>' +
+    '</div>' +
+    '<div style="text-align: right;">' +
+      '<span style="font-size: 11px; text-transform: uppercase; color: #64748b;">Overall Band</span>' +
+      '<div style="font-size: 20px; font-weight: 800; color: #166534;">Band ' + displayScore + '</div>' +
+    '</div>' +
+  '</div>' +
+
+  '<div class="footer">' +
+    'IELTS Mastery Platform • Cambridge Standard Academic Lexical Resource • For Private Study Use' +
+  '</div>' +
+'</body>' +
+'</html>';
+
+  let printIframe = document.getElementById('vocabPrintIframe');
+  if (!printIframe) {
+    printIframe = document.createElement('iframe');
+    printIframe.id = 'vocabPrintIframe';
+    printIframe.style.position = 'fixed';
+    printIframe.style.right = '0';
+    printIframe.style.bottom = '0';
+    printIframe.style.width = '0';
+    printIframe.style.height = '0';
+    printIframe.style.border = '0';
+    printIframe.style.visibility = 'hidden';
+    document.body.appendChild(printIframe);
+  }
+
+  const iframeDoc = printIframe.contentWindow.document;
+  iframeDoc.open();
+  iframeDoc.write(htmlContent);
+  iframeDoc.close();
+
+  showPDFExportToast(w.word, htmlContent);
+
+  setTimeout(() => {
+    try {
+      printIframe.contentWindow.focus();
+      printIframe.contentWindow.print();
+    } catch(err) {
+      console.warn('Iframe print failed, opening fallback window:', err);
+      const wnd = window.open('', '_blank');
+      if (wnd) {
+        wnd.document.open();
+        wnd.document.write(htmlContent);
+        wnd.document.close();
+        wnd.focus();
+        wnd.print();
+      }
+    }
+  }, 300);
+}
+
+function showPDFExportToast(wordName, htmlContent) {
+  let toast = document.getElementById('pdfExportToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'pdfExportToast';
+    toast.style.position = 'fixed';
+    toast.style.bottom = '24px';
+    toast.style.right = '24px';
+    toast.style.zIndex = '9999';
+    toast.style.maxWidth = '420px';
+    toast.style.background = '#172033';
+    toast.style.border = '1px solid #8b5cf6';
+    toast.style.borderRadius = '10px';
+    toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.6)';
+    toast.style.padding = '14px 18px';
+    toast.style.color = '#fff';
+    toast.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">' +
+    '<div>' +
+      '<div style="font-weight: 700; color: #c084fc; font-size: 0.95rem; margin-bottom: 4px;">' +
+        '📄 Print & Save Dialog Opened' +
+      '</div>' +
+      '<div style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.35;">' +
+        'In the print destination dropdown, select <strong>"Save as PDF"</strong> to choose where to save this file on your computer.' +
+      '</div>' +
+      '<div style="margin-top: 8px; display: flex; gap: 8px;">' +
+        '<button id="directDownloadHtmlBtn" style="background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6; color: #c084fc; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600;">' +
+          '💾 Direct Download (.html)' +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+    '<button onclick="this.closest(\'#pdfExportToast\').style.display=\'none\'" style="background: none; border: none; color: #94a3b8; font-size: 1.1rem; cursor: pointer; padding: 0 4px;">&times;</button>' +
+  '</div>';
+  toast.style.display = 'block';
+
+  const dlBtn = document.getElementById('directDownloadHtmlBtn');
+  if (dlBtn) {
+    dlBtn.onclick = () => {
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'IELTS_Vocab_' + (wordName || 'Record') + '.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  setTimeout(() => {
+    if (toast) toast.style.display = 'none';
+  }, 9000);
 }
 
 function setupCueCardView() {

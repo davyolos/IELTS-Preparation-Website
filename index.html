@@ -389,12 +389,15 @@
           </div>
         </div>
 
-        <!-- 3-Minute Word Timer -->
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.5rem; text-align: center;">
-          <div class="timer-label">WORD DRILL TIMER</div>
+        <!-- 3-Minute Word Timer & PDF Exporter -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem 1.25rem; text-align: center; min-width: 200px;">
+          <div class="timer-label">3-MIN WORD TIMER</div>
           <div id="wordTimerDisplay" class="timer-readout" style="font-size: 2.2rem; margin: 0.2rem 0;">03:00</div>
-          <button id="wordTimerBtn" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; margin-top: 0.4rem;" onclick="toggleWordTimer()">⏱️ Start 3-Min Timer</button>
-          <button id="topExportPdfBtn" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; margin-top: 0.4rem; border-color: #8b5cf6; color: #c084fc; display: block; width: 100%;" onclick="exportWordToPDF()">📄 Export to PDF</button>
+          <div style="display: flex; gap: 0.4rem; justify-content: center; margin-top: 0.4rem;">
+            <button id="wordTimerBtn" class="btn btn-primary" style="padding: 0.45rem 0.8rem; font-size: 0.82rem;" onclick="toggleWordTimer()">⏱️ Start 3-Min Timer</button>
+            <button id="wordTimerResetBtn" class="btn btn-outline" style="padding: 0.45rem 0.6rem; font-size: 0.82rem;" title="Reset Timer" onclick="resetWordTimer()">🔄</button>
+          </div>
+          <button id="topExportPdfBtn" class="btn btn-pdf-export" style="margin-top: 0.6rem; width: 100%; justify-content: center;" onclick="exportWordToPDF()">📄 Export to PDF</button>
         </div>
       </div>
 
@@ -406,15 +409,18 @@
         </p>
 
         
-        <div id="inputLockBanner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 1rem; align-items: center; justify-content: space-between;">
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <span style="font-size: 1.3rem;">🔒</span>
+        <div id="inputLockBanner" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #fca5a5; padding: 0.85rem 1.15rem; border-radius: var(--radius-md); font-size: 0.9rem; margin-bottom: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.6rem;">🔒</span>
             <div>
-              <strong>3-Minute Time Limit Reached!</strong>
-              <div style="font-size: 0.8rem; color: #f87171;">Inputs are locked. All sentences have been automatically analyzed and scored below.</div>
+              <strong style="color: #fff; font-size: 0.95rem;">3-Minute Time Limit Reached — Inputs Strictly Locked!</strong>
+              <div style="font-size: 0.82rem; color: #fca5a5; margin-top: 2px;">No further typing allowed. Completed sentences have been evaluated below. You can export this record to PDF at any time.</div>
             </div>
           </div>
-          <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.75rem; border-color: #ef4444; color: #fca5a5;" onclick="exportWordToPDF()">📄 Export PDF</button>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>
+            <button class="btn btn-outline" style="font-size: 0.8rem; border-color: #ef4444; color: #fca5a5;" onclick="resetWordTimer()">🔄 Try Again</button>
+          </div>
         </div>
         <div class="sentences-section">
           <!-- 3 Simple Sentences -->
@@ -466,9 +472,9 @@
 
         <div id="sentenceValidationNotice" style="margin-top: 1rem;"></div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
-          <button id="saveSentencesBtn" class="btn btn-emerald" onclick="evaluateAndSaveSentences(false)">💾 Validate & Save 6 Sentences</button>
-          <button class="btn btn-outline" style="border-color: #8b5cf6; color: #c084fc;" onclick="exportWordToPDF()">📄 Export to PDF</button>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;">
+          <button id="saveSentencesBtn" class="btn btn-emerald" onclick="evaluateAndSaveSentences(false)">💾 Evaluate & Save Sentences</button>
+          <button id="bottomExportPdfBtn" class="btn btn-pdf-export" onclick="exportWordToPDF()">📄 Export to PDF</button>
           <button class="btn btn-primary" onclick="nextWord()">Next Word ➔</button>
         </div>
       </div>
